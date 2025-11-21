@@ -196,7 +196,7 @@ class PreviewDataFetcher {
      */
     public function getEducation() {
         $rows = $this->safeFetchAll(
-            "SELECT id, application_reference, nama_institusi, dari_tahun, hingga_tahun, kelayakan, pangkat_gred_cgpa, sijil_path, created_at, application_id FROM application_education WHERE application_reference = ? ORDER BY id", 
+            "SELECT id, application_reference, nama_institusi, dari_tahun, hingga_tahun, kelayakan, pangkat_gred_cgpa, sijil_path, sijil_tambahan, created_at, application_id FROM application_education WHERE application_reference = ? ORDER BY id", 
             [$this->reference]
         );
         
@@ -208,6 +208,7 @@ class PreviewDataFetcher {
             $row['gred'] = $row['pangkat_gred_cgpa'] ?? '';
             // Map sijil columns
             $row['sijil_filename'] = $row['sijil_path'] ?? '';
+            $row['sijil_tambahan_filename'] = $row['sijil_tambahan'] ?? '';
         }
         unset($row);
         

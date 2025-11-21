@@ -746,7 +746,7 @@ class ApplicationSaveController {
         if (!isset($postData['persekolahan']) || !is_array($postData['persekolahan'])) return;
         
         $stmt = $this->pdo->prepare(
-            "INSERT INTO application_education (application_reference, application_id, nama_institusi, dari_tahun, hingga_tahun, kelayakan, pangkat_gred_cgpa, sijil_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO application_education (application_reference, application_id, nama_institusi, dari_tahun, hingga_tahun, kelayakan, pangkat_gred_cgpa, sijil_path, sijil_tambahan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
         
         foreach ($postData['persekolahan'] as $edu) {
@@ -760,6 +760,7 @@ class ApplicationSaveController {
             $kelayakan = $this->formatStringValue($edu['kelayakan'] ?? null);
             $gred = $this->formatStringValue($edu['gred'] ?? null);
             $sijilPath = $this->formatStringValue($edu['sijil_path'] ?? null, false);
+            $sijilTambahan = $this->formatStringValue($edu['sijil_tambahan_path'] ?? null, false);
 
             $stmt->execute([
                 $application_reference,
@@ -769,7 +770,8 @@ class ApplicationSaveController {
                 $hinggaTahun,
                 $kelayakan,
                 $gred,
-                $sijilPath
+                $sijilPath,
+                $sijilTambahan
             ]);
         }
     }
