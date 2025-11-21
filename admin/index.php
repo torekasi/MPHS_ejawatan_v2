@@ -72,7 +72,7 @@ include 'templates/header.php';
 <!-- Statistics Section -->
 <div class="mb-10">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-        <!-- Total Submitted Applications -->
+        <!-- Total Applications -->
         <a href="applications-list.php" class="block transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
             <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl shadow-xl p-6 border border-blue-200 hover:border-blue-300">
                 <div class="flex items-center">
@@ -82,9 +82,9 @@ include 'templates/header.php';
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-blue-700 mb-1">Permohonan Dihantar</p>
-                        <p class="text-2xl font-semibold text-blue-900 mb-1"><?php echo number_format($total_applications); ?></p>
-                        <p class="text-xs text-blue-600">Klik untuk lihat semua</p>
+                        <p class="text-lg font-bold text-blue-900 mb-1">Total Permohonan</p>
+                        <p class="text-2xl font-semibold text-blue-900 mb-2"><?php echo number_format($total_applications); ?></p>
+                        <p class="text-xs text-blue-600">Jumlah permohonan yang telah dihantar</p>
                     </div>
                 </div>
             </div>
@@ -100,9 +100,9 @@ include 'templates/header.php';
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-orange-700 mb-1">Permohonan Draf</p>
-                        <p class="text-2xl font-semibold text-orange-900 mb-1"><?php echo number_format($total_drafts); ?></p>
-                        <p class="text-xs text-orange-600">Klik untuk lihat draf</p>
+                        <p class="text-lg font-bold text-orange-900 mb-1">Permohonan Draf</p>
+                        <p class="text-2xl font-semibold text-orange-900 mb-2"><?php echo number_format($total_drafts); ?></p>
+                        <p class="text-xs text-orange-600">Permohonan belum dihantar oleh pemohon</p>
                     </div>
                 </div>
             </div>
@@ -118,9 +118,9 @@ include 'templates/header.php';
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-yellow-700 mb-1">Belum Disemak</p>
-                        <p class="text-2xl font-semibold text-yellow-900 mb-1"><?php echo number_format($pending_count); ?></p>
-                        <p class="text-xs text-yellow-600">Klik untuk tapis</p>
+                        <p class="text-lg font-bold text-yellow-900 mb-1">Belum Disemak</p>
+                        <p class="text-2xl font-semibold text-yellow-900 mb-2"><?php echo number_format($pending_count); ?></p>
+                        <p class="text-xs text-yellow-600">Jumlah permohonan yang belum diproses</p>
                     </div>
                 </div>
             </div>

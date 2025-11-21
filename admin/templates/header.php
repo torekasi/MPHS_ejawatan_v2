@@ -23,7 +23,7 @@
     ?>
     <!-- Header and Navigation -->
     <header class="bg-white shadow">
-        <div class="container mx-auto px-4" style="max-width: 1020px; width: 1020px;">
+        <div class="container mx-auto px-4" style="max-width: 1400px;">
             <!-- Logo and Title -->
             <div class="flex items-center justify-between py-4 border-b">
                 <div class="flex items-center gap-4">
@@ -91,7 +91,7 @@
         </div>
     </header>
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8" style="max-width: 1020px; width: 1020px;">
+    <main class="container mx-auto px-4 py-8" style="max-width: 1400px;">
 
 <script>
     // JavaScript to handle dropdown menus
