@@ -1,5 +1,31 @@
 # Changelog
 
+## 2025-11-22 – Education Section Enhancement & Documentation Standards
+
+### Added
+- **Education Section Enhancement:**
+  - Added `sijil_tambahan` column to `application_education` table for additional certificate uploads
+  - Created SQL migration script (`tools/add-sijil-tambahan-column.sql`) for database schema update
+  - Added "Sijil Tambahan" upload field in education form (`application_section/pendidikan.php`)
+  - Added sijil_tambahan support in `modules/preview/DataFetcher.php`
+
+### Changed
+- **Education Form Layout:**
+  - Modified education section layout - "Nama Institusi" field now spans full width for improved UX
+  - Reorganized field arrangement in education entries for better visual flow
+- **Backend Updates:**
+  - Updated `ApplicationSaveController::saveEducation()` to handle `sijil_tambahan` field
+  - Updated `PreviewDataFetcher::getEducation()` to fetch and map sijil_tambahan data
+- **Code Standardization:**
+  - Standardized all `@Author` tags from "AI Assistant" to "Nefi" across multiple files
+
+### Documentation
+- Created comprehensive documentation update requirements (`docs/DOCUMENTATION_REQUIREMENTS.md`)
+- Created education section enhancement summary (`docs/education-section-enhancement.md`)
+- Established mandatory documentation update workflow for all code changes
+- Defined standards for function documentation, changelog, and technical documentation
+
+
 ## 2025-11-10 – Session Timeout & Edit Verification
 - Added a session-based timeout to `job-application-full.php` with a client-side countdown bar and auto-redirect to the main homepage upon expiry. Default timeout is 30 minutes.
 - Enforced server-side timeout in `controllers/ApplicationController.php` to block stale submissions.
