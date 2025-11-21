@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'includes/ErrorHandler.php';
 require_once __DIR__ . '/config.php';
 session_start();
@@ -9,6 +9,10 @@ if (!isset($config['navigation']['show_status_check']) || !$config['navigation']
     include '404.php';
     exit;
 }
+
+// Get reCAPTCHA v3 configuration
+$recaptcha_v3_site_key = $config['recaptcha_v3_site_key'] ?? (getenv('RECAPTCHA_V3_SITE_KEY') ?: '');
+$recaptcha_v3_action = 'status_check';
 
 $error = $_SESSION['error'] ?? null;
 $success = $_SESSION['success'] ?? null;
@@ -39,6 +43,9 @@ unset($_SESSION['error'], $_SESSION['success']);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <?php if (!empty($recaptcha_v3_site_key)): ?>
+    <script src="https://www.google.com/recaptcha/api.js?render=<?php echo htmlspecialchars($recaptcha_v3_site_key); ?>"></script>
+    <?php endif; ?>
     <style>
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -108,7 +115,7 @@ unset($_SESSION['error'], $_SESSION['success']);
                         <div class="ml-3">
                             <p class="text-sm text-blue-700<?php echo ($prefill_app_ref && $prefill_nric) ? ' auto-submit-info' : ''; ?>" id="info-message">
                                 <?php if ($prefill_app_ref && $prefill_nric): ?>
-                                    ✅ Maklumat telah diisi secara automatik. Sistem akan menyemak status dalam sebentar...
+                                    âœ… Maklumat telah diisi secara automatik. Sistem akan menyemak status dalam sebentar...
                                 <?php else: ?>
                                     Sila masukkan No. Kad Pengenalan dan Rujukan Permohonan anda untuk menyemak status.
                                 <?php endif; ?>
@@ -203,27 +210,6 @@ unset($_SESSION['error'], $_SESSION['success']);
                         </div>
                     </div>
 
-                    <!-- Debug Section (for testing) -->
-                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                        <h4 class="text-sm font-medium text-gray-700 mb-2">🔧 Debug/Test</h4>
-                        <p class="text-xs text-gray-600 mb-3">Untuk tujuan debugging, klik link di bawah untuk test secara manual:</p>
-                        <div class="space-y-2">
-                            <button type="button" onclick="testBackend()" class="text-xs bg-blue-100 hover:bg-blue-200 text-blue-800 px-3 py-1 rounded">
-                                Test Backend Connection
-                            </button>
-                            <button type="button" onclick="testAutoFill()" class="text-xs bg-green-100 hover:bg-green-200 text-green-800 px-3 py-1 rounded">
-                                Test Auto-Fill
-                            </button>
-                            <div id="debug-output" class="text-xs text-gray-600 mt-2 hidden"></div>
-                        </div>
-                        <?php if ($prefill_app_ref || $prefill_nric): ?>
-                        <div class="mt-3 p-2 bg-blue-50 rounded text-xs">
-                            <strong>URL Parameters Received:</strong><br>
-                            App Ref: <?php echo htmlspecialchars($prefill_app_ref ?: 'Not provided'); ?><br>
-                            NRIC: <?php echo htmlspecialchars($prefill_nric ?: 'Not provided'); ?>
-                        </div>
-                        <?php endif; ?>
-                    </div>
                 </div>
             </div>
         </div>
@@ -399,12 +385,12 @@ unset($_SESSION['error'], $_SESSION['success']);
                 });
 
                 if (response.ok) {
-                    debugOutput.innerHTML = '<div class="text-green-600">✅ Backend connection successful</div>';
+                    debugOutput.innerHTML = '<div class="text-green-600">âœ… Backend connection successful</div>';
                 } else {
-                    debugOutput.innerHTML = `<div class="text-red-600">❌ Backend connection failed: ${response.status}</div>`;
+                    debugOutput.innerHTML = `<div class="text-red-600">âŒ Backend connection failed: ${response.status}</div>`;
                 }
             } catch (error) {
-                debugOutput.innerHTML = `<div class="text-red-600">❌ Connection error: ${error.message}</div>`;
+                debugOutput.innerHTML = `<div class="text-red-600">âŒ Connection error: ${error.message}</div>`;
             }
         };
         
