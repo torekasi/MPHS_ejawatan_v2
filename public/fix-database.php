@@ -2,7 +2,7 @@
 /**
  * @FileID: fix_database_web
  * @Module: Database Schema Web Fix
- * @Author: AI Assistant
+ * @Author: Nefi
  * @LastModified: 2025-11-14
  * @SecurityTag: validated
  */

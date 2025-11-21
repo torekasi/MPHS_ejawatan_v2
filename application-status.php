@@ -1,13 +1,3 @@
-<?php
-/**
- * @FileID: application_status_001
- * @Module: status_check
- * @Author: ai_assistant
- * @LastModified: 2025-11-10T00:00:00Z
- * @SecurityTag: validated
- */
-// Application status check page
-// Enable error reporting for debugging
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 

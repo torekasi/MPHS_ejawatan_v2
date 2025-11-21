@@ -1,28 +1,66 @@
 <!--
 @FileID: tools-preview-spouse-1109
 @Module: preview
-@Author: AI Assistant
+@Author: Nefi
 @LastModified: 2025-11-09
 @SecurityTag: validated
 -->
 <!doctype html>
 <html lang="ms">
+
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pratonton Toggle Maklumat Pasangan</title>
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
-    .container { border: 1px solid #ddd; border-radius: 8px; padding: 16px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    label { display: block; font-weight: 600; margin-bottom: 6px; }
-    input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
-    .hidden { display: none; }
-    h2 { margin-top: 0; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      margin: 2rem;
+    }
+
+    .container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
   </style>
 </head>
+
 <body>
   <h1>Pratonton: Toggle Maklumat Pasangan</h1>
   <div class="container">
@@ -108,24 +146,25 @@
   </div>
 
   <script>
-  (function(){
-    const maritalSelect = document.getElementById('taraf_perkahwinan');
-    const spouseSection = document.getElementById('spouse_info_section');
-    const namaPasangan = document.getElementById('nama_pasangan');
-    const telefonPasangan = document.getElementById('telefon_pasangan');
+    (function () {
+      const maritalSelect = document.getElementById('taraf_perkahwinan');
+      const spouseSection = document.getElementById('spouse_info_section');
+      const namaPasangan = document.getElementById('nama_pasangan');
+      const telefonPasangan = document.getElementById('telefon_pasangan');
 
-    function toggleSpouseSection(){
-      const isMarried = maritalSelect && maritalSelect.value === 'Berkahwin';
-      spouseSection.classList.toggle('hidden', !isMarried);
-      spouseSection.setAttribute('aria-hidden', (!isMarried).toString());
-      if (namaPasangan) namaPasangan.required = !!isMarried;
-      if (telefonPasangan) telefonPasangan.required = !!isMarried;
-    }
+      function toggleSpouseSection() {
+        const isMarried = maritalSelect && maritalSelect.value === 'Berkahwin';
+        spouseSection.classList.toggle('hidden', !isMarried);
+        spouseSection.setAttribute('aria-hidden', (!isMarried).toString());
+        if (namaPasangan) namaPasangan.required = !!isMarried;
+        if (telefonPasangan) telefonPasangan.required = !!isMarried;
+      }
 
-    maritalSelect.addEventListener('change', toggleSpouseSection);
-    // Init on load
-    toggleSpouseSection();
-  })();
+      maritalSelect.addEventListener('change', toggleSpouseSection);
+      // Init on load
+      toggleSpouseSection();
+    })();
   </script>
 </body>
+
 </html>

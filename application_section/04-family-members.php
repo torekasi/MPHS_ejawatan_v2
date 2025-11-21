@@ -2,7 +2,7 @@
 /**
  * @FileID: application_section_family_members
  * @Module: ApplicationSectionFamilyMembers
- * @Author: AI Assistant
+ * @Author: Nefi
  * @LastModified: 2025-11-15
  * @SecurityTag: validated
  */

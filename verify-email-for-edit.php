@@ -2,7 +2,7 @@
 /**
  * @FileID: verify-email-for-edit
  * @Module: Application Edit Verification
- * @Author: AI Assistant
+ * @Author: Nefi
  * @LastModified: 2025-01-14
  * @SecurityTag: validated
  */

@@ -1,7 +1,7 @@
 <#
 @FileID: dev-server-ps1-1109
 @Module: dev_server
-@Author: AI Assistant
+@Author: Nefi
 @LastModified: 2025-11-09
 @SecurityTag: validated
 #>

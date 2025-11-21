@@ -1,36 +1,134 @@
 <!--
  @FileID: preview_health_oku_001
  @Module: PreviewHealthOKU
- @Author: AI Assistant
+ @Author: Nefi
  @LastModified: 2025-11-09T12:30:00Z
  @SecurityTag: validated
 -->
 <!DOCTYPE html>
 <html lang="ms">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pratonton – Maklumat Kesihatan & OKU</title>
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif; background:#f7fafc; }
-    .container { max-width: 960px; margin: 24px auto; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.1); overflow: hidden; }
-    .section-title { padding: 16px 20px; background: #16a34a; color:#fff; border-bottom: none; font-weight: 600; }
-    .content { padding: 20px; }
-    .row { display: flex; gap: 0; align-items: flex-start; margin-bottom: 0; }
-    .col { flex: 1; }
-    .half { width: 50%; }
-    label { display:block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color:#374151; }
-    .inline { display:flex; gap: 16px; align-items: center; }
-    .hidden { display:none; }
-    .file-status { font-size: 12px; margin-top: 4px; }
-    .required { color: #dc2626; }
-    select, textarea, input[type="text"], input[type="number"], input[type="file"] { width: 100%; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 6px; }
-    .chips { display:flex; flex-wrap: wrap; gap:8px; }
-    .chip { display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border:1px solid #d1d5db; border-radius: 999px; background:#fff; }
-    .overlay { position: fixed; inset: 0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,.4); z-index: 50; }
-    .overlay .box { background:#fff; border-radius:6px; padding:12px 16px; display:flex; gap:8px; align-items:center; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+      background: #f7fafc;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 24px auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+      overflow: hidden;
+    }
+
+    .section-title {
+      padding: 16px 20px;
+      background: #16a34a;
+      color: #fff;
+      border-bottom: none;
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .row {
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+      margin-bottom: 0;
+    }
+
+    .col {
+      flex: 1;
+    }
+
+    .half {
+      width: 50%;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    .inline {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .file-status {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .required {
+      color: #dc2626;
+    }
+
+    select,
+    textarea,
+    input[type="text"],
+    input[type="number"],
+    input[type="file"] {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 999px;
+      background: #fff;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .4);
+      z-index: 50;
+    }
+
+    .overlay .box {
+      background: #fff;
+      border-radius: 6px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
   </style>
 </head>
+
 <body>
   <form class="container" onsubmit="document.getElementById('healthOkuPreviewLoading').style.display='flex'">
     <div class="section-title">Maklumat Kesihatan</div>
@@ -60,20 +158,29 @@
         <div class="half" id="oku_field" style="display:none">
           <label>Jenis OKU (Pilihan)</label>
           <div class="chips">
-            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Penglihatan"> <span>OKU Penglihatan</span></label>
-            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Pendengaran"> <span>OKU Pendengaran</span></label>
-            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Fizikal"> <span>OKU Fizikal</span></label>
-            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Pembelajaran"> <span>OKU Pembelajaran</span></label>
-            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Mental"> <span>OKU Mental</span></label>
-            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Pelbagai"> <span>OKU Pelbagai</span></label>
-            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="Lain-lain"> <span>Lain-lain</span></label>
+            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Penglihatan"> <span>OKU
+                Penglihatan</span></label>
+            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Pendengaran"> <span>OKU
+                Pendengaran</span></label>
+            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Fizikal"> <span>OKU
+                Fizikal</span></label>
+            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Pembelajaran"> <span>OKU
+                Pembelajaran</span></label>
+            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Mental"> <span>OKU
+                Mental</span></label>
+            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="OKU Pelbagai"> <span>OKU
+                Pelbagai</span></label>
+            <label class="chip"><input type="checkbox" name="jenis_oku[]" value="Lain-lain">
+              <span>Lain-lain</span></label>
           </div>
-          <p class="hidden" id="jenis_oku_error" style="color:#dc2626; font-size:12px; margin-top:4px">Sila pilih sekurang-kurangnya satu jenis OKU.</p>
+          <p class="hidden" id="jenis_oku_error" style="color:#dc2626; font-size:12px; margin-top:4px">Sila pilih
+            sekurang-kurangnya satu jenis OKU.</p>
 
           <div class="row">
             <div class="col">
               <label>Salinan Kad OKU</label>
-              <input type="file" id="salinan_kad_oku" name="salinan_kad_oku" accept=".jpg,.jpeg,.png,.gif,.pdf" data-max-size="2" data-allowed-types="image/jpeg,image/jpg,image/png,image/gif,application/pdf">
+              <input type="file" id="salinan_kad_oku" name="salinan_kad_oku" accept=".jpg,.jpeg,.png,.gif,.pdf"
+                data-max-size="2" data-allowed-types="image/jpeg,image/jpg,image/png,image/gif,application/pdf">
               <div class="file-status" id="salinan_kad_oku_status"></div>
             </div>
           </div>
@@ -99,119 +206,128 @@
             <option>Presbiopia</option>
             <option>Lain-lain</option>
           </select>
-          <p class="hidden" id="jenis_rabun_error" style="color:#dc2626; font-size:12px; margin-top:4px">Sila pilih jenis rabun.</p>
+          <p class="hidden" id="jenis_rabun_error" style="color:#dc2626; font-size:12px; margin-top:4px">Sila pilih
+            jenis rabun.</p>
         </div>
       </div>
 
-      
+
     </div>
 
     <div id="healthOkuPreviewLoading" class="overlay" aria-hidden="true">
       <div class="box">
-        <span style="width:16px; height:16px; border:2px solid #3b82f6; border-right-color: transparent; border-radius:50%; display:inline-block; animation: spin 1s linear infinite"></span>
+        <span
+          style="width:16px; height:16px; border:2px solid #3b82f6; border-right-color: transparent; border-radius:50%; display:inline-block; animation: spin 1s linear infinite"></span>
         <span style="font-size:14px">Menyimpan maklumat kesihatan & fizikal...</span>
       </div>
     </div>
   </form>
 
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var okuYes = document.querySelector('input[name="pemegang_kad_oku"][value="Ya"]');
-    var okuNo = document.querySelector('input[name="pemegang_kad_oku"][value="Tidak"]');
-    var okuField = document.getElementById('oku_field');
-    var jenisOkuError = document.getElementById('jenis_oku_error');
-    var jenisOkuCheckboxes = Array.prototype.slice.call(document.querySelectorAll('input[name="jenis_oku[]"]'));
+    document.addEventListener('DOMContentLoaded', function () {
+      var okuYes = document.querySelector('input[name="pemegang_kad_oku"][value="Ya"]');
+      var okuNo = document.querySelector('input[name="pemegang_kad_oku"][value="Tidak"]');
+      var okuField = document.getElementById('oku_field');
+      var jenisOkuError = document.getElementById('jenis_oku_error');
+      var jenisOkuCheckboxes = Array.prototype.slice.call(document.querySelectorAll('input[name="jenis_oku[]"]'));
 
-    var lainYes = document.querySelector('input[name="penyakit_lain"][value="Ya"]');
-    var lainNo = document.querySelector('input[name="penyakit_lain"][value="Tidak"]');
-    var lainField = document.getElementById('penyakit_lain_field');
-    var lainText = document.querySelector('textarea[name="penyakit_lain_nyatakan"]');
+      var lainYes = document.querySelector('input[name="penyakit_lain"][value="Ya"]');
+      var lainNo = document.querySelector('input[name="penyakit_lain"][value="Tidak"]');
+      var lainField = document.getElementById('penyakit_lain_field');
+      var lainText = document.querySelector('textarea[name="penyakit_lain_nyatakan"]');
 
-    var cerYes = document.querySelector('input[name="memakai_cermin_mata"][value="Ya"]');
-    var cerNo = document.querySelector('input[name="memakai_cermin_mata"][value="Tidak"]');
-    var cerField = document.getElementById('cermin_mata_field');
-    var rabunSelect = document.querySelector('select[name="jenis_rabun"]');
-    var rabunError = document.getElementById('jenis_rabun_error');
+      var cerYes = document.querySelector('input[name="memakai_cermin_mata"][value="Ya"]');
+      var cerNo = document.querySelector('input[name="memakai_cermin_mata"][value="Tidak"]');
+      var cerField = document.getElementById('cermin_mata_field');
+      var rabunSelect = document.querySelector('select[name="jenis_rabun"]');
+      var rabunError = document.getElementById('jenis_rabun_error');
 
-    var salinanFile = document.getElementById('salinan_kad_oku');
-    var salinanStatus = document.getElementById('salinan_kad_oku_status');
+      var salinanFile = document.getElementById('salinan_kad_oku');
+      var salinanStatus = document.getElementById('salinan_kad_oku_status');
 
-    function toggle() {
-      var isOku = okuYes && okuYes.checked;
-      okuField.style.display = isOku ? 'block' : 'none';
-      if (!isOku) {
-        jenisOkuError && jenisOkuError.classList.add('hidden');
-        if (salinanFile) { salinanFile.disabled = true; salinanFile.value = ''; if (salinanStatus) { salinanStatus.textContent = ''; salinanStatus.className = 'file-status'; } }
-      } else {
-        if (salinanFile) salinanFile.disabled = false;
-      }
-
-      var isLain = lainYes && lainYes.checked;
-      lainField.style.display = isLain ? 'block' : 'none';
-      if (lainText) {
-        if (isLain) { lainText.setAttribute('required', 'required'); }
-        else { lainText.removeAttribute('required'); }
-      }
-
-      var isCer = cerYes && cerYes.checked;
-      cerField.style.display = isCer ? 'block' : 'none';
-      if (rabunSelect) {
-        if (isCer) { rabunSelect.setAttribute('required', 'required'); }
-        else { rabunSelect.removeAttribute('required'); rabunError && rabunError.classList.add('hidden'); rabunSelect.value = ''; }
-      }
-    }
-
-    function validateOku() {
-      var isOku = okuYes && okuYes.checked;
-      if (!isOku) return true;
-      var any = jenisOkuCheckboxes.some(function(cb) { return cb.checked; });
-      if (!any) { jenisOkuError && jenisOkuError.classList.remove('hidden'); return false; }
-      jenisOkuError && jenisOkuError.classList.add('hidden');
-      return true;
-    }
-
-    function validateRabun() {
-      var isCer = cerYes && cerYes.checked;
-      if (!isCer) return true;
-      if (rabunSelect && !rabunSelect.value) { rabunError && rabunError.classList.remove('hidden'); return false; }
-      rabunError && rabunError.classList.add('hidden');
-      return true;
-    }
-
-    [okuYes, okuNo, lainYes, lainNo, cerYes, cerNo].forEach(function(el){ if (el) el.addEventListener('change', toggle); });
-    jenisOkuCheckboxes.forEach(function(cb){ cb.addEventListener('change', function(){ jenisOkuError && jenisOkuError.classList.add('hidden'); }); });
-    if (rabunSelect) rabunSelect.addEventListener('change', function(){ rabunError && rabunError.classList.add('hidden'); });
-    toggle();
-
-    // Safe fallback for validateFileSize
-    if (typeof window.validateFileSize !== 'function') {
-      window.validateFileSize = function(input, maxMB) {
-        var statusEl = document.getElementById(input.id + '_status') || salinanStatus;
-        if (!input.files || !input.files[0]) { if (statusEl) statusEl.textContent = ''; return; }
-        var file = input.files[0];
-        var sizeMB = file.size / (1024 * 1024);
-        var allowedTypes = (input.getAttribute('data-allowed-types') || '').split(',').filter(Boolean);
-        var messages = [];
-        if (sizeMB > maxMB) messages.push('Saiz fail melebihi ' + maxMB + 'MB.');
-        if (allowedTypes.length && allowedTypes.indexOf(file.type) === -1) messages.push('Jenis fail tidak dibenarkan.');
-        if (statusEl) {
-          statusEl.textContent = messages.join(' ');
-          statusEl.className = 'file-status ' + (messages.length ? 'text-red-600' : 'text-green-700');
-          if (!messages.length) statusEl.textContent = 'Fail sah: ' + (file.name || '');
+      function toggle() {
+        var isOku = okuYes && okuYes.checked;
+        okuField.style.display = isOku ? 'block' : 'none';
+        if (!isOku) {
+          jenisOkuError && jenisOkuError.classList.add('hidden');
+          if (salinanFile) { salinanFile.disabled = true; salinanFile.value = ''; if (salinanStatus) { salinanStatus.textContent = ''; salinanStatus.className = 'file-status'; } }
+        } else {
+          if (salinanFile) salinanFile.disabled = false;
         }
-        if (messages.length) input.value = '';
-      };
-    }
 
-    document.querySelector('form').addEventListener('submit', function(e){
-      var ok = true;
-      if (!validateOku()) ok = false;
-      if (!validateRabun()) ok = false;
-      if (!ok) { e.preventDefault(); e.stopPropagation(); }
+        var isLain = lainYes && lainYes.checked;
+        lainField.style.display = isLain ? 'block' : 'none';
+        if (lainText) {
+          if (isLain) { lainText.setAttribute('required', 'required'); }
+          else { lainText.removeAttribute('required'); }
+        }
+
+        var isCer = cerYes && cerYes.checked;
+        cerField.style.display = isCer ? 'block' : 'none';
+        if (rabunSelect) {
+          if (isCer) { rabunSelect.setAttribute('required', 'required'); }
+          else { rabunSelect.removeAttribute('required'); rabunError && rabunError.classList.add('hidden'); rabunSelect.value = ''; }
+        }
+      }
+
+      function validateOku() {
+        var isOku = okuYes && okuYes.checked;
+        if (!isOku) return true;
+        var any = jenisOkuCheckboxes.some(function (cb) { return cb.checked; });
+        if (!any) { jenisOkuError && jenisOkuError.classList.remove('hidden'); return false; }
+        jenisOkuError && jenisOkuError.classList.add('hidden');
+        return true;
+      }
+
+      function validateRabun() {
+        var isCer = cerYes && cerYes.checked;
+        if (!isCer) return true;
+        if (rabunSelect && !rabunSelect.value) { rabunError && rabunError.classList.remove('hidden'); return false; }
+        rabunError && rabunError.classList.add('hidden');
+        return true;
+      }
+
+      [okuYes, okuNo, lainYes, lainNo, cerYes, cerNo].forEach(function (el) { if (el) el.addEventListener('change', toggle); });
+      jenisOkuCheckboxes.forEach(function (cb) { cb.addEventListener('change', function () { jenisOkuError && jenisOkuError.classList.add('hidden'); }); });
+      if (rabunSelect) rabunSelect.addEventListener('change', function () { rabunError && rabunError.classList.add('hidden'); });
+      toggle();
+
+      // Safe fallback for validateFileSize
+      if (typeof window.validateFileSize !== 'function') {
+        window.validateFileSize = function (input, maxMB) {
+          var statusEl = document.getElementById(input.id + '_status') || salinanStatus;
+          if (!input.files || !input.files[0]) { if (statusEl) statusEl.textContent = ''; return; }
+          var file = input.files[0];
+          var sizeMB = file.size / (1024 * 1024);
+          var allowedTypes = (input.getAttribute('data-allowed-types') || '').split(',').filter(Boolean);
+          var messages = [];
+          if (sizeMB > maxMB) messages.push('Saiz fail melebihi ' + maxMB + 'MB.');
+          if (allowedTypes.length && allowedTypes.indexOf(file.type) === -1) messages.push('Jenis fail tidak dibenarkan.');
+          if (statusEl) {
+            statusEl.textContent = messages.join(' ');
+            statusEl.className = 'file-status ' + (messages.length ? 'text-red-600' : 'text-green-700');
+            if (!messages.length) statusEl.textContent = 'Fail sah: ' + (file.name || '');
+          }
+          if (messages.length) input.value = '';
+        };
+      }
+
+      document.querySelector('form').addEventListener('submit', function (e) {
+        var ok = true;
+        if (!validateOku()) ok = false;
+        if (!validateRabun()) ok = false;
+        if (!ok) { e.preventDefault(); e.stopPropagation(); }
+      });
     });
-  });
   </script>
 
-  <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+  <style>
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </body>
+
 </html>

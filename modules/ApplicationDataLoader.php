@@ -2,7 +2,7 @@
 /**
  * @FileID: application_data_loader
  * @Module: Application Data Loader
- * @Author: AI Assistant
+ * @Author: Nefi
  * @LastModified: 2025-11-14
  * @SecurityTag: validated
  */

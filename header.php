@@ -2,7 +2,7 @@
 /**
  * @FileID: public_header_001
  * @Module: PublicHeader
- * @Author: AI Assistant
+ * @Author: Nefi
  * @LastModified: 2025-11-09T00:00:00Z
  * @SecurityTag: validated
  */

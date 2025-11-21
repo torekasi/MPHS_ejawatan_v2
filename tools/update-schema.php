@@ -2,7 +2,7 @@
 /**
  * @FileID: schema_update_tool
  * @Module: Schema Update Tool
- * @Author: AI Assistant
+ * @Author: Nefi
  * @LastModified: 2025-11-14
  * @SecurityTag: validated
  */

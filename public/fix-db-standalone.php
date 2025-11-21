@@ -2,7 +2,7 @@
 /**
  * @FileID: fix_db_standalone
  * @Module: Standalone Database Schema Fix
- * @Author: AI Assistant
+ * @Author: Nefi
  * @LastModified: 2025-11-14
  * @SecurityTag: validated
  */

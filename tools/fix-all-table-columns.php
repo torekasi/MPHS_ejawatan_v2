@@ -2,7 +2,7 @@
 /**
  * @FileID: fix_all_table_columns_migration
  * @Module: Complete Database Migration Tool
- * @Author: AI Assistant
+ * @Author: Nefi
  * @LastModified: 2025-11-14
  * @SecurityTag: validated
  */
