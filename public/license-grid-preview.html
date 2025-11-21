@@ -1,0 +1,100 @@
+<!--
+  @FileID: license_grid_preview_v1
+  @Module: UI_Preview
+  @Author: AI_Assistant
+  @LastModified: 2025-11-09T00:00:00Z
+  @SecurityTag: validated
+-->
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pratonton Lesen Memandu (4 Kolum)</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background:#f9fafb; margin:0; }
+    .card { background:#fff; border-radius:0.5rem; box-shadow:0 1px 3px rgba(0,0,0,0.1); margin:1.5rem; }
+    .card-inner { padding:1.5rem; }
+    .label { display:block; font-size:0.875rem; font-weight:600; color:#374151; margin-bottom:0.5rem; }
+    .grid { display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap:1rem; }
+    .item { display:inline-flex; align-items:flex-start; gap:0.5rem; }
+    .code { font-size:0.875rem; color:#374151; font-weight:600; }
+    .desc { margin-left:0.25rem; font-size:0.75rem; color:#6b7280; }
+    input[type="checkbox"] { width:1rem; height:1rem; border:1px solid #d1d5db; border-radius:0.25rem; }
+    @media (max-width: 768px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  </style>
+  <!-- Nota: Pratonton statik ini meniru susun atur 4 kolum -->
+  </head>
+<body>
+  <div class="card">
+    <div class="card-inner">
+      <label class="label">Lesen Memandu (pilih yang berkenaan)</label>
+      <div class="grid">
+        <label class="item"><input type="checkbox"><span><span class="code">A</span><span class="desc">— Motosikal (kelas lama)</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">B</span><span class="desc">— Motosikal >250cc</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">B1</span><span class="desc">— Motosikal ≤500cc</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">B2</span><span class="desc">— Motosikal ≤250cc</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">C</span><span class="desc">— Traktor</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">D</span><span class="desc">— Kereta</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">E</span><span class="desc">— Lori/Treler</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">E1</span><span class="desc">— Treler ringan</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">E2</span><span class="desc">— Treler berat</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">F</span><span class="desc">— Jentera pertanian</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">G</span><span class="desc">— Kenderaan gandar khas</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">H</span><span class="desc">— Kren</span></span></label>
+        <label class="item"><input type="checkbox"><span><span class="code">I</span><span class="desc">— Forklift</span></span></label>
+        <label class="item"><input type="checkbox" data-code="Tiada"><span><span class="code">Tiada</span><span class="desc">— Tiada lesen</span></span></label>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:0;">
+    <div class="card-inner">
+      <p style="font-size:0.875rem; color:#374151;">Pratonton ini menunjukkan 4 kolum per baris pada skrin besar, dan 2 kolum pada skrin kecil untuk kebolehgunaan mudah alih.</p>
+    </div>
+  </div>
+  <script>
+    // Logik pratonton: jika "Tiada" dipilih, pilihan lain dimatikan; jika lain dipilih, "Tiada" dimatikan
+    (function(){
+      var items = document.querySelectorAll('.grid .item input[type="checkbox"]');
+      if (!items.length) return;
+      var noneCb = null;
+      items.forEach(function(cb){ if (cb.getAttribute('data-code') === 'Tiada') noneCb = cb; });
+
+      function setDisabledOthers(disabled) {
+        items.forEach(function(cb){
+          if (cb !== noneCb) {
+            cb.disabled = disabled;
+            var item = cb.closest('.item');
+            if (item) {
+              item.style.opacity = disabled ? 0.5 : 1;
+              item.style.pointerEvents = disabled ? 'none' : 'auto';
+            }
+          }
+        });
+      }
+
+      function update() {
+        var anyNonNoneChecked = Array.prototype.some.call(items, function(cb){ return cb !== noneCb && cb.checked; });
+        var noneChecked = noneCb && noneCb.checked;
+
+        if (noneChecked) {
+          items.forEach(function(cb){ if (cb !== noneCb) cb.checked = false; });
+          setDisabledOthers(true);
+          if (noneCb) noneCb.disabled = false;
+        } else {
+          setDisabledOthers(false);
+        }
+
+        if (anyNonNoneChecked) {
+          if (noneCb) { noneCb.checked = false; noneCb.disabled = true; }
+        } else {
+          if (noneCb) noneCb.disabled = false;
+        }
+      }
+
+      items.forEach(function(cb){ cb.addEventListener('change', update); });
+      update();
+    })();
+  </script>
+</body>
+</html>

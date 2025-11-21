@@ -1,0 +1,14 @@
+{
+  "name": "mphs/ejawatan",
+  "description": "MPHS eJawatan application dependencies",
+  "type": "project",
+  "require": {
+    "phpmailer/phpmailer": "^6.9"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

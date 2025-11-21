@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pratonton Timeout Borang</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin:0; }
+    .demo { max-width: 840px; margin: 60px auto; padding: 24px; border: 1px solid #e5e7eb; border-radius: 8px; }
+    #timeoutBar { position:fixed; top:0; left:0; width:100%; z-index:9998; background:#1f2937; color:#fff; padding:6px 12px; font-size:13px; display:flex; justify-content:center; align-items:center; gap:8px; }
+  </style>
+</head>
+<body>
+  <div class="demo">
+    <h1>Pratonton Timeout Borang</h1>
+    <p>Bar kiraan masa akan dipaparkan di bahagian atas. Apabila masa tamat, halaman akan mengalih ke laman utama (simulasi).</p>
+    <p><strong>Nota:</strong> Ini hanya pratonton statik untuk memeriksa UI bar dan tingkah laku tamat tempoh.</p>
+  </div>
+
+  <script>
+    // Simulate a 30s timeout for preview
+    const timeoutSeconds = 30;
+    const startTs = Math.floor(Date.now() / 1000);
+    const endTs = startTs + timeoutSeconds;
+
+    const bar = document.createElement('div');
+    bar.id = 'timeoutBar';
+    bar.innerHTML = '<span>Tempoh sesi borang: </span><strong id="timeoutCountdown"></strong>';
+    document.body.appendChild(bar);
+    const cd = document.getElementById('timeoutCountdown');
+
+    const tick = () => {
+      const now = Math.floor(Date.now() / 1000);
+      const remain = Math.max(0, endTs - now);
+      const mm = String(Math.floor(remain / 60)).padStart(2, '0');
+      const ss = String(remain % 60).padStart(2, '0');
+      cd.textContent = `${mm}:${ss}`;
+      if (remain <= 5) bar.style.background = '#b45309';
+      if (remain <= 0) {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;';
+        overlay.innerHTML = '<div style="background:#fff;padding:16px 20px;border-radius:8px;max-width:420px;text-align:center;color:#111827">Sesi borang telah tamat. Demo akan kembali ke halaman utama.</div>';
+        document.body.appendChild(overlay);
+        setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+        return;
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

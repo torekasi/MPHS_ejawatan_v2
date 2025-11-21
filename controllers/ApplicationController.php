@@ -1,0 +1,297 @@
+<?php
+/**
+ * @FileID: controller_application_001
+ * @Module: ApplicationController
+ * @Author: AI Assistant
+ * @LastModified: 2025-11-10T00:00:00Z
+ * @SecurityTag: validated
+ */
+declare(strict_types=1);
+
+// Prevent direct access
+if (basename(__FILE__) === basename($_SERVER['SCRIPT_FILENAME'] ?? '')) { http_response_code(403); exit; }
+
+require_once __DIR__ . '/../includes/LogManager.php';
+
+class ApplicationController
+{
+    /**
+     * Handle full job application saving.
+     * Performs basic CSRF validation and delegates to existing processor for now.
+     * Returns: void (handles redirects internally)
+     */
+    public static function handleSaveFull(): void
+    {
+        // Security headers
+        header('X-Frame-Options: SAMEORIGIN');
+        header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; connect-src 'self';");
+        header('X-Content-Type-Options: nosniff');
+        header('Referrer-Policy: no-referrer');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: index.php');
+            exit();
+        }
+
+        // Session for CSRF
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        // CSRF validation
+        $csrfToken = $_POST['csrf_token'] ?? '';
+        if (empty($_SESSION['csrf_token']) || !hash_equals((string)$_SESSION['csrf_token'], (string)$csrfToken)) {
+            http_response_code(400);
+            echo 'CSRF validation failed.';
+            exit();
+        }
+
+        $cfgResult = require __DIR__ . '/../config.php';
+        $cfg = $cfgResult['config'] ?? $cfgResult;
+        $recaptchaToken = $_POST['recaptcha_token'] ?? '';
+        $recaptchaAction = $cfg['recaptcha_v3_action'] ?? 'job_application';
+        $recaptchaSecret = $cfg['recaptcha_v3_secret_key'] ?? (getenv('RECAPTCHA_V3_SECRET_KEY') ?: '');
+        if (!empty($recaptchaSecret)) {
+            $ok = self::verifyRecaptchaV3($recaptchaToken, $recaptchaSecret, $recaptchaAction, 0.5);
+            if (!$ok) {
+                $_SESSION['application_errors'] = ['Pengesahan keselamatan gagal. Sila cuba lagi.'];
+                $_SESSION['application_data'] = $_POST;
+                $redirect_url = '../job-application-full.php?job_id=' . ($_POST['job_id'] ?? '');
+                if (!empty($_POST['application_id'])) { $redirect_url .= '&app_id=' . $_POST['application_id']; }
+                if (!empty($_POST['application_reference'])) { $redirect_url .= '&ref=' . urlencode($_POST['application_reference']); }
+                if (!empty($_POST['edit'])) { $redirect_url .= '&edit=1'; }
+                header('Location: ' . $redirect_url);
+                exit();
+            }
+        } else {
+            if (($cfg['app_env'] ?? 'development') === 'production') {
+                $_SESSION['application_errors'] = ['Sistem keselamatan tidak dikonfigurasi.'];
+                $_SESSION['application_data'] = $_POST;
+                $redirect_url = '../job-application-full.php?job_id=' . ($_POST['job_id'] ?? '');
+                if (!empty($_POST['application_id'])) { $redirect_url .= '&app_id=' . $_POST['application_id']; }
+                if (!empty($_POST['application_reference'])) { $redirect_url .= '&ref=' . urlencode($_POST['application_reference']); }
+                if (!empty($_POST['edit'])) { $redirect_url .= '&edit=1'; }
+                header('Location: ' . $redirect_url);
+                exit();
+            }
+        }
+
+        // Server-side timeout enforcement
+        $startTs = isset($_SESSION['form_start_time']) ? (int)$_SESSION['form_start_time'] : time();
+        $timeoutSeconds = isset($_SESSION['form_timeout_seconds']) ? (int)$_SESSION['form_timeout_seconds'] : 1800; // default 30m
+        if ((time() - $startTs) > $timeoutSeconds) {
+            $_SESSION['error'] = 'Sesi borang telah tamat. Sila mulakan semula dari halaman utama.';
+            header('Location: index.php');
+            exit();
+        }
+
+        // Edit verification enforcement (if edit mode)
+        $isEdit = isset($_POST['edit']) && (string)$_POST['edit'] === '1';
+        if ($isEdit) {
+            $applicationId = isset($_POST['application_id']) ? (int)$_POST['application_id'] : 0;
+            $applicationRef = isset($_POST['application_reference']) ? (string)$_POST['application_reference'] : '';
+            $verified = false;
+            if (isset($_SESSION['verified_application_id'], $_SESSION['verified_application_ref'])) {
+                if (($applicationId && (int)$_SESSION['verified_application_id'] === $applicationId) ||
+                    ($applicationRef && (string)$_SESSION['verified_application_ref'] === $applicationRef)) {
+                    $verified = true;
+                }
+            }
+            if (isset($_SESSION['edit_application_verified']) && $_SESSION['edit_application_verified'] === true) {
+                $verified = true;
+            }
+            if (!$verified) {
+                $_SESSION['error'] = 'Akses edit memerlukan pengesahan. Sila sahkan identiti melalui halaman Semak Status.';
+                header('Location: semak-status.php');
+                exit();
+            }
+        }
+
+        // Sanitize a few critical inputs defensively
+        $_POST['job_id'] = isset($_POST['job_id']) ? (int)$_POST['job_id'] : 0;
+        $_POST['nama_penuh'] = isset($_POST['nama_penuh']) ? trim($_POST['nama_penuh']) : '';
+        $_POST['email'] = isset($_POST['email']) ? trim($_POST['email']) : '';
+
+        // Use new ApplicationSaveController for proper table structure
+        try {
+            require_once __DIR__ . '/ApplicationSaveController.php';
+            
+            // Get database connection
+            $result = require __DIR__ . '/../config.php';
+            $config = $result['config'] ?? $result;
+            
+            $pdo = new PDO(
+                "mysql:host={$config['db_host']};dbname={$config['db_name']};charset=utf8mb4",
+                $config['db_user'],
+                $config['db_pass'],
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                ]
+            );
+            
+            // Ensure all tables exist
+            require_once __DIR__ . '/../includes/schema.php';
+            require_once __DIR__ . '/../modules/FileUploaderImplementation.php';
+            create_tables($pdo);
+            
+            $saveController = new ApplicationSaveController($pdo, $config);
+            $result = $saveController->saveApplication($_POST, $_FILES);
+            
+            if ($result['success']) {
+                // Log successful save
+                error_log('Application saved successfully: ID=' . $result['application_id'] . ', Ref=' . $result['application_reference']);
+                
+                // Clear any error session data
+                unset($_SESSION['application_errors'], $_SESSION['application_data']);
+                
+                // Redirect to preview or thank you page
+                if (!empty($_POST['redirect_to_preview'])) {
+                    header('Location: ../preview-application.php?ref=' . urlencode($result['application_reference']));
+                } else {
+                    header('Location: ../application-thank-you.php?ref=' . urlencode($result['application_reference']));
+                }
+                exit();
+            } else {
+                throw new Exception('Failed to save application');
+            }
+            
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $errorTrace = $e->getTraceAsString();
+            $errorFile = $e->getFile();
+            $errorLine = $e->getLine();
+
+            $logDetails = [
+                'error_message' => $errorMessage,
+                'error_file' => $errorFile,
+                'error_line' => $errorLine,
+                'post_keys' => array_keys($_POST),
+                'files_keys' => array_keys($_FILES),
+                'job_id' => $_POST['job_id'] ?? null,
+                'application_id' => $_POST['application_id'] ?? null,
+                'application_reference' => $_POST['application_reference'] ?? null,
+                'edit_mode' => isset($_POST['edit']) ? 'true' : 'false',
+                'trace' => $errorTrace
+            ];
+
+            log_frontend_error('Application save failed', $logDetails);
+
+            $_SESSION['application_errors'] = ['Permohonan tidak dapat diproses buat masa ini. Sila cuba lagi.'];
+            $_SESSION['application_data'] = $_POST; // Preserve form data
+            unset($_SESSION['debug_info'], $_SESSION['error_trace']);
+
+            // Redirect back to form with error
+            $redirect_url = '../job-application-full.php?job_id=' . ($_POST['job_id'] ?? '');
+            if (!empty($_POST['application_id'])) {
+                $redirect_url .= '&app_id=' . $_POST['application_id'];
+            }
+            if (!empty($_POST['application_reference'])) {
+                $redirect_url .= '&ref=' . urlencode($_POST['application_reference']);
+            }
+            if (!empty($_POST['edit'])) {
+                $redirect_url .= '&edit=1';
+            }
+            
+            header('Location: ' . $redirect_url);
+            exit();
+        }
+    }
+
+    private static function verifyRecaptchaV3(string $token, string $secret, string $expectedAction, float $minScore = 0.5): bool
+    {
+        if ($token === '' || $secret === '') { return false; }
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = [
+            'secret' => $secret,
+            'response' => $token,
+            'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''
+        ];
+        $opts = [
+            'http' => [
+                'method' => 'POST',
+                'header' => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => http_build_query($data),
+                'timeout' => 5
+            ]
+        ];
+        $resp = @file_get_contents($url, false, stream_context_create($opts));
+        if ($resp === false) { return false; }
+        $json = json_decode($resp, true);
+        if (!is_array($json)) { return false; }
+        if (empty($json['success'])) { return false; }
+        if (isset($json['action']) && $json['action'] !== $expectedAction) { return false; }
+        if (isset($json['score']) && (float)$json['score'] < $minScore) { return false; }
+        return true;
+    }
+
+    public static function checkNricDuplicate(): void
+    {
+        header('Content-Type: application/json');
+        header('X-Frame-Options: SAMEORIGIN');
+        header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; connect-src 'self';");
+        header('X-Content-Type-Options: nosniff');
+        header('Referrer-Policy: no-referrer');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['error' => 'METHOD_NOT_ALLOWED']);
+            exit();
+        }
+
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        $csrfToken = $_POST['csrf_token'] ?? '';
+        if (empty($_SESSION['csrf_token']) || !hash_equals((string)$_SESSION['csrf_token'], (string)$csrfToken)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'CSRF_FAILED']);
+            exit();
+        }
+
+        $jobId = isset($_POST['job_id']) ? (int)$_POST['job_id'] : 0;
+        $nric = isset($_POST['nombor_ic']) ? trim((string)$_POST['nombor_ic']) : '';
+        $excludeId = isset($_POST['application_id']) ? (int)$_POST['application_id'] : 0;
+
+        try {
+            require_once __DIR__ . '/../.config.php';
+            $dsn = "mysql:host={$config['db_host']};dbname={$config['db_name']};charset=utf8mb4";
+            $pdo = new PDO($dsn, $config['db_user'], $config['db_pass'], [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+            ]);
+
+            // Check in application_application_main table first
+            if ($excludeId > 0) {
+                $stmt = $pdo->prepare('SELECT id FROM application_application_main WHERE job_id = ? AND nombor_ic = ? AND id <> ? LIMIT 1');
+                $stmt->execute([$jobId, $nric, $excludeId]);
+            } else {
+                $stmt = $pdo->prepare('SELECT id FROM application_application_main WHERE job_id = ? AND nombor_ic = ? LIMIT 1');
+                $stmt->execute([$jobId, $nric]);
+            }
+            $exists = (bool)$stmt->fetch();
+            
+            // Also check legacy job_applications table if not found in main table
+            if (!$exists) {
+                if ($excludeId > 0) {
+                    $stmt = $pdo->prepare('SELECT id FROM job_applications WHERE job_id = ? AND nombor_ic = ? AND id <> ? LIMIT 1');
+                    $stmt->execute([$jobId, $nric, $excludeId]);
+                } else {
+                    $stmt = $pdo->prepare('SELECT id FROM job_applications WHERE job_id = ? AND nombor_ic = ? LIMIT 1');
+                    $stmt->execute([$jobId, $nric]);
+                }
+                $exists = (bool)$stmt->fetch();
+            }
+            echo json_encode(['exists' => $exists]);
+        } catch (Throwable $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'SERVER_ERROR']);
+        }
+        exit();
+    }
+}
+
+?>

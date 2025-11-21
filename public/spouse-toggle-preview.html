@@ -1,0 +1,131 @@
+<!--
+@FileID: tools-preview-spouse-1109
+@Module: preview
+@Author: AI Assistant
+@LastModified: 2025-11-09
+@SecurityTag: validated
+-->
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pratonton Toggle Maklumat Pasangan</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
+    .container { border: 1px solid #ddd; border-radius: 8px; padding: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
+    .hidden { display: none; }
+    h2 { margin-top: 0; }
+  </style>
+</head>
+<body>
+  <h1>Pratonton: Toggle Maklumat Pasangan</h1>
+  <div class="container">
+    <div class="grid-3">
+      <div>
+        <label for="taraf_perkahwinan">Taraf Perkahwinan</label>
+        <select id="taraf_perkahwinan">
+          <option value="Bujang">Bujang</option>
+          <option value="Berkahwin">Berkahwin</option>
+          <option value="Duda">Duda</option>
+          <option value="Janda">Janda</option>
+        </select>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="nama@contoh.com" />
+      </div>
+      <div>
+        <label for="nombor_telefon">Nombor Telefon</label>
+        <input id="nombor_telefon" type="tel" placeholder="012-3456789" />
+      </div>
+    </div>
+  </div>
+
+  <div id="spouse_info_section" class="container hidden" aria-hidden="true">
+    <h2>Maklumat Pasangan</h2>
+    <div class="grid-2">
+      <div>
+        <label for="nama_pasangan">Nama Pasangan</label>
+        <input id="nama_pasangan" type="text" />
+      </div>
+      <div>
+        <label for="telefon_pasangan">Nombor Telefon Pasangan</label>
+        <input id="telefon_pasangan" type="tel" />
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:12px;">
+      <div>
+        <label for="status_pasangan">Status Pekerjaan Pasangan</label>
+        <select id="status_pasangan">
+          <option value="">Sila Pilih</option>
+          <option value="MPHS">MPHS</option>
+          <option value="Kerajaan">Kerajaan</option>
+          <option value="Berkanun">Berkanun</option>
+          <option value="Swasta">Swasta</option>
+          <option value="Bekerja sendiri">Bekerja sendiri</option>
+          <option value="Tidak Bekerja">Tidak Bekerja</option>
+        </select>
+      </div>
+      <div>
+        <label for="pekerjaan_pasangan">Pekerjaan Pasangan</label>
+        <input id="pekerjaan_pasangan" type="text" />
+      </div>
+      <div>
+        <label for="nama_majikan_pasangan">Nama Majikan Pasangan</label>
+        <input id="nama_majikan_pasangan" type="text" />
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:12px;">
+      <div>
+        <label for="telefon_pejabat_pasangan">Telefon Pejabat Pasangan</label>
+        <input id="telefon_pejabat_pasangan" type="tel" />
+      </div>
+      <div>
+        <label for="alamat_majikan_pasangan">Alamat Majikan Pasangan</label>
+        <input id="alamat_majikan_pasangan" type="text" />
+      </div>
+      <div>
+        <label for="bandar_majikan_pasangan">Bandar Majikan</label>
+        <input id="bandar_majikan_pasangan" type="text" />
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:12px;">
+      <div>
+        <label for="negeri_majikan_pasangan">Negeri Majikan</label>
+        <input id="negeri_majikan_pasangan" type="text" />
+      </div>
+      <div>
+        <label for="poskod_majikan_pasangan">Poskod Majikan</label>
+        <input id="poskod_majikan_pasangan" type="text" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    const maritalSelect = document.getElementById('taraf_perkahwinan');
+    const spouseSection = document.getElementById('spouse_info_section');
+    const namaPasangan = document.getElementById('nama_pasangan');
+    const telefonPasangan = document.getElementById('telefon_pasangan');
+
+    function toggleSpouseSection(){
+      const isMarried = maritalSelect && maritalSelect.value === 'Berkahwin';
+      spouseSection.classList.toggle('hidden', !isMarried);
+      spouseSection.setAttribute('aria-hidden', (!isMarried).toString());
+      if (namaPasangan) namaPasangan.required = !!isMarried;
+      if (telefonPasangan) telefonPasangan.required = !!isMarried;
+    }
+
+    maritalSelect.addEventListener('change', toggleSpouseSection);
+    // Init on load
+    toggleSpouseSection();
+  })();
+  </script>
+</body>
+</html>

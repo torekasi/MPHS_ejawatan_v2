@@ -1,0 +1,185 @@
+/**
+ * Duplicate Validator Styles
+ * 
+ * CSS for duplicate checking UI elements
+ * Used with DuplicateValidator.js
+ * 
+ * @version 1.0
+ * @date 2025-10-28
+ */
+
+/* Checking indicator */
+.duplicate-checking-message {
+    display: none;
+    padding: 8px 12px;
+    margin-top: 5px;
+    background-color: #e3f2fd;
+    border-left: 3px solid #2196F3;
+    color: #1976D2;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.duplicate-checking-message i {
+    margin-right: 5px;
+}
+
+/* Field states */
+input.checking-duplicate {
+    border-color: #2196F3 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232196F3' viewBox='0 0 16 16'%3E%3Cpath d='M8 16a7.928 7.928 0 0 1-3.428-.77l.857-1.807A6.006 6.006 0 0 0 14 8c0-3.309-2.691-6-6-6a6.006 6.006 0 0 0-5.422 8.572l-1.806.859A7.928 7.928 0 0 1 0 8c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 8 8' to='360 8 8' dur='1s' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px 18px;
+    padding-right: 40px;
+}
+
+/* Error message box */
+.duplicate-error {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.duplicate-error strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.duplicate-error i {
+    margin-right: 5px;
+}
+
+.duplicate-error .btn {
+    margin-top: 10px;
+}
+
+/* Success state */
+input.is-valid,
+input.border-success {
+    border-color: #28a745 !important;
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px 18px;
+}
+
+/* Error state */
+input.is-invalid,
+input.border-danger {
+    border-color: #dc3545 !important;
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px 18px;
+}
+
+/* Disabled button styles */
+button.disabled[data-disabled-by-validator="true"],
+input.disabled[data-disabled-by-validator="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    position: relative;
+}
+
+button.disabled[data-disabled-by-validator="true"]::after,
+input.disabled[data-disabled-by-validator="true"]::after {
+    content: " (Permohonan pendua dijumpai)";
+    font-size: 12px;
+    font-weight: normal;
+    color: #dc3545;
+}
+
+/* Alert styles (if not using Bootstrap) */
+.alert {
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.alert-info {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .duplicate-error {
+        font-size: 14px;
+    }
+    
+    .duplicate-error strong {
+        font-size: 15px;
+    }
+    
+    .duplicate-checking-message {
+        font-size: 13px;
+    }
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fa-spinner.fa-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Focus states */
+input.checking-duplicate:focus,
+input.is-valid:focus,
+input.is-invalid:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+}
+
+/* Smooth transitions */
+input {
+    transition: border-color 0.3s ease, background-image 0.3s ease;
+}
+
+.alert {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Print styles */
+@media print {
+    .duplicate-error,
+    .duplicate-checking-message {
+        display: none !important;
+    }
+}
+
+

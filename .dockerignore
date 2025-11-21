@@ -1,0 +1,41 @@
+# Ignore Git files
+.git
+.gitignore
+
+# Ignore documentation
+README.md
+readme.md
+*.md
+DOC/
+
+# Ignore development files
+.env.example
+.vscode/
+.idea/
+
+# Ignore temporary files
+*.tmp
+*.log
+logs/
+admin/logs/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore backup files
+*.bak
+*.backup
+
+# Ignore node modules if any
+node_modules/
+
+# Ignore composer vendor if using Composer
+vendor/
+
+# Ignore uploaded files during build (they should be volumes)
+uploads/
+
+# Ignore database files (handled by Docker volume)
+*.sql.backup
+*.db

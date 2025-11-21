@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview – Kemahiran (Single Container)</title>
+  <style>
+    body { background:#f3f4f6; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin:0; padding:24px; }
+    .heading-title { background:#16a34a; color:#fff; padding:10px 16px; font-weight:600; }
+    .p-6 { padding:16px; }
+    .bg-white { background:#fff; }
+    .rounded-lg { border-radius:10px; }
+    .shadow-md { box-shadow:0 4px 10px rgba(0,0,0,0.08); }
+    .overflow-hidden { overflow:hidden; }
+    .entry { background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:12px; margin-bottom:12px; }
+    .grid { display:grid; gap:12px; }
+    .grid-2 { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .grid-3 { grid-template-columns:repeat(3, minmax(0,1fr)); }
+    .row-end { display:flex; justify-content:flex-end; }
+    .btn { background:#2563eb; color:#fff; border:none; border-radius:6px; padding:8px 12px; cursor:pointer; }
+    .wrap { max-width:1060px; margin:0 auto; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="heading-title">Kemahiran Bahasa</div>
+      <div class="p-6">
+        <div class="entry">
+          <div class="grid grid-3">
+            <input placeholder="Bahasa" />
+            <input placeholder="Pertuturan" />
+            <input placeholder="Penulisan" />
+          </div>
+          <div class="row-end"><button class="btn">Tambah Bahasa</button></div>
+        </div>
+      </div>
+
+      <div class="heading-title">Kelulusan SPM/SPV</div>
+      <div class="p-6">
+        <div class="entry grid grid-3">
+          <input placeholder="Tahun" />
+          <input placeholder="Gred Keseluruhan" />
+          <input placeholder="Angka Giliran" />
+        </div>
+      </div>
+
+      <div class="heading-title">Maklumat Persekolahan & IPT</div>
+      <div class="p-6">
+        <div class="entry grid grid-2">
+          <input placeholder="Nama Institusi" />
+          <input placeholder="Kelayakan" />
+        </div>
+      </div>
+
+      <div class="heading-title">Badan Profesional</div>
+      <div class="p-6">
+        <div class="entry grid grid-2">
+          <input placeholder="Nama Lembaga" />
+          <input placeholder="No. Ahli" />
+        </div>
+      </div>
+
+      <div class="heading-title">Kegiatan Luar</div>
+      <div class="p-6">
+        <div class="entry grid grid-2">
+          <input placeholder="Sukan/Persatuan/Kelab" />
+          <input placeholder="Jawatan" />
+        </div>
+      </div>
+
+      <div class="heading-title">Kemahiran Komputer</div>
+      <div class="p-6">
+        <div class="entry grid grid-2">
+          <input placeholder="Nama Perisian" />
+          <input placeholder="Tahap Kemahiran" />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
