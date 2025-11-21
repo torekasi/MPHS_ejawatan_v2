@@ -437,11 +437,11 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
             if (!empty($prefill_education)):
                 foreach ($prefill_education as $edu): ?>
             <div class="education-entry bg-gray-50 p-4 rounded-lg mb-4">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Institusi</label>
+                    <input type="text" name="persekolahan[<?php echo $edu_idx; ?>][institusi]" class="w-full px-3 py-2 border border-gray-300 rounded-md uppercase-input" value="<?php echo htmlspecialchars($edu['institusi']); ?>">
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Institusi</label>
-                        <input type="text" name="persekolahan[<?php echo $edu_idx; ?>][institusi]" class="w-full px-3 py-2 border border-gray-300 rounded-md uppercase-input" value="<?php echo htmlspecialchars($edu['institusi']); ?>">
-                    </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Kelayakan</label>
                         <select name="persekolahan[<?php echo $edu_idx; ?>][kelayakan]" class="w-full px-3 py-2 border border-gray-300 rounded-md">
@@ -476,18 +476,27 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
                             <input type="hidden" name="persekolahan[<?php echo $edu_idx; ?>][sijil_path]" value="<?php echo htmlspecialchars($eduExistingCert); ?>">
                         <?php endif; ?>
                         <div id="persekolahan_<?php echo $edu_idx; ?>_sijil_status" class="file-status text-xs text-gray-600 mt-1"></div>
-                        
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Sijil Tambahan (PDF/Gambar)</label>
+                        <?php $eduExistingCertTambahan = $edu['sijil_tambahan'] ?? ''; ?>
+                        <input type="file" id="persekolahan_<?php echo $edu_idx; ?>_sijil_tambahan" name="persekolahan[<?php echo $edu_idx; ?>][sijil_tambahan]" class="w-full px-3 py-2 border border-gray-300 rounded-md" accept=".jpg,.jpeg,.png,.gif,.pdf" data-max-size="5" data-allowed-types="image/jpeg,image/jpg,image/png,image/gif,application/pdf" data-field-label="Sijil Tambahan">
+                        <?php if (!empty($eduExistingCertTambahan)): ?>
+                            <p class="text-xs text-green-700 mt-1">Fail dimuat naik: <?php echo htmlspecialchars(basename($eduExistingCertTambahan)); ?></p>
+                            <input type="hidden" name="persekolahan[<?php echo $edu_idx; ?>][sijil_tambahan_path]" value="<?php echo htmlspecialchars($eduExistingCertTambahan); ?>">
+                        <?php endif; ?>
+                        <div id="persekolahan_<?php echo $edu_idx; ?>_sijil_tambahan_status" class="file-status text-xs text-gray-600 mt-1"></div>
                     </div>
                 </div>
                 <div class="flex justify-end"><button type="button" class="remove-education-btn text-red-500 text-sm" style="<?php echo $edu_idx > 0 ? '' : 'display: none;'; ?>">Buang</button></div>
             </div>
             <?php $edu_idx++; endforeach; else: ?>
             <div class="education-entry bg-gray-50 p-4 rounded-lg mb-4">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Institusi</label>
+                    <input type="text" name="persekolahan[0][institusi]" class="w-full px-3 py-2 border border-gray-300 rounded-md uppercase-input">
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Institusi</label>
-                        <input type="text" name="persekolahan[0][institusi]" class="w-full px-3 py-2 border border-gray-300 rounded-md uppercase-input">
-                    </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Kelayakan</label>
                         <select name="persekolahan[0][kelayakan]" class="w-full px-3 py-2 border border-gray-300 rounded-md">
@@ -507,7 +516,7 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
                         <input type="text" name="persekolahan[0][dari_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="YYYY" pattern="^[0-9]{4}$" minlength="4" maxlength="4" inputmode="numeric">
                     </div>
                     <div>
-                        <label class="block text sm font-medium text-gray-700 mb-2">Hingga Tahun</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Hingga Tahun</label>
                         <input type="text" name="persekolahan[0][hingga_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="YYYY" pattern="^[0-9]{4}$" minlength="4" maxlength="4" inputmode="numeric">
                     </div>
                     <div>
@@ -518,6 +527,11 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
                         <label class="block text-sm font-medium text-gray-700 mb-2">Salinan Sijil (PDF/Gambar)</label>
                         <input type="file" id="persekolahan_0_sijil" name="persekolahan[0][sijil]" class="w-full px-3 py-2 border border-gray-300 rounded-md" accept=".jpg,.jpeg,.png,.gif,.pdf" data-max-size="5" data-allowed-types="image/jpeg,image/jpg,image/png,image/gif,application/pdf" data-field-label="Sijil Pendidikan">
                         <div id="persekolahan_0_sijil_status" class="file-status text-xs text-gray-600 mt-1"></div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Sijil Tambahan (PDF/Gambar)</label>
+                        <input type="file" id="persekolahan_0_sijil_tambahan" name="persekolahan[0][sijil_tambahan]" class="w-full px-3 py-2 border border-gray-300 rounded-md" accept=".jpg,.jpeg,.png,.gif,.pdf" data-max-size="5" data-allowed-types="image/jpeg,image/jpg,image/png,image/gif,application/pdf" data-field-label="Sijil Tambahan">
+                        <div id="persekolahan_0_sijil_tambahan_status" class="file-status text-xs text-gray-600 mt-1"></div>
                     </div>
                 </div>
                 <div class="flex justify-end"><button type="button" class="remove-education-btn text-red-500 text-sm" style="display: none;">Buang</button></div>
