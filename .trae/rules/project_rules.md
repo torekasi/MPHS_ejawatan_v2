@@ -1,3 +1,4 @@
+
 Follow this structure, standard, and rule set for all backend development.  
 Apply these rules for every file, function, or module you create or modify.  
 All code must comply with pentest and security guidelines.
@@ -94,7 +95,7 @@ Root/
      /**
       * @FileID: <unique_identifier>
       * @Module: <module_name>
-      * @Author: <developer_or_ai>
+      * @Author: Nefi
       * @LastModified: <timestamp>
       * @SecurityTag: validated
       */
