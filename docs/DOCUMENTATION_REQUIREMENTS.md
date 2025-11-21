@@ -139,6 +139,85 @@ Every time code is updated, modified, or new features are added, the following d
 
 ---
 
+## Testing and File Naming Conventions
+
+### Testing Files Naming Standard
+
+**MANDATORY:** All testing, verification, and debugging files MUST use the `test_` prefix.
+
+**Naming Format:**
+```
+test_<filename>.<extension>
+```
+
+**Examples:**
+- `test_database_connection.php` - Database connection testing
+- `test_email_service.php` - Email service verification
+- `test_payment_gateway.php` - Payment gateway testing
+- `test_file_upload.php` - File upload functionality testing
+- `test_recaptcha.php` - reCAPTCHA verification testing
+- `test_api_endpoint.php` - API endpoint testing
+
+**Rules:**
+1. ✅ **DO** use `test_` prefix for all testing files
+2. ✅ **DO** place test files in appropriate directories:
+   - `/tests/` - Unit and integration tests
+   - `/tools/` - Utility and verification scripts
+   - Root directory - Quick debugging scripts (temporary)
+3. ✅ **DO** add test files to `.gitignore` if they contain sensitive data
+4. ❌ **DON'T** commit test files to production branches without review
+5. ❌ **DON'T** leave test files in production deployments
+
+**Test File Structure:**
+```php
+<?php
+/**
+ * @FileID: test_<identifier>
+ * @Module: Testing
+ * @Author: [Your Name]
+ * @Purpose: [What this test verifies]
+ * @LastModified: YYYY-MM-DD
+ * @SecurityTag: testing
+ */
+
+// Test configuration
+define('TEST_MODE', true);
+
+// Your test code here
+```
+
+**Cleanup:**
+- Remove temporary test files before committing
+- Document permanent test files in `/docs/testing.md`
+- Archive old test files in `/tests/archive/`
+
+---
+
+## Code Organization Rules
+
+### File Naming Conventions
+
+**Production Files:**
+- Use descriptive, lowercase names with hyphens: `application-status.php`
+- Controllers: `<Name>Controller.php` (PascalCase)
+- Models: `<Name>Model.php` (PascalCase)
+- Views: `<name>-view.php` (lowercase with hyphens)
+
+**Testing Files:**
+- Always prefix with `test_`: `test_feature_name.php`
+
+**Utility Scripts:**
+- Place in `/tools/` directory
+- Use descriptive names: `update-schema.php`, `fix-database.php`
+
+**Migration Scripts:**
+- Place in `/tools/` or `/migrations/`
+- Use date prefix: `2025-11-22_add_sijil_tambahan.sql`
+- Or descriptive names: `add-sijil-tambahan-column.sql`
+
+---
+
+
 ## Documentation Standards
 
 ### General Rules:

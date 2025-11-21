@@ -31,3 +31,11 @@ ehthumbs.db
 Thumbs.db
 .cursor
 .trae
+
+# Testing and debugging files
+test_*.php
+test_*.js
+test_*.html
+test_*.sql
+debug_*.php
+debug_*.log

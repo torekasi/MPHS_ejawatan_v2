@@ -24,6 +24,8 @@
 - Created education section enhancement summary (`docs/education-section-enhancement.md`)
 - Established mandatory documentation update workflow for all code changes
 - Defined standards for function documentation, changelog, and technical documentation
+- **Added testing file naming convention:** All test files must use `test_` prefix
+- Updated `.gitignore` to automatically exclude test files from commits
 
 
 ## 2025-11-10 – Session Timeout & Edit Verification
