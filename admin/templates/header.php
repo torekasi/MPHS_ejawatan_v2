@@ -110,9 +110,9 @@
                         <!-- Halaman Section -->
                         <button type="button" class="w-full px-3 py-2 bg-gray-50 border-b border-gray-100 flex items-center justify-between group submenu-toggle hover:bg-gray-100 transition-colors" data-target="submenu-halaman">
                             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Halaman</span>
-                            <svg class="w-3 h-3 text-gray-400 transform transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            <svg class="w-3 h-3 text-gray-400 transform transition-transform duration-200 submenu-arrow rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </button>
-                        <div id="submenu-halaman" class="submenu-content hidden bg-white">
+                        <div id="submenu-halaman" class="submenu-content bg-white">
                             <a href="page-content.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='page-content.php' && !isset($_GET['id'])) echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -198,23 +198,37 @@
             });
         });
         
-        // Handle submenu toggles
+        // Handle submenu toggles (Accordion Style)
         const submenuToggles = document.querySelectorAll('.submenu-toggle');
         submenuToggles.forEach(toggle => {
             toggle.addEventListener('click', function(e) {
                 e.stopPropagation(); // Prevent closing the main dropdown
                 const targetId = this.getAttribute('data-target');
                 const targetContent = document.getElementById(targetId);
-                const arrow = this.querySelector('.submenu-arrow');
+                const thisArrow = this.querySelector('.submenu-arrow');
                 
-                // Toggle visibility
+                // Close other submenus
+                submenuToggles.forEach(otherToggle => {
+                    if (otherToggle !== toggle) {
+                        const otherTargetId = otherToggle.getAttribute('data-target');
+                        const otherContent = document.getElementById(otherTargetId);
+                        const otherArrow = otherToggle.querySelector('.submenu-arrow');
+                        
+                        if (otherContent) {
+                            otherContent.classList.add('hidden');
+                            otherArrow.classList.remove('rotate-180');
+                        }
+                    }
+                });
+                
+                // Toggle current submenu
                 targetContent.classList.toggle('hidden');
                 
                 // Rotate arrow
                 if (!targetContent.classList.contains('hidden')) {
-                    arrow.classList.add('rotate-180');
+                    thisArrow.classList.add('rotate-180');
                 } else {
-                    arrow.classList.remove('rotate-180');
+                    thisArrow.classList.remove('rotate-180');
                 }
             });
         });
