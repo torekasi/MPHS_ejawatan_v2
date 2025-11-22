@@ -108,50 +108,56 @@
                     </button>
                     <div class="absolute left-0 mt-1 w-64 bg-white rounded-lg shadow-xl border border-gray-100 z-20 dropdown-menu overflow-hidden" aria-labelledby="systemDropdown">
                         <!-- Halaman Section -->
-                        <div class="px-3 py-2 bg-gray-50 border-b border-gray-100">
+                        <button type="button" class="w-full px-3 py-2 bg-gray-50 border-b border-gray-100 flex items-center justify-between group submenu-toggle hover:bg-gray-100 transition-colors" data-target="submenu-halaman">
                             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Halaman</span>
+                            <svg class="w-3 h-3 text-gray-400 transform transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="submenu-halaman" class="submenu-content hidden bg-white">
+                            <a href="page-content.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='page-content.php' && !isset($_GET['id'])) echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                <span>Cara Memohon</span>
+                            </a>
+                            <a href="page-content.php?id=1" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='page-content.php' && isset($_GET['id']) && $_GET['id']=='1') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                <span>Pengishtiharan</span>
+                            </a>
                         </div>
-                        <a href="page-content.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='page-content.php' && !isset($_GET['id'])) echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            <span>Cara Memohon</span>
-                        </a>
-                        <a href="page-content.php?id=1" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='page-content.php' && isset($_GET['id']) && $_GET['id']=='1') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            <span>Pengishtiharan</span>
-                        </a>
                         
                         <!-- System Tools Section -->
-                        <div class="px-3 py-2 bg-gray-50 border-b border-t border-gray-100 mt-1">
+                        <button type="button" class="w-full px-3 py-2 bg-gray-50 border-b border-t border-gray-100 flex items-center justify-between group submenu-toggle hover:bg-gray-100 transition-colors" data-target="submenu-system">
                             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">System Tools</span>
+                            <svg class="w-3 h-3 text-gray-400 transform transition-transform duration-200 submenu-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="submenu-system" class="submenu-content hidden bg-white">
+                            <a href="db-backup.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='db-backup.php') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                                </svg>
+                                <span>Database Backup</span>
+                            </a>
+                            <a href="activity-logs.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='activity-logs.php') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                <span>Activity Logs</span>
+                            </a>
+                            <a href="email-blast.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='email-blast.php') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                <span>Email Blast</span>
+                            </a>
+                            <a href="status-templates.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='status-templates.php') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                                </svg>
+                                <span>Status Email Templates</span>
+                            </a>
                         </div>
-                        <a href="db-backup.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='db-backup.php') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
-                            </svg>
-                            <span>Database Backup</span>
-                        </a>
-                        <a href="activity-logs.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='activity-logs.php') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            <span>Activity Logs</span>
-                        </a>
-                        <a href="email-blast.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='email-blast.php') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                            </svg>
-                            <span>Email Blast</span>
-                        </a>
-                        <a href="status-templates.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors duration-150 <?php if(basename($_SERVER['PHP_SELF'])=='status-templates.php') echo 'text-blue-700 bg-blue-50 font-medium'; ?>">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
-                            </svg>
-                            <span>Status Email Templates</span>
-                        </a>
                     </div>
                 </div>
             </nav>
@@ -185,6 +191,27 @@
                 // Rotate arrow when dropdown is open
                 const arrow = this.querySelector('.dropdown-arrow');
                 if (dropdown.classList.contains('show')) {
+                    arrow.classList.add('rotate-180');
+                } else {
+                    arrow.classList.remove('rotate-180');
+                }
+            });
+        });
+        
+        // Handle submenu toggles
+        const submenuToggles = document.querySelectorAll('.submenu-toggle');
+        submenuToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent closing the main dropdown
+                const targetId = this.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+                const arrow = this.querySelector('.submenu-arrow');
+                
+                // Toggle visibility
+                targetContent.classList.toggle('hidden');
+                
+                // Rotate arrow
+                if (!targetContent.classList.contains('hidden')) {
                     arrow.classList.add('rotate-180');
                 } else {
                     arrow.classList.remove('rotate-180');
