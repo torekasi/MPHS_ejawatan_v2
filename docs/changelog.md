@@ -1,5 +1,346 @@
 # Changelog
 
+## 2025-11-23 – Fix Duplicate Form Sections
+- **Fixed:** Removed duplicate hidden sections for "Badan Profesional" and "Kegiatan Luar" in `pendidikan.php` that were causing empty data submission and preventing save.
+
+## 2025-11-23 – OKU Fields Client-Side Validation
+
+### Added
+- **Mandatory Validation for OKU Fields:**
+  - When "Adakah anda pemegang kad OKU?" is "Ya":
+    - **Jenis OKU**: At least one checkbox must be selected.
+    - **Salinan Kad OKU**: File upload is mandatory (unless an existing file is already uploaded).
+  - Added error message "Sila muat naik Salinan Kad OKU" for missing file.
+  - Validation runs on form submission.
+  - Error messages are automatically hidden when user corrects the input.
+  - Validation respects existing files in edit mode (doesn't force re-upload).
+
+### Changed
+- **OKU Section Layout:**
+  - Restructured layout to place "Salinan Kad OKU" next to the "Adakah anda pemegang kad OKU?" question.
+  - Moved "Jenis OKU" checkboxes to a dedicated row below the question and file upload.
+  - Updated "Jenis OKU" checkboxes style to match "Lesen Memandu" grid layout (2 columns on mobile, 4 on desktop).
+  - Wrapped "Jenis OKU" section in a sub-container with border and background for better visual grouping.
+  - Improved responsiveness and visual flow.
+
+### Technical Details
+- Updated `application_section/03-health-oku.php`:
+  - Modified `validateOkuSelection()` to include file check.
+  - Added `salinan_kad_oku_error` element.
+  - Added event listeners to clear errors on interaction.
+  - Split `oku_field` into `oku_file_field` and `oku_jenis_field` for better layout control.
+
+## 2025-11-23 – OKU Data Loading & Save Fixes
+
+### Fixed
+- **OKU Data Loading in Edit Mode:**
+  - Fixed `jenis_oku` checkboxes not showing saved values
+  - Improved JSON decoding logic to handle both string and array formats
+  - Fixed `salinan_kad_oku` file path loss during edit if no new file uploaded
+  - Added logic to preserve existing `salinan_kad_oku` path before cleaning up old data
+  
+- **Badan Profesional & Kegiatan Luar Save Logic:**
+  - Added robust date handling for `tahun` extraction in professional bodies
+  - Added detailed logging to debug save failures
+  - Verified column mapping and data structure
+
+### Technical Details
+- **03-health-oku.php**: Updated `jenis_oku` decoding to check `is_string` before `json_decode`
+- **ApplicationSaveController.php**:
+  - `saveSeparateTableData`: Added pre-cleanup check for `salinan_kad_oku`
+  - `saveProfessionalBodies`: Added `strtotime` check and regex fallback for year extraction
+  - Added `error_log` for better visibility into save process
+
+### Impact
+- OKU information now correctly loads in edit mode
+- Existing OKU card uploads are not lost when editing other fields
+- Improved reliability of saving professional bodies and extracurricular activities
+
+## 2025-11-23 – File Upload Cloning Fix
+
+### Fixed
+- **Duplicate File Upload References in Cloned Entries:**
+  - Fixed issue where clicking "Tambah Pendidikan" copied existing file upload references
+  - Cloned education entries now start with clean, empty file upload fields
+  - Removed "Fail dimuat naik: [filename]" messages from cloned entries
+  - Removed hidden `*_path` input fields from cloned entries
+  - File inputs in cloned entries no longer marked as required
+
+### Technical Details
+- Updated `application_section/pendidikan.php` cloneEntry function:
+  - Added logic to remove hidden path inputs: `inp.name.includes('_path')`
+  - Remove existing file messages: `p.textContent.includes('Fail dimuat naik:')`
+  - Remove `required` attribute from cloned file inputs
+  - Properly clear file status divs
+
+### Impact
+- New education entries start fresh without previous file references
+- Users can add multiple education entries without confusion
+- Each entry's file uploads are independent
+- Cleaner UX when adding multiple education records
+
+## 2025-11-23 – Badan Profesional & Kegiatan Luar Save Fixes
+
+### Fixed
+- **Badan Profesional (Professional Bodies) Not Saving:**
+  - Fixed column mismatch between form data and database table
+  - Table has `tahun` column (year only), not `tarikh_sijil` (full date)
+  - Updated save function to extract year from `tarikh_sijil` date field
+  - Proper mapping: `sijil` → `sijil_diperoleh`, `tarikh_sijil` → `tahun` (year only)
+  - Data now saves correctly to `application_professional_bodies` table
+  
+- **Kegiatan Luar (Extracurricular Activities) Not Saving:**
+  - Fixed missing `no_ahli` column in INSERT statement
+  - Table structure includes `no_ahli` column which was not being inserted
+  - Added `no_ahli` to INSERT statement (set to NULL if not provided)
+  - Data now saves correctly to `application_extracurricular` table
+
+### Technical Details
+- Updated `controllers/ApplicationSaveController.php`:
+  - `saveProfessionalBodies()`: Simplified logic, removed dynamic column detection
+  - Direct INSERT with fixed columns matching actual table structure
+  - Extract year from date: `date('Y', strtotime($tarikhSijil))`
+  - `saveExtracurricular()`: Added `no_ahli` column to INSERT statement
+  - Proper column order matching database schema
+
+### Database Schema Reference
+- **application_professional_bodies**: `id`, `application_reference`, `application_id`, `nama_lembaga`, `sijil_diperoleh`, `no_ahli`, `salinan_sijil_filename`, `created_at`, `tahun`
+- **application_extracurricular**: `id`, `application_reference`, `sukan_persatuan_kelab`, `jawatan`, `peringkat`, `tahap`, `no_ahli`, `salinan_sijil_filename`, `created_at`, `application_id`, `tarikh_sijil`
+
+### Impact
+- Professional bodies data now saves successfully
+- Extracurricular activities data now saves successfully
+- No more silent save failures for these sections
+- Complete application data is now persisted to database
+
+## 2025-11-23 – Education Fields Conditional Validation
+
+### Added
+- **Client-Side Validation for Maklumat Persekolahan & IPT:**
+  - All fields (Kelayakan, Dari Tahun, Hingga Tahun) become mandatory when Nama Institusi has a value
+  - Real-time validation as user types or selects values
+  - Visual feedback with red border (`border-red-300`) on required empty fields
+  - Dynamic required asterisk (*) indicator added/removed from field labels
+  - Red border automatically removed when field is filled
+  - Works with dynamically added education entries
+  - Uses MutationObserver to monitor new entries
+
+### Technical Details
+- Added `setupEducationValidation()` function in `application_section/pendidikan.php`
+- Validation triggers on:
+  - Input event (when typing in Nama Institusi)
+  - Blur event (when leaving Nama Institusi field)
+  - Change event (when selecting dropdown values)
+- Sets `required` attribute dynamically based on Nama Institusi value
+- Prevents form submission if required fields are empty
+
+### Impact
+- Prevents incomplete education entries from being submitted
+- Better data quality - ensures all related fields are filled together
+- Improved user experience with immediate visual feedback
+- Reduces database errors from missing mandatory fields
+- Works seamlessly with the add/remove education entry functionality
+
+## 2025-11-23 – Database Save Error Fixes
+
+### Fixed
+- **Education Kelayakan NULL Error:**
+  - Fixed "Column 'kelayakan' cannot be null" database error when saving education data
+  - Updated `ApplicationSaveController::saveEducation()` to properly handle empty kelayakan values
+  - Added validation to skip empty education entries (both institusi and kelayakan null)
+  - Kelayakan field can now be left empty without causing database errors
+  - **Database Fix Required**: Run `fix_kelayakan.sql` to alter the column to allow NULL
+  
+- **SPM Additional Subjects Column Error:**
+  - Fixed "Unknown column 'salinan_sijil'" error in SPM additional subjects save
+  - Removed `salinan_sijil` column from INSERT statement as it doesn't exist in table schema
+  - SPM additional subjects now save correctly without certificate path field
+  
+- **Form Submission:**
+  - Form now saves successfully without database constraint violations
+  - Empty optional fields properly handled throughout save process
+
+### Database Migration Required
+Run this SQL command to fix the kelayakan column:
+```sql
+ALTER TABLE application_education MODIFY COLUMN kelayakan VARCHAR(100) NULL;
+```
+
+Or run the provided SQL file:
+- File: `fix_kelayakan.sql`
+- Method 1 (Docker): `docker exec -it <container-name> mysql -u<user> -p<password> <database> < /var/www/html/fix_kelayakan.sql`
+- Method 2 (phpMyAdmin): Import the SQL file
+- Method 3 (MySQL CLI): `mysql -u<user> -p<password> <database> < fix_kelayakan.sql`
+
+### Technical Details
+- Updated `controllers/ApplicationSaveController.php`:
+  - Line 751-763: Enhanced education save validation
+  - Line 839: Removed non-existent salinan_sijil column from SPM subjects INSERT
+- Created `fix_kelayakan.sql` for database schema fix
+- Added comments for clarity on nullable fields
+- Improved error handling for empty form fields
+
+### Impact
+- Users can now submit and edit application forms without database errors
+- Optional fields (like kelayakan) can be left empty
+- Better data validation prevents incomplete entries from being saved
+- Improved form submission reliability
+
+## 2025-11-23 – Year Fields Converted to Dropdowns
+
+### Changed
+- **SPM/SPV Tahun Field:**
+  - Converted from number input to dropdown select
+  - Shows years from last year (2024) backwards to 1970
+  - Improves data validation and user experience
+  - Prevents invalid year entries
+- **Maklumat Persekolahan & IPT Year Fields:**
+  - Converted "Dari Tahun" and "Hingga Tahun" from text inputs to dropdown selects
+  - Both fields show years from last year backwards to 1970
+  - Applied to both prefilled entries and new entry template
+  - Maintains selected values when editing existing data
+
+### Fixed
+- **Variable Scope Issue:**
+  - Fixed undefined variable error when using year dropdowns
+  - Moved `$current_year` and `$last_year` definitions to top of file (global scope)
+  - Removed redundant variable definitions from individual dropdown loops
+  - Prevents PHP errors when submitting/editing forms
+
+### Technical Details
+- Updated `application_section/pendidikan.php`
+- Year variables now defined once at file top: `$current_year = date('Y'); $last_year = $current_year - 1;`
+- Year dropdowns dynamically generated using PHP loop
+- Selected values properly preserved for edit mode
+- Cloning script already supports select elements, no JavaScript changes needed
+
+### Impact
+- Better data quality with validated year selections
+- Improved mobile UX with native dropdown instead of keyboard input
+- Prevents typos and invalid year entries
+- Consistent year selection across all education fields
+- Form submission now works without PHP errors
+
+## 2025-11-23 – Applications List Filtering Enhancements
+
+### Added
+- **Auto-Filter on Dropdown Change:**
+  - Job position dropdown now auto-submits the filter form when a job is selected
+  - Status selection auto-submits after a short delay (500ms) for better UX
+  - Removed need to manually click "Tapis" button for dropdown filters
+- **Multi-Select Status Filter with Pills:**
+  - Converted single-select status dropdown to multi-select with checkboxes
+  - Added visual pills display below status dropdown showing selected statuses
+  - Pills are clickable with × button to remove individual status filters
+  - Dropdown shows count of selected statuses (e.g., "2 status dipilih")
+  - Backend updated to handle array of status values using SQL IN clause
+- **Job Position Highlighting:**
+  - Selected job position input field now highlighted with blue background and border
+  - Visual feedback shows which job filter is currently active
+  - Highlighting persists across page reloads when job filter is applied
+
+### Changed
+- **Filter Form UX:**
+  - Added `filter-form` ID for JavaScript interaction
+  - Status filtering logic updated to support multiple values
+  - Improved dropdown toggle with click-outside-to-close functionality
+  - Auto-submit delays optimized (300ms for job, 500ms for status)
+
+### Technical Details
+- Updated `admin/applications-list.php` PHP backend to handle `status[]` array parameter
+- Added JavaScript for multi-select dropdown, pills management, and auto-filtering
+- Status name mapping dynamically generated from database or fallback values
+- Pills use Tailwind CSS classes for consistent styling
+
+### Impact
+- Faster filtering workflow - no need to click "Tapis" button repeatedly
+- Better visual feedback for active filters
+- Ability to filter by multiple statuses simultaneously
+- Improved admin user experience when managing applications
+
+## 2025-11-23 – Timer Bar Position Fix
+
+### Fixed
+- **Timer Bar Floating Issue:**
+  - Changed timer bar from `position: sticky` to `position: fixed` in `job-application-full.php`
+  - Added `left: 0` to ensure full width alignment from the left edge
+  - Added `.has-timer-bar` CSS class to body with `padding-top: 33px` to prevent content overlap
+  - Timer bar now stays consistently at the top of the viewport instead of floating halfway down the page
+  - Added responsive padding adjustment for mobile (30px on screens ≤480px)
+
+### Impact
+- Timer bar is now always visible at the top of the screen
+- Content no longer gets hidden behind the timer bar
+- Improved user experience with consistent timer visibility
+
+## 2025-11-23 – Mobile Responsiveness Fixes
+
+### Fixed
+- **Navigation Mobile Overflow:**
+  - Fixed horizontal overflow issue in `job-application-full.php` navigation pills on mobile devices
+  - Added `.nav-pills-container` class with `flex-wrap` to allow navigation items to wrap on smaller screens
+  - Implemented responsive font sizes and padding for navigation pills (12px → 10px → 9px for tablet → mobile)
+  - Added `overflow-x: hidden` to body to prevent horizontal scrolling
+- **Container Width Issues:**
+  - Updated `.standard-container` in `assets/css/main.css` to use `width: 100%` instead of fixed `1050px`
+  - Added responsive padding adjustments (1rem → 0.5rem on mobile)
+  - Ensures proper containment on all screen sizes without horizontal overflow
+- **Mobile Media Queries:**
+  - Added `@media (max-width: 768px)` for tablet adjustments
+  - Added `@media (max-width: 480px)` for mobile phone adjustments
+  - Reduced navigation gap and padding on smaller screens for better space utilization
+
+### Impact
+- Navigation now wraps properly on mobile devices instead of causing page-wide horizontal scroll
+- Header remains fixed and doesn't move when scrolling horizontally
+- Improved mobile user experience with properly sized touch targets
+- All content stays within viewport boundaries on mobile devices
+
+## 2025-11-23 – Application Submission Bug Fixes
+
+### Fixed
+- **Database Schema Issue:**
+  - Added missing `salinan_sijil` column to `application_spm_additional_subjects` table
+  - This was causing application submissions to fail with "Column not found" error
+- **Health Section Data Handling:**
+  - Fixed `TypeError` in `application_section/03-health-oku.php` when handling `jenis_oku` field
+  - Added proper type checking to handle both array and JSON string formats
+  - Prevents `json_decode()` from receiving an array when data is already decoded
+
+### Impact
+- Application submissions now work correctly without database errors
+- Health section properly handles OKU type selections in both new and edit modes
+- Error messages are more user-friendly and informative
+
+
+
+## 2025-11-22 – Candidate Filtering UI Enhancements
+
+### Changed
+- **Job Management UI (`admin/job-create.php`, `admin/job-edit.php`):**
+  - Moved "Kriteria Penapisan Calon" section to the bottom of the form
+  - Updated filtering criteria layout to use a 3-column grid
+  - Made "Lesen Memandu" section collapsible
+  - Added "Negeri Kelahiran" to filtering criteria
+- **Application List (`admin/applications-list.php`):**
+  - Updated filtering logic to include "Negeri Kelahiran" check
+  - **Documentation:** [Candidate Filtering UI Enhancements](candidate-filtering-ui-enhancements.md)
+
+## 2025-11-22 – Candidate Filtering System
+
+### Added
+- **Candidate Filtering System:**
+  - Added `job_requirements` JSON column to `job_postings` table
+  - Updated Job Create/Edit forms (`admin/job-create.php`, `admin/job-edit.php`) to include filtering criteria:
+    - Driving Licenses (Multi-select)
+    - Gender & Nationality
+    - Minimum Years in Selangor
+    - Minimum Education Level & Working Experience
+  - Updated Application List (`admin/applications-list.php`) to:
+    - Highlight "Ideal Candidates" meeting all criteria with a green badge
+    - Filter list to show only ideal candidates
+  - **Documentation:** [Candidate Filtering System](candidate-filtering-system.md)
+
 ## 2025-11-22 – Education Section Enhancement & Documentation Standards
 
 ### Added

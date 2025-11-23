@@ -501,6 +501,21 @@ class ApplicationSaveController {
     private function saveSeparateTableData($postData, $application_id, $application_reference, $is_edit) {
         // If editing, clean up existing data first
         if ($is_edit) {
+            // Preserve salinan_kad_oku if not provided in new data
+            if (empty($postData['salinan_kad_oku'])) {
+                try {
+                    $stmt = $this->pdo->prepare("SELECT salinan_kad_oku FROM application_health WHERE application_reference = ? LIMIT 1");
+                    $stmt->execute([$application_reference]);
+                    $existingPath = $stmt->fetchColumn();
+                    if ($existingPath) {
+                        $postData['salinan_kad_oku'] = $existingPath;
+                        error_log("Preserved existing salinan_kad_oku: " . $existingPath);
+                    }
+                } catch (Throwable $e) {
+                    error_log("Error preserving salinan_kad_oku: " . $e->getMessage());
+                }
+            }
+
             $this->cleanupExistingData($application_reference);
         }
         
@@ -751,13 +766,20 @@ class ApplicationSaveController {
         
         foreach ($postData['persekolahan'] as $edu) {
             $institusi = $this->formatStringValue($edu['institusi'] ?? null);
+            $kelayakan = $this->formatStringValue($edu['kelayakan'] ?? null);
+            
+            // Skip if both institusi and kelayakan are empty
+            if ($institusi === null && $kelayakan === null) {
+                continue;
+            }
+            
+            // Skip if institusi is empty (required field)
             if ($institusi === null) {
                 continue;
             }
 
             $dariTahun = $this->formatStringValue($edu['dari_tahun'] ?? null);
             $hinggaTahun = $this->formatStringValue($edu['hingga_tahun'] ?? null);
-            $kelayakan = $this->formatStringValue($edu['kelayakan'] ?? null);
             $gred = $this->formatStringValue($edu['gred'] ?? null);
             $sijilPath = $this->formatStringValue($edu['sijil_path'] ?? null, false);
             $sijilTambahan = $this->formatStringValue($edu['sijil_tambahan_path'] ?? null, false);
@@ -768,7 +790,7 @@ class ApplicationSaveController {
                 $institusi,
                 $dariTahun,
                 $hinggaTahun,
-                $kelayakan,
+                $kelayakan, // Can be null
                 $gred,
                 $sijilPath,
                 $sijilTambahan
@@ -836,7 +858,7 @@ class ApplicationSaveController {
         if (!isset($postData['spm_subjek_lain']) || !is_array($postData['spm_subjek_lain'])) return;
         
         $stmt = $this->pdo->prepare(
-            "INSERT INTO application_spm_additional_subjects (application_reference, application_id, tahun, angka_giliran, subjek, gred, salinan_sijil) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO application_spm_additional_subjects (application_reference, application_id, tahun, angka_giliran, subjek, gred) VALUES (?, ?, ?, ?, ?, ?)"
         );
         
         $spm_tahun = $this->formatStringValue($postData['spm_tahun'] ?? null);
@@ -854,8 +876,7 @@ class ApplicationSaveController {
                 $spm_tahun,
                 $spm_angka_giliran,
                 $subjectName,
-                $this->formatStringValue($subj['gred'] ?? null),
-                $this->formatStringValue($subj['salinan_sijil'] ?? null, false)
+                $this->formatStringValue($subj['gred'] ?? null)
             ]);
         }
     }
@@ -937,76 +958,71 @@ class ApplicationSaveController {
      * Save professional bodies
      */
     private function saveProfessionalBodies($postData, $application_id, $application_reference) {
-        if (!isset($postData['badan_profesional']) || !is_array($postData['badan_profesional'])) return;
+        if (!isset($postData['badan_profesional']) || !is_array($postData['badan_profesional'])) {
+            error_log("saveProfessionalBodies: No data found");
+            return;
+        }
 
-        $columnsInfo = [];
+        error_log("saveProfessionalBodies: Processing " . count($postData['badan_profesional']) . " entries");
+
+        $colSet = [];
         try {
-            $columnsInfo = $this->pdo->query("SHOW COLUMNS FROM application_professional_bodies")->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Throwable $e) {
-            $columnsInfo = [];
-        }
+            $cols = $this->pdo->query("SHOW COLUMNS FROM application_professional_bodies")->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($cols as $c) { $colSet[$c['Field']] = true; }
+        } catch (Throwable $e) {}
 
-        $hasTarikh = false;
-        $hasTahun = false;
-        $isTahunDate = false;
-        $salinanCol = 'salinan_sijil_filename';
-        foreach ($columnsInfo as $col) {
-            $field = $col['Field'] ?? '';
-            $type = $col['Type'] ?? '';
-            if ($field === 'tarikh_sijil') { $hasTarikh = true; }
-            if ($field === 'tahun') { $hasTahun = true; if (stripos($type, 'date') !== false) { $isTahunDate = true; } }
-            if ($field === 'salinan_sijil_path') { $salinanCol = 'salinan_sijil_path'; }
-            if ($field === 'salinan_sijil_filename') { $salinanCol = 'salinan_sijil_filename'; }
-            if ($field === 'salinan_sijil') { $salinanCol = 'salinan_sijil'; }
-        }
-
-        $columns = ['application_reference','application_id','nama_lembaga','no_ahli','sijil_diperoleh'];
-        if ($hasTarikh) {
-            $columns[] = 'tarikh_sijil';
-        } elseif ($hasTahun) {
-            $columns[] = 'tahun';
-        }
-        $columns[] = $salinanCol;
-        $placeholders = implode(', ', array_fill(0, count($columns), '?'));
-
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO application_professional_bodies (" . implode(', ', $columns) . ") VALUES (" . $placeholders . ")"
-        );
-
-        foreach ($postData['badan_profesional'] as $prof) {
+        foreach ($postData['badan_profesional'] as $idx => $prof) {
             $namaLembaga = $this->formatStringValue($prof['nama_lembaga'] ?? null);
             if ($namaLembaga === null) {
+                error_log("saveProfessionalBodies: Entry {$idx} skipped - nama_lembaga is empty");
                 continue;
             }
 
-            $tarikh = $this->formatStringValue($prof['tarikh_sijil'] ?? null);
-            $tahunVal = null;
-            if ($tarikh !== null) {
-                $tahunVal = $isTahunDate ? date('Y-m-d', strtotime($tarikh)) : date('Y', strtotime($tarikh));
-            } else {
-                $tahunRaw = $this->formatStringValue($prof['tahun'] ?? null);
-                if ($tahunRaw !== null) {
-                    $tahunVal = $isTahunDate ? (preg_match('/^\d{4}$/', $tahunRaw) ? ($tahunRaw . '-01-01') : $tahunRaw) : $tahunRaw;
+            // Extract year from tarikh_sijil if provided
+            $tahun = null;
+            $tarikhSijil = $this->formatStringValue($prof['tarikh_sijil'] ?? null);
+            if ($tarikhSijil !== null) {
+                // Extract year from date (YYYY-MM-DD -> YYYY)
+                $ts = strtotime($tarikhSijil);
+                if ($ts !== false) {
+                    $tahun = date('Y', $ts);
+                } else {
+                    // Fallback: try to extract 4 digits
+                    if (preg_match('/^\d{4}$/', $tarikhSijil)) {
+                        $tahun = $tarikhSijil;
+                    }
                 }
             }
 
-            $values = [
-                $application_reference,
-                $application_id,
-                $namaLembaga,
-                $this->formatStringValue($prof['no_ahli'] ?? null),
-                $this->formatStringValue($prof['sijil'] ?? null)
-            ];
+            try {
+                $path = $this->formatStringValue($prof['salinan_sijil_path'] ?? null, false);
+                $columns = ['application_reference','application_id','nama_lembaga','sijil_diperoleh','no_ahli'];
+                if (isset($colSet['tahun'])) { $columns[] = 'tahun'; }
+                if (isset($colSet['salinan_sijil_filename'])) { $columns[] = 'salinan_sijil_filename'; }
+                if (isset($colSet['salinan_sijil'])) { $columns[] = 'salinan_sijil'; }
+                if (isset($colSet['tarikh_sijil'])) { $columns[] = 'tarikh_sijil'; }
 
-            if ($hasTarikh) {
-                $values[] = $tarikh;
-            } elseif ($hasTahun) {
-                $values[] = $tahunVal;
+                $placeholders = rtrim(str_repeat('?, ', count($columns)), ', ');
+                $sql = "INSERT INTO application_professional_bodies (" . implode(', ', $columns) . ") VALUES (" . $placeholders . ")";
+                $stmt = $this->pdo->prepare($sql);
+
+                $vals = [
+                    $application_reference,
+                    $application_id,
+                    $namaLembaga,
+                    $this->formatStringValue($prof['sijil'] ?? null),
+                    $this->formatStringValue($prof['no_ahli'] ?? null)
+                ];
+                if (isset($colSet['tahun'])) { $vals[] = $tahun; }
+                if (isset($colSet['salinan_sijil_filename'])) { $vals[] = $path; }
+                if (isset($colSet['salinan_sijil'])) { $vals[] = $path; }
+                if (isset($colSet['tarikh_sijil'])) { $vals[] = $this->formatStringValue($prof['tarikh_sijil'] ?? null); }
+
+                $stmt->execute($vals);
+                error_log("saveProfessionalBodies: Saved entry {$idx} - {$namaLembaga}");
+            } catch (Throwable $e) {
+                error_log("saveProfessionalBodies: Error saving entry {$idx}: " . $e->getMessage());
             }
-
-            $values[] = $this->formatStringValue($prof['salinan_sijil_path'] ?? null, false);
-
-            $stmt->execute($values);
         }
     }
     
@@ -1014,28 +1030,65 @@ class ApplicationSaveController {
      * Save extracurricular activities
      */
     private function saveExtracurricular($postData, $application_id, $application_reference) {
-        if (!isset($postData['kegiatan_luar']) || !is_array($postData['kegiatan_luar'])) return;
+        if (!isset($postData['kegiatan_luar']) || !is_array($postData['kegiatan_luar'])) {
+            error_log("saveExtracurricular: No data found");
+            return;
+        }
         
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO application_extracurricular (application_reference, application_id, sukan_persatuan_kelab, jawatan, peringkat, tahap, tarikh_sijil, salinan_sijil_filename) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-        );
+        error_log("saveExtracurricular: Processing " . count($postData['kegiatan_luar']) . " entries");
+
+        $colSet = [];
+        try {
+            $cols = $this->pdo->query("SHOW COLUMNS FROM application_extracurricular")->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($cols as $c) { $colSet[$c['Field']] = true; }
+        } catch (Throwable $e) {}
         
-        foreach ($postData['kegiatan_luar'] as $activity) {
+        foreach ($postData['kegiatan_luar'] as $idx => $activity) {
             $sukan = $this->formatStringValue($activity['sukan_persatuan_kelab'] ?? null);
             if ($sukan === null) {
+                error_log("saveExtracurricular: Entry {$idx} skipped - sukan_persatuan_kelab is empty");
                 continue;
             }
 
-            $stmt->execute([
-                $application_reference,
-                $application_id,
-                $sukan,
-                $this->formatStringValue($activity['jawatan'] ?? null),
-                $this->formatStringValue($activity['peringkat'] ?? null),
-                $this->formatStringValue($activity['tahap'] ?? null),
-                $this->formatStringValue($activity['tarikh_sijil'] ?? null),
-                $this->formatStringValue($activity['salinan_sijil_path'] ?? null, false)
-            ]);
+            // Extract year from tarikh_sijil if provided
+            $tahun = null;
+            $tarikhSijil = $this->formatStringValue($activity['tarikh_sijil'] ?? null);
+            if ($tarikhSijil !== null) {
+                $ts = strtotime($tarikhSijil);
+                if ($ts !== false) {
+                    $tahun = date('Y', $ts);
+                } elseif (preg_match('/^\d{4}$/', $tarikhSijil)) {
+                    $tahun = $tarikhSijil;
+                }
+            }
+
+            try {
+                $path = $this->formatStringValue($activity['salinan_sijil_path'] ?? null, false);
+                $columns = ['application_reference','application_id','sukan_persatuan_kelab','jawatan','peringkat'];
+                if (isset($colSet['tahap'])) { $columns[] = 'tahap'; }
+                if (isset($colSet['no_ahli'])) { $columns[] = 'no_ahli'; }
+                if (isset($colSet['tarikh_sijil'])) { $columns[] = 'tarikh_sijil'; }
+                if (isset($colSet['tahun'])) { $columns[] = 'tahun'; }
+                if (isset($colSet['salinan_sijil_filename'])) { $columns[] = 'salinan_sijil_filename'; }
+                if (isset($colSet['salinan_sijil'])) { $columns[] = 'salinan_sijil'; }
+
+                $placeholders = rtrim(str_repeat('?, ', count($columns)), ', ');
+                $sql = "INSERT INTO application_extracurricular (" . implode(', ', $columns) . ") VALUES (" . $placeholders . ")";
+                $stmt = $this->pdo->prepare($sql);
+
+                $vals = [$application_reference, $application_id, $sukan, $this->formatStringValue($activity['jawatan'] ?? null), $this->formatStringValue($activity['peringkat'] ?? null)];
+                if (isset($colSet['tahap'])) { $vals[] = $this->formatStringValue($activity['tahap'] ?? null); }
+                if (isset($colSet['no_ahli'])) { $vals[] = $this->formatStringValue($activity['no_ahli'] ?? null); }
+                if (isset($colSet['tarikh_sijil'])) { $vals[] = $tarikhSijil; }
+                if (isset($colSet['tahun'])) { $vals[] = $tahun; }
+                if (isset($colSet['salinan_sijil_filename'])) { $vals[] = $path; }
+                if (isset($colSet['salinan_sijil'])) { $vals[] = $path; }
+
+                $stmt->execute($vals);
+                error_log("saveExtracurricular: Saved entry {$idx} - {$sukan}");
+            } catch (Throwable $e) {
+                error_log("saveExtracurricular: Error saving entry {$idx}: " . $e->getMessage());
+            }
         }
     }
     

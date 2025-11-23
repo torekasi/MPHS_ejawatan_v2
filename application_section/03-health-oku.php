@@ -67,8 +67,10 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
         </div>
 
         <div>
-            <div class="flex items-start space-x-0 mb-4">
-                <div class="flex-1 pl-2 md:pl-4">
+            <!-- Row 1: Question and File Upload -->
+            <div class="flex flex-wrap items-start space-x-0 mb-4">
+                <!-- Left: Question -->
+                <div class="w-full md:w-1/2 pl-2 md:pl-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Adakah anda pemegang kad OKU? <span class="required">*</span></label>
                     <div class="mt-2 flex items-center gap-6">
                         <label class="inline-flex items-center">
@@ -81,45 +83,92 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
                         </label>
                     </div>
                 </div>
-                <?php $jenis_oku = !empty($application['jenis_oku']) ? json_decode($application['jenis_oku'], true) : []; ?>
-                <div class="w-1/2" id="oku_field" style="display: <?php echo (($application['pemegang_kad_oku'] ?? '')==='YA' || ($application['pemegang_kad_oku'] ?? '')==='Ya') ? 'block' : 'none'; ?>;">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Jenis OKU (Pilihan)</label>
-                    <div class="mt-2 flex flex-wrap gap-2">
+
+                <!-- Right: Salinan Kad OKU -->
+                <div class="w-full md:w-1/2 pl-2 md:pl-4 mt-4 md:mt-0" id="oku_file_field" style="display: <?php echo (($application['pemegang_kad_oku'] ?? '')==='YA' || ($application['pemegang_kad_oku'] ?? '')==='Ya') ? 'block' : 'none'; ?>;">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Salinan Kad OKU <span class="required">*</span></label>
+                    <input type="file" id="salinan_kad_oku" name="salinan_kad_oku" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" accept=".jpg,.jpeg,.png,.gif,.pdf" data-max-size="2" data-allowed-types="image/jpeg,image/jpg,image/png,image/gif,application/pdf" data-field-label="Salinan Kad OKU" onchange="validateFileSize(this, 2)">
+                    <p class="text-xs text-red-600 mt-1 hidden" id="salinan_kad_oku_error">Sila muat naik Salinan Kad OKU.</p>
+                    <p class="text-xs text-gray-500 mt-1"><strong>Format:</strong> JPG, JPEG, PNG, GIF, PDF | <strong>Maksimum:</strong> 2MB</p>
+                    <div class="file-status mt-1" id="salinan_kad_oku_status"></div>
+                    <?php $okuFile = $application['salinan_kad_oku'] ?? ($application['salinan_kad_oku_path'] ?? null); ?>
+                    <?php if (!empty($okuFile)): ?>
+                    <p class="text-xs text-green-700 mt-1">Fail dimuat naik: <?php echo htmlspecialchars(basename($okuFile)); ?></p>
+                    <?php 
+                        $of = (string)$okuFile;
+                        $ourl = preg_match('/^https?:\/\//i',$of) ? $of : ('/' . ltrim($of,'/'));
+                        $oext = strtolower(pathinfo($of, PATHINFO_EXTENSION));
+                    ?>
+                    <div class="mt-2 border border-gray-200 rounded-md bg-white flex items-center justify-center" style="height:200px; overflow:hidden;">
+                        <?php if (in_array($oext,['jpg','jpeg','png','gif','webp'])): ?>
+                            <img src="<?php echo htmlspecialchars($ourl); ?>" alt="Pratonton Kad OKU" style="max-height:200px; max-width:100%; object-fit:contain; display:block;">
+                        <?php elseif ($oext==='pdf'): ?>
+                            <iframe src="<?php echo htmlspecialchars($ourl); ?>" title="Pratonton PDF" style="height:200px; width:100%;"></iframe>
+                        <?php else: ?>
+                            <a class="text-blue-600 underline" href="<?php echo htmlspecialchars($ourl); ?>" target="_blank" rel="noopener">Lihat fail</a>
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Row 2: Jenis OKU -->
+            <?php 
+                $jenis_oku = [];
+                // DEBUG: Check what data we're getting
+                echo "<!-- DEBUG: jenis_oku value: " . htmlspecialchars(var_export($application['jenis_oku'] ?? null, true)) . " -->\n";
+                echo "<!-- DEBUG: pemegang_kad_oku value: " . htmlspecialchars($application['pemegang_kad_oku'] ?? '') . " -->\n";
+                echo "<!-- DEBUG: jenis_oku array: " . htmlspecialchars(var_export($jenis_oku, true)) . " -->\n";
+                
+                if (!empty($application['jenis_oku'])) {
+                    if (is_array($application['jenis_oku'])) {
+                        $jenis_oku = $application['jenis_oku'];
+                    } elseif (is_string($application['jenis_oku'])) {
+                        $decoded = json_decode($application['jenis_oku'], true);
+                        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                            $jenis_oku = $decoded;
+                        } else {
+                            $raw = trim($application['jenis_oku']);
+                            if (strpos($raw, ',') !== false) {
+                                $parts = array_map('trim', explode(',', $raw));
+                                $jenis_oku = array_filter($parts, function($v){ return $v !== ''; });
+                            } elseif ($raw !== '') {
+                                $jenis_oku = [$raw];
+                            }
+                        }
+                    }
+                    $options_canonical = ['OKU Penglihatan','OKU Pendengaran','OKU Pertuturan','OKU Fizikal','OKU Pembelajaran','OKU Mental','OKU Pelbagai','Lain-lain'];
+                    $map = [];
+                    foreach ($options_canonical as $o) { $map[strtoupper($o)] = $o; }
+                    $normalized = [];
+                    foreach ($jenis_oku as $val) {
+                        $key = strtoupper(trim($val));
+                        if (isset($map[$key])) {
+                            $normalized[] = $map[$key];
+                        } elseif (preg_match('/^LAIN[- ]?LAIN$/i', $val)) {
+                            $normalized[] = 'Lain-lain';
+                        } else {
+                            $normalized[] = trim($val);
+                        }
+                    }
+                    $jenis_oku = array_values(array_unique($normalized));
+                }
+            ?>
+            <div class="w-full pl-2 md:pl-4 mb-4" id="oku_jenis_field" style="display: <?php echo (strtolower($application['pemegang_kad_oku'] ?? '')==='ya') ? 'block' : 'none'; ?>;">
+                <div class="border border-gray-200 rounded-md p-4 bg-gray-50">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Jenis OKU (Pilihan) <span class="required">*</span></label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
                         <?php foreach (['OKU Penglihatan','OKU Pendengaran','OKU Pertuturan','OKU Fizikal','OKU Pembelajaran','OKU Mental','OKU Pelbagai','Lain-lain'] as $opt): ?>
-                            <label class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-full bg-white hover:bg-green-50">
+                            <div class="inline-flex items-start space-x-2">
                                 <input type="checkbox" name="jenis_oku[]" value="<?php echo htmlspecialchars($opt); ?>" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" <?php echo in_array($opt, $jenis_oku ?? []) ? 'checked' : ''; ?>>
-                                <span class="ml-2 text-sm text-gray-700"><?php echo htmlspecialchars($opt); ?></span>
-                            </label>
+                                <div>
+                                    <span class="text-sm text-gray-700 font-medium"><?php echo htmlspecialchars($opt); ?></span>
+                                </div>
+                            </div>
                         <?php endforeach; ?>
                     </div>
                     <p class="text-xs text-red-600 mt-1 hidden" id="jenis_oku_error">Sila pilih sekurang-kurangnya satu jenis OKU.</p>
                     <p class="text-xs text-gray-500 mt-1">Anda boleh pilih satu atau lebih jenis OKU jika berkaitan</p>
-
-                    <!-- Salinan Kad OKU dipindahkan ke dalam kontena OKU dan akan turut disembunyikan apabila 'Tidak' dipilih -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Salinan Kad OKU</label>
-                        <input type="file" id="salinan_kad_oku" name="salinan_kad_oku" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" accept=".jpg,.jpeg,.png,.gif,.pdf" data-max-size="2" data-allowed-types="image/jpeg,image/jpg,image/png,image/gif,application/pdf" data-field-label="Salinan Kad OKU" onchange="validateFileSize(this, 2)">
-                        <p class="text-xs text-gray-500 mt-1"><strong>Format:</strong> JPG, JPEG, PNG, GIF, PDF | <strong>Maksimum:</strong> 2MB</p>
-                        <div class="file-status mt-1" id="salinan_kad_oku_status"></div>
-<?php $okuFile = $application['salinan_kad_oku'] ?? ($application['salinan_kad_oku_path'] ?? null); ?>
-<?php if (!empty($okuFile)): ?>
-<p class="text-xs text-green-700 mt-1">Fail dimuat naik: <?php echo htmlspecialchars(basename($okuFile)); ?></p>
-<?php 
-    $of = (string)$okuFile;
-    $ourl = preg_match('/^https?:\/\//i',$of) ? $of : ('/' . ltrim($of,'/'));
-    $oext = strtolower(pathinfo($of, PATHINFO_EXTENSION));
-?>
-<div class="mt-2 border border-gray-200 rounded-md bg-white flex items-center justify-center" style="height:200px; overflow:hidden;">
-    <?php if (in_array($oext,['jpg','jpeg','png','gif','webp'])): ?>
-        <img src="<?php echo htmlspecialchars($ourl); ?>" alt="Pratonton Kad OKU" style="max-height:200px; max-width:100%; object-fit:contain; display:block;">
-    <?php elseif ($oext==='pdf'): ?>
-        <iframe src="<?php echo htmlspecialchars($ourl); ?>" title="Pratonton PDF" style="height:200px; width:100%;"></iframe>
-    <?php else: ?>
-        <a class="text-blue-600 underline" href="<?php echo htmlspecialchars($ourl); ?>" target="_blank" rel="noopener">Lihat fail</a>
-    <?php endif; ?>
-</div>
-<?php endif; ?>
-                    </div>
                 </div>
             </div>
         </div>
@@ -181,7 +230,9 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
 document.addEventListener('DOMContentLoaded', function() {
     var okuYesRadio = document.querySelector('input[name="pemegang_kad_oku"][value="Ya"]');
     var okuNoRadio = document.querySelector('input[name="pemegang_kad_oku"][value="Tidak"]');
-    var okuField = document.getElementById('oku_field');
+    var okuField = document.getElementById('oku_field'); // Legacy reference, might be null now
+    var okuFileField = document.getElementById('oku_file_field');
+    var okuJenisField = document.getElementById('oku_jenis_field');
     var jenisOkuError = document.getElementById('jenis_oku_error');
     var jenisOkuCheckboxes = Array.prototype.slice.call(document.querySelectorAll('input[name="jenis_oku[]"]'));
 
@@ -224,7 +275,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleVisibility() {
         // OKU field
         var okuYes = okuYesRadio && okuYesRadio.checked;
-        okuField.style.display = okuYes ? 'block' : 'none';
+        
+        // Toggle both fields
+        if (okuFileField) okuFileField.style.display = okuYes ? 'block' : 'none';
+        if (okuJenisField) okuJenisField.style.display = okuYes ? 'block' : 'none';
+        
         if (!okuYes) {
             jenisOkuError && (jenisOkuError.classList.add('hidden'));
             // Disable and clear OKU file input when not applicable
@@ -232,6 +287,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 salinanFile.disabled = true;
                 salinanFile.value = '';
                 if (salinanStatus) { salinanStatus.textContent = ''; salinanStatus.className = 'file-status mt-1'; }
+                var fileError = document.getElementById('salinan_kad_oku_error');
+                if (fileError) fileError.classList.add('hidden');
             }
         } else {
             if (salinanFile) salinanFile.disabled = false;
@@ -265,13 +322,38 @@ document.addEventListener('DOMContentLoaded', function() {
     function validateOkuSelection() {
         var okuYes = okuYesRadio && okuYesRadio.checked;
         if (!okuYes) return true; // No requirement when not OKU holder
+        
+        var valid = true;
+        
+        // Validate Jenis OKU
         var anyChecked = jenisOkuCheckboxes.some(function(cb) { return cb.checked; });
         if (!anyChecked) {
             jenisOkuError && jenisOkuError.classList.remove('hidden');
-            return false;
+            valid = false;
+        } else {
+            hideJenisOkuError();
         }
-        hideJenisOkuError();
-        return true;
+        
+        // Validate Salinan Kad OKU
+        var fileInput = document.getElementById('salinan_kad_oku');
+        var fileError = document.getElementById('salinan_kad_oku_error');
+        // Check if file selected OR if existing file is present (look for green text)
+        var hasFile = fileInput && fileInput.files && fileInput.files.length > 0;
+        var hasExisting = false;
+        // Look for existing file message in the new container
+        var existingMsg = document.querySelector('#oku_file_field p.text-green-700');
+        if (existingMsg && existingMsg.textContent.includes('Fail dimuat naik')) {
+            hasExisting = true;
+        }
+        
+        if (!hasFile && !hasExisting) {
+            fileError && fileError.classList.remove('hidden');
+            valid = false;
+        } else {
+            fileError && fileError.classList.add('hidden');
+        }
+        
+        return valid;
     }
 
     function hideJenisOkuError() {
@@ -296,11 +378,21 @@ document.addEventListener('DOMContentLoaded', function() {
     jenisOkuCheckboxes.forEach(function(cb) {
         cb.addEventListener('change', function() { if (jenisOkuError) jenisOkuError.classList.add('hidden'); });
     });
+    if (salinanFile) {
+        salinanFile.addEventListener('change', function() { 
+            var fileError = document.getElementById('salinan_kad_oku_error');
+            if (fileError) fileError.classList.add('hidden');
+        });
+    }
     if (jenisRabunSelect) {
         jenisRabunSelect.addEventListener('change', function() { jenisRabunError && jenisRabunError.classList.add('hidden'); });
     }
 
-    toggleVisibility();
+    // Only call toggleVisibility if we're not in edit mode with pre-filled data
+    // This prevents overriding the PHP-generated display state
+    if (!document.querySelector('input[name="pemegang_kad_oku"][checked]')) {
+        toggleVisibility();
+    }
 
     // Bind form submission for validation and loading overlay
     var container = document.currentScript.closest('.bg-white');

@@ -84,7 +84,38 @@ Every time code is updated, modified, or new features are added, the following d
 
 ---
 
-### 3. Technical Documentation (`/docs/technical/`)
+### 3. Walkthroughs & Feature Documentation (`/docs/*.md`)
+**When to create:**
+- Completing a significant feature or task
+- Implementing complex workflows
+- Major UI/UX changes
+
+**Requirements:**
+- **Save Location:** All walkthroughs must be saved as markdown files in the `/docs/` directory (e.g., `/docs/feature-name.md`).
+- **Changelog Reference:** The created documentation file MUST be referenced in the corresponding `/docs/changelog.md` entry.
+
+**Format:**
+- Feature Title
+- Description of changes
+- Implementation details
+- Verification steps
+- Screenshots (if applicable)
+
+---
+
+### 4. Product Requirements Document (`/docs/PRD.md`)
+**When to update:**
+- Before starting ANY coding task or implementation
+- When requirements change during implementation
+
+**Requirements:**
+- **Incremental Updates:** Add a new section for each feature/task.
+- **Content:** Must include the Goal, User Stories (optional), Technical Requirements, and Implementation Plan.
+- **Status:** Mark sections as [Draft], [In Progress], or [Completed].
+
+---
+
+### 5. Technical Documentation (`/docs/technical/`)
 **When to update:**
 - Architecture changes
 - Database schema modifications
@@ -119,6 +150,7 @@ Every time code is updated, modified, or new features are added, the following d
 1. **Before coding:**
    - Review existing documentation
    - Plan what documentation will need updates
+   - **Update PRD:** Incrementally update `/docs/PRD.md` with the implementation plan and requirements for the current task.
 
 2. **During coding:**
    - Add inline code comments

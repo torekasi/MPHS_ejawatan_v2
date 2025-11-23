@@ -1,3 +1,4 @@
+<?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -156,6 +157,7 @@ $status_data = null;
 $nric = null;
 $application_ref = null;
 $edit_token = null;
+$job_code = $_GET['job_code'] ?? '';
 
 // Get any flash messages
 session_start();
@@ -169,11 +171,10 @@ if (isset($_GET['test']) && $_GET['test'] == '1') {
     exit;
 }
 
-// Check if NRIC and application_ref are provided
 if (isset($_GET['nric']) && isset($_GET['application_ref'])) {
     $nric = trim($_GET['nric']);
     $application_ref = trim($_GET['application_ref']);
-    $job_code = $_GET['job_code'] ?? '';
+    $job_code = is_string($job_code) ? $job_code : '';
     
     // Normalize NRIC (handle with-hyphens and digits-only)
     $clean_nric = preg_replace('/[^0-9]/', '', $nric);

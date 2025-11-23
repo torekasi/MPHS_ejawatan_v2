@@ -462,24 +462,26 @@ try {
                 $stmt = $pdo->prepare("SELECT * FROM application_extracurricular WHERE application_reference = ? ORDER BY id ASC");
                 $stmt->execute([$ref]);
                 foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                    $salinan = $row['salinan_sijil_filename'] ?? ($row['salinan_sijil_path'] ?? ($row['salinan_sijil'] ?? ''));
                     $prefill_extracurriculars[] = [
                         'sukan_persatuan_kelab' => $row['sukan_persatuan_kelab'] ?? '',
                         'jawatan' => $row['jawatan'] ?? '',
                         'peringkat' => $row['peringkat'] ?? '',
                         'tarikh_sijil' => $row['tarikh_sijil'] ?? (!empty($row['tahun']) ? ($row['tahun'] . '-01-01') : ''),
-                        'salinan_sijil' => $row['salinan_sijil'] ?? '',
+                        'salinan_sijil' => $salinan,
                     ];
                 }
                 if (empty($prefill_extracurriculars) && !empty($application_id)) {
                     $stmt = $pdo->prepare("SELECT * FROM application_extracurricular WHERE application_id = ? ORDER BY id ASC");
                     $stmt->execute([$application_id]);
                     foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                        $salinan = $row['salinan_sijil_filename'] ?? ($row['salinan_sijil_path'] ?? ($row['salinan_sijil'] ?? ''));
                         $prefill_extracurriculars[] = [
                             'sukan_persatuan_kelab' => $row['sukan_persatuan_kelab'] ?? '',
                             'jawatan' => $row['jawatan'] ?? '',
                             'peringkat' => $row['peringkat'] ?? '',
                             'tarikh_sijil' => $row['tarikh_sijil'] ?? (!empty($row['tahun']) ? ($row['tahun'] . '-01-01') : ''),
-                            'salinan_sijil' => $row['salinan_sijil'] ?? '',
+                            'salinan_sijil' => $salinan,
                         ];
                     }
                 }
@@ -515,6 +517,14 @@ try {
             $stmt = $pdo->prepare('SELECT * FROM application_health WHERE application_reference = ? LIMIT 1');
             $stmt->execute([$ref]);
             $health = $stmt->fetch(PDO::FETCH_ASSOC);
+            // DEBUG: Check health data retrieval
+            if ($health) {
+                error_log("DEBUG: Health data found for ref: " . $ref);
+                error_log("DEBUG: jenis_oku from health: " . ($health['jenis_oku'] ?? 'NULL'));
+                error_log("DEBUG: pemegang_kad_oku from health: " . ($health['pemegang_kad_oku'] ?? 'NULL'));
+            } else {
+                error_log("DEBUG: No health data found for ref: " . $ref);
+            }
             if ($health) {
                 $merge_fields = [
                     'darah_tinggi','kencing_manis','penyakit_buah_pinggang','penyakit_jantung','batuk_kering_tibi','kanser','aids','penagih_dadah','perokok','penyakit_lain','penyakit_lain_nyatakan','pemegang_kad_oku','jenis_oku','memakai_cermin_mata','jenis_rabun','berat_kg','tinggi_cm','salinan_kad_oku'
@@ -605,15 +615,74 @@ if (isset($_SESSION['application_data']) && !empty($_SESSION['application_data']
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f7f9fc; }
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+            background-color: #f7f9fc; 
+            overflow-x: hidden;
+        }
         .section-title { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 1rem; font-weight: 600; font-size: 1.125rem; }
         .required { color: #dc2626; }
-        .standard-container { max-width: 1050px; margin: 0 auto; width: 100%; }
+        .standard-container { max-width: 1050px; margin: 0 auto; width: 100%; padding-left: 1rem; padding-right: 1rem; }
         .add-row-btn { background-color: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; }
         .add-row-btn:hover { background-color: #059669; }
         .uppercase-input { text-transform: uppercase; }
-        .nav-pill { display:inline-block; margin-right:8px; padding:6px 12px; background:#eef2ff; color:#1e3a8a; border-radius:9999px; font-size:12px; }
+        .nav-pill { 
+            display: inline-block; 
+            margin-right: 8px; 
+            margin-bottom: 8px;
+            padding: 6px 12px; 
+            background: #eef2ff; 
+            color: #1e3a8a; 
+            border-radius: 9999px; 
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .nav-pills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 1rem;
+        }
         .bg-white.rounded-lg.shadow-md { margin-top: 24px; }
+        
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .nav-pill {
+                font-size: 10px;
+                padding: 5px 10px;
+                margin-right: 4px;
+                margin-bottom: 6px;
+            }
+            .nav-pills-container {
+                padding: 0.75rem 0.5rem;
+                gap: 4px;
+            }
+            .standard-container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            .section-title {
+                font-size: 1rem;
+                padding: 0.75rem;
+            }
+        }
+        
+        /* Timer bar spacing */
+        body.has-timer-bar {
+            padding-top: 33px; /* Height of timer bar (6px padding top + 13px font + 6px padding bottom + some extra) */
+        }
+        
+        @media (max-width: 480px) {
+            .nav-pill {
+                font-size: 9px;
+                padding: 4px 8px;
+            }
+            body.has-timer-bar {
+                padding-top: 30px; /* Slightly less on mobile */
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen body-bg-image">
@@ -669,7 +738,7 @@ if (isset($_SESSION['application_data']) && !empty($_SESSION['application_data']
                 <p class="text-blue-200 text-sm">Rujukan Permohonan: <?php echo htmlspecialchars($application_ref); ?></p>
                 <?php endif; ?>
             </div>
-            <div class="p-4 flex justify-center items-center">
+            <div class="nav-pills-container">
                 <span class="nav-pill"><a href="#agreement">Pengakuan</a></span>
                 <span class="nav-pill"><a href="#uploads">Dokumen</a></span>
                 <span class="nav-pill"><a href="#personal">Peribadi</a></span>
@@ -717,7 +786,6 @@ if (isset($_SESSION['application_data']) && !empty($_SESSION['application_data']
                     <a href="index.php" class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-3 px-6 rounded-lg transition duration-200">Kembali</a>
                     <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-8 rounded-lg transition duration-200">Simpan & Pratonton</button>
                 </div>
-                <p class="text-sm text-gray-500 text-center mb-6">Klik "Simpan & Pratonton" untuk menyemak semua maklumat sebelum hantar.</p>
             </div>
         </form>
     <?php endif; ?>
@@ -734,7 +802,7 @@ if (isset($_SESSION['application_data']) && !empty($_SESSION['application_data']
 
   const bar = document.createElement('div');
   bar.id = 'timeoutBar';
-  bar.style.cssText = 'position:sticky;top:0;width:100%;z-index:9998;background:#1f2937;color:#fff;padding:6px 12px;font-size:13px;display:flex;justify-content:center;align-items:center;gap:8px;';
+  bar.style.cssText = 'position:fixed;top:0;left:0;width:100%;z-index:9998;background:#1f2937;color:#fff;padding:6px 12px;font-size:13px;display:flex;justify-content:center;align-items:center;gap:8px;';
   bar.innerHTML = '<span>Tempoh sesi borang: </span><strong id="timeoutCountdown"></strong>';
   const headerEl = document.querySelector('header');
   if (headerEl && headerEl.parentNode) {
@@ -742,6 +810,9 @@ if (isset($_SESSION['application_data']) && !empty($_SESSION['application_data']
   } else {
     document.body.insertBefore(bar, document.body.firstChild);
   }
+  
+  // Add padding to body to account for fixed timer bar
+  document.body.classList.add('has-timer-bar');
 
   const cd = document.getElementById('timeoutCountdown');
   const form = document.getElementById('applicationFormFull');
