@@ -1029,14 +1029,29 @@ document.addEventListener('click', function(e){
     fetch('routes/application.php', { method: 'POST', headers: { 'Content-Type':'application/x-www-form-urlencoded' }, body: body.toString() })
       .then(function(r){ return r.json(); })
       .then(function(res){
-        duplicate = !!res.exists;
-        if (duplicate) {
+        var isDup = !!(res.duplicate || res.exists);
+        duplicate = isDup;
+        if (isDup) {
           if (submitBtn) submitBtn.disabled = true;
           icInput.classList.add('border-red-500');
-          alert('Permohonan untuk jawatan ini dengan NRIC tersebut sudah wujud.');
+          var msg = 'Anda telah membuat permohonan untuk jawatan ini. Sila teruskan dari halaman Semak Status dengan memasukkan Nombor IC dan No Rujukan anda. No Rujukan boleh didapati di emel anda.';
+          alert(msg);
+          var errorDiv = document.getElementById('duplicate-error-message');
+          if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.id = 'duplicate-error-message';
+            errorDiv.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-2';
+            icInput.parentNode.insertBefore(errorDiv, icInput.nextSibling);
+          }
+          var link = 'semak-status.php';
+          var html = 'Permohonan pendua dikesan. Sila pergi ke <a href="' + link + '" class="underline text-blue-700">Semak Status</a> dan masukkan Nombor IC dan No Rujukan anda. No Rujukan boleh didapati di emel anda.';
+          errorDiv.innerHTML = html;
+          errorDiv.style.display = 'block';
         } else {
           if (submitBtn) submitBtn.disabled = false;
           icInput.classList.remove('border-red-500');
+          var errorDiv2 = document.getElementById('duplicate-error-message');
+          if (errorDiv2) { errorDiv2.style.display = 'none'; }
         }
       })
       .catch(function(){ /* noop */ });

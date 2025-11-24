@@ -1,14 +1,10 @@
 <?php
 // Admin page to unlock applications that have expired tokens
-require_once '../includes/AdminAuth.php';
-require_once '../config.php';
-
-// Check admin authentication
-$adminAuth = new AdminAuth($pdo);
-if (!$adminAuth->isLoggedIn()) {
-    header('Location: login.php');
-    exit();
-}
+require_once '../includes/bootstrap.php';
+require_once 'auth.php';
+$config = require '../config.php';
+$result = get_database_connection($config);
+$pdo = $result['pdo'];
 
 $message = '';
 $error = '';
