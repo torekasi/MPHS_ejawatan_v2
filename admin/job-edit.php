@@ -39,6 +39,10 @@ try {
     }
     
     $job = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Ensure $id is set for updates even when page is opened via job_code
+    if ($job && (!isset($id) || !is_numeric($id))) {
+        $id = (int)($job['id'] ?? 0);
+    }
     if (!$job) {
         header('Location: job-list.php');
         exit;
@@ -114,8 +118,12 @@ $log_details = [
                 'message' => 'Jawatan berjaya dikemaskini!'
             ];
             
-            // Redirect to job list page after successful update
-            header('Location: job-list.php');
+            // Redirect to job-view page after successful update
+            if (!empty($job['job_code'])) {
+                header('Location: job-view.php?job_code=' . urlencode($job['job_code']));
+            } else {
+                header('Location: job-view.php?id=' . urlencode($id));
+            }
             exit;
         }
     }
@@ -145,7 +153,7 @@ if ($error) {
 
 include 'templates/header.php';
 ?>
-<div class="max-w-7xl mx-auto bg-white rounded-lg shadow-sm p-8 mt-8">
+<div class="standard-container mx-auto bg-white rounded-lg shadow-sm p-8 mt-8">
     <h2 class="text-2xl font-bold mb-6 text-blue-900">Edit Jawatan</h2>
     <?php if ($error): ?>
         <div class="bg-red-100 text-red-700 p-4 rounded mb-4"><?php echo $error; ?></div>
@@ -240,13 +248,28 @@ include 'templates/header.php';
                     </button>
                     <div id="license-container" class="hidden mt-3 grid grid-cols-2 md:grid-cols-5 gap-3">
                         <?php 
-                        $licenses = ['A', 'B', 'B2', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+                        $licenses = [
+                            ['code' => 'A', 'desc' => 'Motosikal (kelas lama)'],
+                            ['code' => 'B', 'desc' => 'Motosikal >250cc'],
+                            ['code' => 'B1', 'desc' => 'Motosikal ≤500cc'],
+                            ['code' => 'B2', 'desc' => 'Motosikal ≤250cc'],
+                            ['code' => 'C', 'desc' => 'Traktor'],
+                            ['code' => 'D', 'desc' => 'Kereta'],
+                            ['code' => 'E', 'desc' => 'Lori/Treler'],
+                            ['code' => 'E1', 'desc' => 'Treler ringan'],
+                            ['code' => 'E2', 'desc' => 'Treler berat'],
+                            ['code' => 'F', 'desc' => 'Jentera pertanian'],
+                            ['code' => 'G', 'desc' => 'Kenderaan gandar khas'],
+                            ['code' => 'H', 'desc' => 'Kren'],
+                            ['code' => 'I', 'desc' => 'Forklift'],
+                            ['code' => 'Tiada', 'desc' => 'Tiada lesen']
+                        ];
                         $selected_licenses = $reqs['license'] ?? [];
                         foreach ($licenses as $lic): 
                         ?>
                         <label class="inline-flex items-center bg-white px-3 py-2 rounded border border-gray-200 hover:bg-gray-50 cursor-pointer">
-                            <input type="checkbox" name="req_license[]" value="<?php echo $lic; ?>" class="form-checkbox h-4 w-4 text-blue-600" <?php echo in_array($lic, $selected_licenses) ? 'checked' : ''; ?>>
-                            <span class="ml-2 text-sm text-gray-700">Lesen <?php echo $lic; ?></span>
+                            <input type="checkbox" name="req_license[]" value="<?php echo $lic['code']; ?>" class="form-checkbox h-4 w-4 text-blue-600" <?php echo in_array($lic['code'], $selected_licenses) ? 'checked' : ''; ?>>
+                            <span class="ml-2 text-sm text-gray-700"><?php echo $lic['code']; ?> — <?php echo $lic['desc']; ?></span>
                         </label>
                         <?php endforeach; ?>
                     </div>
@@ -296,7 +319,12 @@ include 'templates/header.php';
                     <select name="req_birth_state" class="w-full border rounded px-3 py-2 bg-white">
                         <option value="">Semua Negeri</option>
                         <?php 
-                        $states = ["Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Sabah", "Sarawak", "Selangor", "Terengganu", "Wilayah Persekutuan"];
+                        $states = [
+                            "Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Sabah", "Sarawak", "Selangor", "Terengganu",
+                            "Wilayah Persekutuan Kuala Lumpur", "Wilayah Persekutuan Labuan", "Wilayah Persekutuan Putrajaya", "Bukan Malaysia"
+                        ];
+                        $existingBirth = $reqs['birth_state'] ?? '';
+                        if ($existingBirth === 'Wilayah Persekutuan') { $states[] = 'Wilayah Persekutuan'; }
                         foreach ($states as $st): 
                         ?>
                         <option value="<?php echo $st; ?>" <?php echo ($reqs['birth_state'] ?? '') === $st ? 'selected' : ''; ?>><?php echo $st; ?></option>
@@ -362,7 +390,7 @@ include 'templates/header.php';
         </script>
         <div class="md:col-span-2 flex gap-4 pt-4">
             <button type="submit" class="bg-blue-600 text-white px-8 py-2 rounded hover:bg-blue-700 transition">Simpan</button>
-            <a href="job-list.php" class="bg-gray-500 text-white px-8 py-2 rounded hover:bg-gray-600 transition">Kembali</a>
+            <button type="button" onclick="window.history.back()" class="bg-gray-500 text-white px-8 py-2 rounded hover:bg-gray-600 transition">Kembali</button>
         </div>
         <script>
     function formatNumberInput(input) {

@@ -14,6 +14,9 @@
         .dropdown-menu.show {
             display: block;
         }
+        :root { --admin-max-width: 1024px; }
+        .standard-container { max-width: var(--admin-max-width); padding-left: 1rem; padding-right: 1rem; }
+        .admin-shell { max-width: var(--admin-max-width); }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -23,7 +26,7 @@
     ?>
     <!-- Header and Navigation -->
     <header class="bg-white shadow">
-        <div class="container mx-auto px-4" style="max-width: 1400px;">
+        <div class="container mx-auto px-4 admin-shell">
             <!-- Logo and Title -->
             <div class="flex items-center justify-between py-4 border-b">
                 <div class="flex items-center gap-4">
@@ -164,7 +167,7 @@
         </div>
     </header>
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8" style="max-width: 1400px;">
+    <main class="container mx-auto px-4 py-8 admin-shell">
 
 <script>
     // JavaScript to handle dropdown menus

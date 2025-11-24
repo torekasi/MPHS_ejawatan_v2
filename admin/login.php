@@ -71,22 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         log_error('Database error during login', ['error_code' => $error_code, 'exception' => $e->getMessage(), 'user_identifier' => $username]);
     }
 }
-?><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Log Masuk Admin - ejawatan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/x-icon" href="<?php echo htmlspecialchars($config['favicon']); ?>">
+?>
+<?php include 'templates/header.php'; ?>
+
+<div class="standard-container mx-auto">
     <?php if (!empty($recaptcha_v2_site_key)): ?>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <?php endif; ?>
-</head>
-<body class="bg-gray-50 min-h-screen flex flex-col justify-center items-center">
-    <header class="w-full flex flex-col items-center mt-10 mb-6">
-        <img src="<?php echo htmlspecialchars($config['logo_url']); ?>" alt="Logo" class="h-20 w-auto mx-auto mb-4 drop-shadow-lg">
-    </header>
-    <main class="w-full max-w-md bg-white p-8 rounded shadow-xl">
+    <div class="w-full max-w-md mx-auto bg-white p-8 rounded shadow-xl">
         <h2 class="text-2xl font-bold mb-6 text-center text-blue-900">Log Masuk Admin</h2>
         <?php if ($error): ?>
             <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-center"><?php echo htmlspecialchars($error); ?></div>
@@ -110,13 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="mt-4 text-center">
             <a href="forgot-password.php" class="text-blue-700 hover:underline text-sm">Lupa kata laluan?</a>
         </div>
-    </main>
-    <footer class="mt-4 text-center text-gray-500 text-sm">
-        <p>Version 1.0.0</p>
-    </footer>
-</body>
-</html>
+    </div>
+</div>
 
-<?php
-// DB helper comes from includes/bootstrap.php
-?>
+<?php include 'templates/footer.php'; ?>

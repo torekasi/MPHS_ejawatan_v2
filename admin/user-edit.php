@@ -77,7 +77,7 @@ try {
 include 'templates/header.php';
 ?>
 
-<div class="max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-6">
+<div class="standard-container mx-auto bg-white rounded-lg shadow-sm p-6">
     <h2 class="text-xl font-bold text-blue-900 mb-6">Edit Profil Pengguna</h2>
 
     <?php if ($error): ?>

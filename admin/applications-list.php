@@ -278,7 +278,15 @@ try {
         $data_where_sql = " WHERE (aa.submission_status != 'Draft' OR aa.submission_status IS NULL)";
     }
 
-    $sql = "SELECT aa.*, jp.job_title, jp.job_code AS job_code, jp.kod_gred, st.name AS status_name, st.code AS status_code
+    $hasJobReqCol = false;
+    try {
+        $colCheck = $pdo->query("SHOW COLUMNS FROM job_postings LIKE 'job_requirements'");
+        $hasJobReqCol = (bool)($colCheck && $colCheck->fetch());
+    } catch (Exception $e) { $hasJobReqCol = false; }
+
+    $jobReqSelect = $hasJobReqCol ? ", jp.job_requirements AS job_requirements" : '';
+
+    $sql = "SELECT aa.*, jp.job_title, jp.job_code AS job_code, jp.kod_gred" . $jobReqSelect . ", st.name AS status_name, st.code AS status_code
             FROM application_application_main aa
             LEFT JOIN job_postings jp ON aa.job_id = jp.id
             LEFT JOIN application_statuses st ON st.code = aa.submission_status" .
@@ -301,68 +309,96 @@ try {
     $stmt->execute($all_params);
     $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Process applications to determine "Ideal Candidate" status
-    // Only if a specific job is selected and has requirements
-    if (!empty($current_job_reqs)) {
-        foreach ($applications as &$app) {
-            $is_ideal = true;
+    foreach ($applications as &$app) {
+        $reqs = [];
+        if (!empty($app['job_requirements'])) {
+            $decoded = json_decode($app['job_requirements'], true);
+            if (is_array($decoded)) { $reqs = $decoded; }
+        } elseif (!empty($current_job_reqs)) {
             $reqs = $current_job_reqs;
+        }
 
-            // 1. License Check
-            if (!empty($reqs['license'])) {
-                $app_licenses = json_decode($app['lesen_memandu'] ?? '[]', true) ?: [];
-                foreach ($reqs['license'] as $req_lic) {
-                    if (!in_array($req_lic, $app_licenses)) {
-                        $is_ideal = false;
-                        break;
+        $is_ideal = null;
+        $criteria_total = 0;
+        $criteria_met = 0;
+
+        if (!empty($reqs)) {
+            $is_ideal = true;
+
+            if (!empty($reqs['license']) && is_array($reqs['license'])) {
+                $licenses_raw = $app['lesen_memandu_set'] ?? ($app['lesen_memandu'] ?? ($app['kelas_lesen'] ?? ''));
+                $app_licenses = [];
+                if (is_array($licenses_raw)) {
+                    $app_licenses = $licenses_raw;
+                } elseif (is_string($licenses_raw)) {
+                    $raw = trim($licenses_raw);
+                    if ($raw !== '') {
+                        $decoded = json_decode($raw, true);
+                        if (is_array($decoded)) {
+                            $app_licenses = $decoded;
+                        } else {
+                            $parts = preg_split('/[\s,;\\\/]+/', $raw);
+                            $app_licenses = array_values(array_filter(array_map(function($v){ return trim((string)$v); }, (array)$parts), function($v){ return $v !== ''; }));
+                        }
                     }
                 }
-            }
+                $app_licenses = array_map(function($v){ return strtoupper((string)$v); }, (array)$app_licenses);
+                $required_licenses = array_values(array_filter(array_map(function($v){ return strtoupper((string)$v); }, (array)$reqs['license']), function($v){ return $v !== ''; }));
+                $required_licenses = array_unique($required_licenses);
 
-            // 2. Gender Check
-            if ($is_ideal && !empty($reqs['gender'])) {
-                if (strtoupper(trim($app['jantina'] ?? '')) !== strtoupper(trim($reqs['gender']))) {
-                    $is_ideal = false;
+                $similar_sum = 0.0;
+                $all_found = true;
+                foreach ($required_licenses as $req_lic) {
+                    $best = 0.0;
+                    foreach ($app_licenses as $al) {
+                        if ($req_lic === $al) { $best = 1.0; break; }
+                        if (strpos($al, $req_lic) !== false || strpos($req_lic, $al) !== false) { $best = max($best, 0.9); }
+                        $pct = 0.0; similar_text($req_lic, $al, $pct); $best = max($best, ($pct/100.0));
+                    }
+                    if ($best <= 0.0) { $all_found = false; }
+                    $similar_sum += $best;
                 }
+                $criteria_total += count($required_licenses);
+                $criteria_met += $similar_sum;
+                if (!$all_found) { $is_ideal = false; }
             }
 
-            // 3. Nationality Check
-            if ($is_ideal && !empty($reqs['nationality'])) {
-                if (strtoupper(trim($app['warganegara'] ?? '')) !== strtoupper(trim($reqs['nationality']))) {
-                    $is_ideal = false;
-                }
+            if (!empty($reqs['gender'])) {
+                $criteria_total++;
+                $match = strtoupper(trim($app['jantina'] ?? '')) === strtoupper(trim($reqs['gender']));
+                if ($match) { $criteria_met++; } else { $is_ideal = false; }
             }
 
-            // 3.5. Bangsa Check
-            if ($is_ideal && !empty($reqs['bangsa'])) {
-                if (strtoupper(trim($app['bangsa'] ?? '')) !== strtoupper(trim($reqs['bangsa']))) {
-                    $is_ideal = false;
-                }
+            if (!empty($reqs['nationality'])) {
+                $criteria_total++;
+                $match = strtoupper(trim($app['warganegara'] ?? '')) === strtoupper(trim($reqs['nationality']));
+                if ($match) { $criteria_met++; } else { $is_ideal = false; }
             }
 
-            // 3.6. Birth State Check
-            if ($is_ideal && !empty($reqs['birth_state'])) {
-                if (strtoupper(trim($app['negeri_kelahiran'] ?? '')) !== strtoupper(trim($reqs['birth_state']))) {
-                    $is_ideal = false;
-                }
+            if (!empty($reqs['bangsa'])) {
+                $criteria_total++;
+                $match = strtoupper(trim($app['bangsa'] ?? '')) === strtoupper(trim($reqs['bangsa']));
+                if ($match) { $criteria_met++; } else { $is_ideal = false; }
             }
 
-            // 4. Years in Selangor Check
-            if ($is_ideal && !empty($reqs['min_selangor_years'])) {
+            if (!empty($reqs['birth_state'])) {
+                $criteria_total++;
+                $match = strtoupper(trim($app['negeri_kelahiran'] ?? '')) === strtoupper(trim($reqs['birth_state']));
+                if ($match) { $criteria_met++; } else { $is_ideal = false; }
+            }
+
+            if (!empty($reqs['min_selangor_years'])) {
+                $criteria_total++;
                 $years = (int)($app['tempoh_bermastautin_selangor'] ?? 0);
-                if ($years < (int)$reqs['min_selangor_years']) {
-                    $is_ideal = false;
-                }
+                if ($years >= (int)$reqs['min_selangor_years']) { $criteria_met++; } else { $is_ideal = false; }
             }
 
-            // 5. Education Level Check
-            if ($is_ideal && !empty($reqs['min_education'])) {
-                // Fetch highest education for this applicant
+            if (!empty($reqs['min_education'])) {
+                $criteria_total++;
                 try {
                     $edu_stmt = $pdo->prepare("SELECT kelayakan FROM application_education WHERE application_reference = ?");
                     $edu_stmt->execute([$app['application_reference']]);
                     $edu_rows = $edu_stmt->fetchAll(PDO::FETCH_COLUMN);
-                    
                     $edu_ranks = [
                         'SPM' => 1,
                         'STPM' => 2, 'SIJIL' => 2,
@@ -370,10 +406,8 @@ try {
                         'IJAZAH' => 4, 'IJAZAH SARJANA MUDA' => 4,
                         'MASTER' => 5, 'SARJANA' => 5, 'PHD' => 5
                     ];
-                    
                     $req_rank = $edu_ranks[strtoupper($reqs['min_education'])] ?? 0;
                     $max_app_rank = 0;
-                    
                     foreach ($edu_rows as $edu) {
                         $normalized_edu = strtoupper(trim($edu));
                         foreach ($edu_ranks as $key => $rank) {
@@ -382,27 +416,31 @@ try {
                             }
                         }
                     }
-                    
-                    if ($max_app_rank < $req_rank) {
-                        $is_ideal = false;
-                    }
+                    if ($max_app_rank >= $req_rank) { $criteria_met++; } else { $is_ideal = false; }
                 } catch (Exception $e) {
                     $is_ideal = false;
                 }
             }
-
-
-
-            $app['is_ideal'] = $is_ideal;
         }
-        unset($app);
 
-        // Filter if "Show Ideal Only" is checked
-        if (isset($_GET['show_ideal']) && $_GET['show_ideal'] == '1') {
-            $applications = array_filter($applications, function($app) {
-                return !empty($app['is_ideal']);
-            });
+        $app['is_ideal'] = $is_ideal;
+        $app['suitability_score'] = ($criteria_total > 0) ? (int)round(($criteria_met / $criteria_total) * 100) : null;
+        if ($app['suitability_score'] === null) {
+            $app['suitability_label'] = null;
+        } elseif ($is_ideal) {
+            $app['suitability_label'] = 'Ideal';
+        } elseif ($app['suitability_score'] >= 70) {
+            $app['suitability_label'] = 'Sesuai';
+        } else {
+            $app['suitability_label'] = 'Tidak Sesuai';
         }
+    }
+    unset($app);
+
+    if (isset($_GET['show_ideal']) && $_GET['show_ideal'] == '1') {
+        $applications = array_filter($applications, function($app) {
+            return isset($app['suitability_score']) && $app['suitability_score'] >= 50;
+        });
     }
 
 
@@ -501,9 +539,9 @@ include 'templates/header.php';
     <?php endif; ?>
     
     <!-- Summary Statistics -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
         <!-- Total Applications -->
-        <a href="applications-list.php" class="block transform hover:scale-105 transition-transform duration-200">
+        <a href="applications-list.php" title="Mengira semua permohonan dihantar (submission_locked = 1). Draf tidak termasuk." class="block transform hover:scale-105 transition-transform duration-200">
             <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl h-24 flex items-center justify-center">
                 <div class="text-center">
                     <p class="text-sm font-medium text-gray-500">Total Permohonan</p>
@@ -514,7 +552,7 @@ include 'templates/header.php';
         </a>
         
         <!-- Pending Applications -->
-        <a href="applications-list.php?status=PENDING" class="block transform hover:scale-105 transition-transform duration-200">
+        <a href="applications-list.php?status[]=PENDING&status[]=RECEIVED" title="Belum Disemak = Permohonan Diterima (PENDING/RECEIVED)." class="block transform hover:scale-105 transition-transform duration-200">
             <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl h-24 flex items-center justify-center">
                 <div class="text-center">
                     <p class="text-sm font-medium text-gray-500">Belum Disemak</p>
@@ -522,7 +560,7 @@ include 'templates/header.php';
                         <?php 
                         // Count from database excluding drafts
                         try {
-                            $pending_sql = "SELECT COUNT(*) FROM application_application_main aa WHERE aa.submission_locked = 1 AND (aa.submission_status != 'Draft' OR aa.submission_status IS NULL) AND aa.reviewed_at IS NULL AND aa.approved_at IS NULL";
+                            $pending_sql = "SELECT COUNT(*) FROM application_application_main aa WHERE aa.submission_locked = 1 AND aa.submission_status IN ('PENDING','RECEIVED')";
                             $pending_stmt = $pdo->query($pending_sql);
                             $pending_count = $pending_stmt->fetchColumn();
                             echo number_format($pending_count);
@@ -537,7 +575,7 @@ include 'templates/header.php';
         </a>
         
         <!-- Reviewed Applications -->
-        <a href="applications-list.php?status=REVIEWED" class="block transform hover:scale-105 transition-transform duration-200">
+        <a href="applications-list.php?status[]=SCREENING&status[]=TEST_INTERVIEW&status[]=AWAITING_RESULT" title="Telah Disemak = Sedang Ditapis + Dipanggil Ujian/Temu Duga + Menunggu Keputusan." class="block transform hover:scale-105 transition-transform duration-200">
             <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl h-24 flex items-center justify-center">
                 <div class="text-center">
                     <p class="text-sm font-medium text-gray-500">Telah Disemak</p>
@@ -545,7 +583,7 @@ include 'templates/header.php';
                         <?php 
                         // Count from database excluding drafts
                         try {
-                            $reviewed_sql = "SELECT COUNT(*) FROM application_application_main aa WHERE aa.submission_locked = 1 AND (aa.submission_status != 'Draft' OR aa.submission_status IS NULL) AND aa.reviewed_at IS NOT NULL AND aa.approved_at IS NULL";
+                            $reviewed_sql = "SELECT COUNT(*) FROM application_application_main aa WHERE aa.submission_locked = 1 AND aa.submission_status IN ('SCREENING','TEST_INTERVIEW','AWAITING_RESULT')";
                             $reviewed_stmt = $pdo->query($reviewed_sql);
                             $reviewed_count = $reviewed_stmt->fetchColumn();
                             echo number_format($reviewed_count);
@@ -560,7 +598,7 @@ include 'templates/header.php';
         </a>
         
         <!-- Approved Applications -->
-        <a href="applications-list.php?status=APPROVED" class="block transform hover:scale-105 transition-transform duration-200">
+        <a href="applications-list.php?status[]=PASSED_INTERVIEW&status[]=OFFER_APPOINTMENT&status[]=APPOINTED" title="Diluluskan = Lulus Temu Duga + Tawaran Pelantikan + Dilantik." class="block transform hover:scale-105 transition-transform duration-200">
             <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl h-24 flex items-center justify-center">
                 <div class="text-center">
                     <p class="text-sm font-medium text-gray-500">Diluluskan</p>
@@ -568,7 +606,7 @@ include 'templates/header.php';
                         <?php 
                         // Count from database excluding drafts
                         try {
-                            $approved_sql = "SELECT COUNT(*) FROM application_application_main aa WHERE aa.submission_locked = 1 AND (aa.submission_status != 'Draft' OR aa.submission_status IS NULL) AND aa.approved_at IS NOT NULL";
+                            $approved_sql = "SELECT COUNT(*) FROM application_application_main aa WHERE aa.submission_locked = 1 AND aa.submission_status IN ('PASSED_INTERVIEW','OFFER_APPOINTMENT','APPOINTED')";
                             $approved_stmt = $pdo->query($approved_sql);
                             $approved_count = $approved_stmt->fetchColumn();
                             echo number_format($approved_count);
@@ -581,13 +619,43 @@ include 'templates/header.php';
                 </div>
             </div>
         </a>
+        <!-- Draft Applications -->
+        <a href="draft-applications.php" title="Permohonan draf (submission_locked = 0 atau NULL)." class="block transform hover:scale-105 transition-transform duration-200">
+            <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl h-24 flex items-center justify-center">
+                <div class="text-center">
+                    <p class="text-sm font-medium text-gray-500">Draf Permohonan</p>
+                    <p class="text-2xl font-bold text-gray-900">
+                        <?php 
+                        try {
+                            $draft_sql = "SELECT COUNT(*) FROM application_application_main aa WHERE (aa.submission_status = 'Draft' OR aa.submission_locked = 0)";
+                            $draft_stmt = $pdo->query($draft_sql);
+                            $draft_count = $draft_stmt->fetchColumn();
+                            echo number_format($draft_count);
+                        } catch (Exception $e) {
+                            echo '0';
+                        }
+                        ?>
+                    </p>
+                    <p class="text-xs text-orange-600 mt-1">Klik untuk lihat draf</p>
+                </div>
+            </div>
+        </a>
     </div>
 
-    <div class="flex justify-between items-center mb-6">
-        <form id="bulk-form" method="post" action="applications-list.php" class="flex items-center space-x-2">
+    <div class="mb-6">
+        <div class="bg-white shadow-sm border border-blue-200 rounded-lg w-full">
+            <div class="px-4 py-2 bg-blue-50 border-b border-blue-200 rounded-t-lg">
+                <h3 class="text-sm font-semibold text-blue-800">Tindakan Status</h3>
+            </div>
+            <form id="bulk-form" method="post" action="applications-list.php" class="p-4 flex items-center flex-wrap gap-2">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
             <input type="hidden" name="search" value="<?php echo htmlspecialchars($filters['search'] ?? ''); ?>">
-            <input type="hidden" name="status" value="<?php echo htmlspecialchars($filters['status'] ?? ''); ?>">
+            <?php 
+            $bulk_selected_statuses = isset($filters['status']) ? (is_array($filters['status']) ? $filters['status'] : [$filters['status']]) : [];
+            foreach ($bulk_selected_statuses as $bst) {
+                echo '<input type="hidden" name="status[]" value="' . htmlspecialchars($bst) . '">';
+            }
+            ?>
             <input type="hidden" name="job_id" value="<?php echo htmlspecialchars($filters['job_id'] ?? ''); ?>">
             <select name="bulk_action" class="px-3 py-2 border rounded">
                 <option value="">Tindakan Status</option>
@@ -608,17 +676,16 @@ include 'templates/header.php';
             <input type="text" name="bulk_note" id="bulk-note" class="px-3 py-2 border rounded w-64" placeholder="Nota (wajib)">
             <label class="inline-flex items-center space-x-2"><input type="checkbox" name="send_status_email" value="1" <?php echo !empty($config['status_email_enabled']) ? 'checked' : ''; ?>> <span>Hantar emel</span></label>
             <button type="button" id="bulk-apply" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">Laksana</button>
-        </form>
-        <div class="flex items-center space-x-2">
-            <a href="draft-applications.php" class="inline-flex items-center px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700">Permohonan Draf</a>
-            <a href="applications-list.php?export=csv<?php echo !empty($filters) ? '&' . http_build_query(array_filter($filters)) : ''; ?>" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Export CSV</a>
+            </form>
         </div>
     </div>
 
     <!-- Filters -->
-    <div class="bg-white shadow-sm border border-gray-200 rounded-lg p-6 mb-6">
-        <h2 class="text-xl font-semibold mb-4">Tapis Permohonan</h2>
-        <form id="filter-form" method="get" class="flex flex-wrap gap-4">
+    <div class="bg-white shadow-sm border border-gray-200 rounded-lg mb-6">
+        <div class="px-4 py-2 bg-indigo-50 border-b border-indigo-200 rounded-t-lg">
+            <h2 class="text-sm font-semibold text-indigo-700">Tapis Permohonan</h2>
+        </div>
+        <form id="filter-form" method="get" class="p-4 flex flex-wrap gap-4">
             <div class="w-full md:w-1/3">
                 <label class="block text-gray-700 mb-2">Carian</label>
                 <input type="text" name="search" value="<?php echo htmlspecialchars($filters['search'] ?? ''); ?>" 
@@ -638,22 +705,24 @@ include 'templates/header.php';
                         if ($selected_label === '') { foreach ($expired as $j) { if ((string)$j['id'] === (string)$selected_job_id) { $selected_label = 'Ditutup >45 hari: ' . $job_labels_by_id[$j['id']]; break; } } }
                     }
                 ?>
-                <input type="text" id="job_search" name="job_search" list="jobs-datalist" placeholder="Taip untuk cari jawatan" class="w-full px-3 py-2 border rounded <?php echo !empty($selected_job_id) ? 'bg-blue-50 border-blue-400 font-medium' : ''; ?>" value="<?php echo htmlspecialchars($selected_label); ?>">
+                <div class="relative">
+                    <input type="text" id="job_search" name="job_search" placeholder="Taip untuk cari jawatan" class="w-full px-3 py-2 border rounded <?php echo !empty($selected_job_id) ? 'bg-blue-50 border-blue-400 font-medium' : ''; ?>" value="<?php echo htmlspecialchars($selected_label); ?>" autocomplete="off">
+                    <div id="job-options" class="hidden absolute z-10 w-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto"></div>
+                </div>
                 <input type="hidden" name="job_id" id="job_id_hidden" value="<?php echo htmlspecialchars($selected_job_id); ?>">
-                <datalist id="jobs-datalist">
-                    <?php foreach ($published as $job): ?>
-                        <option value="<?php echo htmlspecialchars('Aktif: ' . $job_labels_by_id[$job['id']]); ?>"></option>
-                    <?php endforeach; ?>
-                    <?php foreach ($upcoming as $job): ?>
-                        <option value="<?php echo htmlspecialchars('Akan Datang: ' . $job_labels_by_id[$job['id']]); ?>"></option>
-                    <?php endforeach; ?>
-                    <?php foreach ($recently_closed as $job): ?>
-                        <option value="<?php echo htmlspecialchars('Ditutup ≤45 hari: ' . $job_labels_by_id[$job['id']]); ?>"></option>
-                    <?php endforeach; ?>
-                    <?php foreach ($expired as $job): ?>
-                        <option value="<?php echo htmlspecialchars('Ditutup >45 hari: ' . $job_labels_by_id[$job['id']]); ?>"></option>
-                    <?php endforeach; ?>
-                </datalist>
+                <script type="application/json" id="job-index-data"><?php
+                    $payload = [
+                        'Aktif' => [],
+                        'Akan Datang' => [],
+                        'Ditutup ≤45 hari' => [],
+                        'Ditutup >45 hari' => []
+                    ];
+                    foreach ($published as $job) { $payload['Aktif'][] = ['label' => $job_labels_by_id[$job['id']], 'id' => $job['id']]; }
+                    foreach ($upcoming as $job) { $payload['Akan Datang'][] = ['label' => $job_labels_by_id[$job['id']], 'id' => $job['id']]; }
+                    foreach ($recently_closed as $job) { $payload['Ditutup ≤45 hari'][] = ['label' => $job_labels_by_id[$job['id']], 'id' => $job['id']]; }
+                    foreach ($expired as $job) { $payload['Ditutup >45 hari'][] = ['label' => $job_labels_by_id[$job['id']], 'id' => $job['id']]; }
+                    echo json_encode($payload);
+                ?></script>
             </div>
             
             <div class="w-full md:w-1/5">
@@ -727,19 +796,20 @@ include 'templates/header.php';
             <div class="w-full md:w-auto flex items-end pb-2">
                 <label class="inline-flex items-center cursor-pointer">
                     <input type="checkbox" name="show_ideal" value="1" class="form-checkbox h-5 w-5 text-blue-600" <?php echo isset($_GET['show_ideal']) ? 'checked' : ''; ?>>
-                    <span class="ml-2 text-gray-700 font-medium">Tunjuk Calon Ideal Sahaja</span>
+                    <span class="ml-2 text-gray-700 font-medium" title="Menapis calon dengan Skor Kriteria ≥ 50%">Tunjuk Calon ≥ 50% Sahaja</span>
                 </label>
             </div>
             
             <div class="w-full md:w-auto flex items-end">
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Tapis</button>
                 <a href="applications-list.php" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Reset</a>
+                <a href="applications-list.php?export=csv<?php echo !empty($filters) ? '&' . http_build_query(array_filter($filters)) : ''; ?>" class="ml-2 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Export CSV</a>
             </div>
         </form>
     </div>
     
     <!-- Applications Table Layout -->
-    <div class="bg-white shadow-sm border border-gray-200 rounded-lg overflow-hidden">
+    <div class="bg-white shadow-sm border border-gray-200 rounded-lg overflow-visible">
         <?php if (empty($applications)): ?>
         <div class="p-8 text-center text-gray-500">
             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -801,6 +871,7 @@ include 'templates/header.php';
                                     </div>
                                 <?php endif; ?>
                                 <div class="ml-4">
+                                    
                                     <div class="text-sm text-gray-900 flex items-center">
                                         <?php echo htmlspecialchars($application['nama_penuh']); ?>
                                         <?php if (!empty($application['is_ideal'])): ?>
@@ -819,9 +890,6 @@ include 'templates/header.php';
                                     <div class="text-sm text-gray-900">
                                         <?php echo htmlspecialchars($application['job_title'] ?? 'N/A'); ?>
                                     </div>
-                                    <div class="text-xs text-gray-500">
-                                        <?php echo htmlspecialchars(($application['job_code'] ?? '') . ' ' . ($application['kod_gred'] ?? '')); ?>
-                                    </div>
                                     <div class="text-sm text-gray-500">
                                         <?php echo htmlspecialchars($application['nombor_ic']); ?>
                                     </div>
@@ -835,14 +903,51 @@ include 'templates/header.php';
                             ?>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full border <?php echo $status_class; ?>">
-                                <?php echo $status_text; ?>
-                            </span>
+                            <div class="flex flex-col items-start gap-1">
+                                <?php if (isset($application['suitability_score']) && $application['suitability_score'] !== null): ?>
+                                    <?php 
+                                        $score = (int)$application['suitability_score'];
+                                        $pillClass = 'bg-red-100 text-red-800 border-red-200';
+                                        if ($score >= 95) { $pillClass = 'bg-green-100 text-green-800 border-green-200'; }
+                                        elseif ($score >= 80) { $pillClass = 'bg-teal-100 text-teal-800 border-teal-200'; }
+                                        elseif ($score >= 70) { $pillClass = 'bg-green-100 text-green-800 border-green-200'; }
+                                        elseif ($score >= 50) { $pillClass = 'bg-yellow-100 text-yellow-800 border-yellow-200'; }
+                                        elseif ($score >= 30) { $pillClass = 'bg-orange-100 text-orange-800 border-orange-200'; }
+                                    ?>
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border <?php echo $pillClass; ?>" title="Skor mengikut kriteria">
+                                        Skor Kriteria: <?php echo $score; ?>%
+                                    </span>
+                                <?php endif; ?>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full border <?php echo $status_class; ?>">
+                                    <?php echo $status_text; ?>
+                                </span>
+                            </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="application-view.php?id=<?php echo $application['id']; ?>" class="text-blue-600 hover:text-blue-900">Lihat</a>
-                                <button onclick="updateStatus(<?php echo $application['id']; ?>)" class="text-gray-600 hover:text-gray-900 ml-2">Status</button>
+                            <div class="flex space-x-2 items-center">
+                                <button type="button" onclick="viewApplication(<?php echo $application['id']; ?>)" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700">Lihat</button>
+                                <div class="relative inline-block text-left">
+                                    <button type="button" class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded bg-white text-gray-700 hover:bg-gray-50" data-toggle="status-dropdown" data-app-id="<?php echo (int)$application['id']; ?>">Status ▾</button>
+                                    <div class="hidden absolute top-full right-0 z-50 w-56 bg-white border border-gray-200 rounded-lg shadow-lg p-1 flex flex-col" style="z-index: 1000;" data-dropdown-for="<?php echo (int)$application['id']; ?>">
+                                        <?php if (!empty($status_options)): ?>
+                                            <?php foreach ($status_options as $st): ?>
+                                                <button type="button" class="block w-full text-left px-3 py-2 hover:bg-gray-50 text-sm" data-status-code="<?php echo htmlspecialchars($st['code']); ?>" data-status-name="<?php echo htmlspecialchars($st['name']); ?>" data-app-id="<?php echo (int)$application['id']; ?>"><?php echo htmlspecialchars($st['name']); ?></button>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <?php $__fallback = [
+                                                ['code'=>'PENDING','name'=>'Permohonan Diterima'],
+                                                ['code'=>'SCREENING','name'=>'Sedang Ditapis'],
+                                                ['code'=>'TEST_INTERVIEW','name'=>'Dipanggil Ujian / Temu Duga'],
+                                                ['code'=>'AWAITING_RESULT','name'=>'Menunggu Keputusan'],
+                                                ['code'=>'PASSED_INTERVIEW','name'=>'Lulus Temu Duga'],
+                                                ['code'=>'OFFER_APPOINTMENT','name'=>'Tawaran Pelantikan'],
+                                                ['code'=>'APPOINTED','name'=>'Dilantik']
+                                            ]; foreach ($__fallback as $st): ?>
+                                                <button type="button" class="block w-full text-left px-3 py-2 hover:bg-gray-50 text-sm" data-status-code="<?php echo htmlspecialchars($st['code']); ?>" data-status-name="<?php echo htmlspecialchars($st['name']); ?>" data-app-id="<?php echo (int)$application['id']; ?>"><?php echo htmlspecialchars($st['name']); ?></button>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -890,40 +995,119 @@ include 'templates/header.php';
     <?php endif; ?>
 </div>
 
+<!-- Quick Status Modal -->
+<div id="quick-status-modal" class="hidden fixed inset-0 z-30 bg-black bg-opacity-40 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
+        <div class="px-4 py-2 bg-blue-50 border-b border-blue-200 rounded-t-lg text-sm font-semibold text-blue-800">Kemaskini Status</div>
+        <form id="quick-status-form" method="post" action="applications-list.php" class="p-4 space-y-3">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
+            <input type="hidden" name="bulk_action" value="">
+            <input type="hidden" name="selected_ids[]" value="">
+            <input type="hidden" name="search" value="">
+            <div id="quick-status-hidden-status"></div>
+            <input type="hidden" name="job_id" value="">
+            <div class="text-sm">Status dipilih: <span id="quick-status-label" class="font-semibold"></span></div>
+            <div>
+                <label class="block text-sm text-gray-700 mb-1">Catatan</label>
+                <textarea name="bulk_note" class="w-full px-3 py-2 border rounded" placeholder="Masukkan catatan (wajib)" required></textarea>
+            </div>
+            <label class="inline-flex items-center space-x-2"><input type="checkbox" name="send_status_email" value="1" <?php echo !empty($config['status_email_enabled']) ? 'checked' : ''; ?>><span>Hantar emel</span></label>
+            <div class="flex justify-end gap-2 pt-2">
+                <button type="button" onclick="closeQuickStatusModal()" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Batal</button>
+                <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Simpan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
 function updateStatus(applicationId) {
     // Redirect to application view page with status update focus
     window.location.href = 'application-view.php?id=' + applicationId + '#status';
 }
 
-var jobIndex = {};
-try {
-    var dataEl = document.getElementById('job-index-data');
-    if (dataEl) { jobIndex = JSON.parse(dataEl.textContent || '{}'); }
-} catch (e) {}
+function viewApplication(applicationId) {
+    window.location.href = 'application-view.php?id=' + applicationId;
+}
 
+var jobIndex = {};
 var jobSearchInput = document.getElementById('job_search');
 var jobHidden = document.getElementById('job_id_hidden');
 var filterForm = document.getElementById('filter-form');
+var jobOptionsEl = document.getElementById('job-options');
 
-// Job search with auto-submit
+function loadJobIndex() {
+    if (Object.keys(jobIndex).length) return;
+    var dataEl = document.getElementById('job-index-data');
+    if (dataEl) {
+        try { jobIndex = JSON.parse(dataEl.textContent || '{}'); } catch (e) { jobIndex = {}; }
+    }
+}
+
+function buildJobOptions(filter) {
+    loadJobIndex();
+    if (!jobOptionsEl) return;
+    var order = ['Aktif','Akan Datang','Ditutup ≤45 hari','Ditutup >45 hari'];
+    var maxItems = 300;
+    var count = 0;
+    jobOptionsEl.innerHTML = '';
+    var f = filter ? String(filter).toLowerCase() : '';
+    order.forEach(function(cat){
+        var items = Array.isArray(jobIndex[cat]) ? jobIndex[cat] : [];
+        if (f) { items = items.filter(function(e){ return (e.label || '').toLowerCase().indexOf(f) !== -1; }); }
+        if (items.length === 0) return;
+        var header = document.createElement('div');
+        header.className = 'px-3 py-2 text-xs font-semibold text-gray-600 bg-gray-50';
+        header.textContent = cat;
+        jobOptionsEl.appendChild(header);
+        for (var i=0; i<items.length && count<maxItems; i++) {
+            var e = items[i];
+            var opt = document.createElement('button');
+            opt.type = 'button';
+            opt.className = 'w-full text-left px-3 py-2 hover:bg-gray-50';
+            opt.textContent = e.label;
+            opt.setAttribute('data-id', e.id);
+            opt.setAttribute('data-cat', cat);
+            opt.addEventListener('click', function(){
+                var id = this.getAttribute('data-id');
+                var label = this.textContent;
+                var catLabel = this.getAttribute('data-cat') || '';
+                jobHidden.value = String(id);
+                jobSearchInput.value = (catLabel ? (catLabel + ': ') : '') + label;
+                jobSearchInput.classList.add('bg-blue-50', 'border-blue-400', 'font-medium');
+                closeJobOptions();
+                setTimeout(function(){ filterForm.submit(); }, 200);
+            });
+            jobOptionsEl.appendChild(opt);
+            count++;
+        }
+    });
+    if (!jobOptionsEl.childElementCount) {
+        jobOptionsEl.innerHTML = '<div class="px-3 py-2 text-sm text-gray-500">Tiada padanan</div>';
+    }
+}
+
+function openJobOptions(){ if (jobOptionsEl){ jobOptionsEl.classList.remove('hidden'); buildJobOptions(jobSearchInput ? jobSearchInput.value : ''); } }
+function closeJobOptions(){ if (jobOptionsEl){ jobOptionsEl.classList.add('hidden'); } }
+
 if (jobSearchInput && jobHidden && filterForm) {
-    jobSearchInput.addEventListener('input', function() {
-        var v = this.value;
-        if (jobIndex[v]) {
-            jobHidden.value = jobIndex[v];
-            // Add highlighting
-            this.classList.add('bg-blue-50', 'border-blue-400', 'font-medium');
-            // Auto-submit after short delay
-            setTimeout(function() {
-                filterForm.submit();
-            }, 300);
-        } else {
-            jobHidden.value = '';
-            this.classList.remove('bg-blue-50', 'border-blue-400', 'font-medium');
+    jobSearchInput.addEventListener('focus', openJobOptions);
+    jobSearchInput.addEventListener('click', openJobOptions);
+    jobSearchInput.addEventListener('input', function(){ buildJobOptions(this.value); });
+    jobSearchInput.addEventListener('keydown', function(e){
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            var first = jobOptionsEl ? jobOptionsEl.querySelector('button[data-id]') : null;
+            if (first) { first.click(); }
         }
     });
 }
+
+document.addEventListener('click', function(e){
+    if (jobOptionsEl && !jobOptionsEl.contains(e.target) && e.target !== jobSearchInput) {
+        closeJobOptions();
+    }
+});
 
 // Multi-select status dropdown with pills
 var statusDropdown = document.getElementById('status-dropdown');
@@ -1057,6 +1241,103 @@ if (bulkApply) {
         });
         form.submit();
     });
+}
+
+// Quick status dropdown & modal logic
+document.addEventListener('click', function(e){
+    var t = e.target;
+    var btn = t.closest('[data-toggle="status-dropdown"]');
+    var allDrops = document.querySelectorAll('[data-dropdown-for]');
+    function hideDropdown(d){
+        if (!d) return;
+        d.classList.add('hidden');
+        if (d.dataset.floating === '1' && d._originalParent) {
+            d.style.position = '';
+            d.style.top = '';
+            d.style.left = '';
+            d.style.zIndex = '';
+            d.dataset.floating = '';
+            d._originalParent.appendChild(d);
+        }
+    }
+    if (btn) {
+        var id = btn.getAttribute('data-app-id');
+        var dd = document.querySelector('[data-dropdown-for="' + id + '"]');
+        allDrops.forEach(function(d){ if (d !== dd) hideDropdown(d); });
+        if (dd) {
+            if (dd.classList.contains('hidden')) {
+                dd.classList.remove('hidden');
+                if (!dd._originalParent) dd._originalParent = dd.parentNode;
+                document.body.appendChild(dd);
+                var rect = btn.getBoundingClientRect();
+                var w = dd.offsetWidth || 224;
+                var vw = window.innerWidth || document.documentElement.clientWidth || 1024;
+                var vh = window.innerHeight || document.documentElement.clientHeight || 768;
+                dd.style.position = 'fixed';
+                dd.style.zIndex = '10000';
+                dd.style.maxHeight = Math.floor(vh * 0.6) + 'px';
+                dd.style.overflowY = 'auto';
+                var left = Math.min(vw - w - 8, Math.max(8, rect.right - w));
+                dd.style.left = left + 'px';
+                var ddh = dd.offsetHeight || dd.scrollHeight || 0;
+                var spaceBelow = vh - rect.bottom;
+                var spaceAbove = rect.top;
+                if (ddh > spaceBelow && spaceAbove > spaceBelow) {
+                    dd.style.top = (rect.top - ddh) + 'px';
+                    dd.dataset.openDir = 'up';
+                } else {
+                    dd.style.top = (rect.bottom) + 'px';
+                    dd.dataset.openDir = 'down';
+                }
+                dd.dataset.floating = '1';
+            } else {
+                hideDropdown(dd);
+            }
+        }
+        return;
+    }
+    var item = t.closest('[data-status-code]');
+    if (item) {
+        var code = item.getAttribute('data-status-code');
+        var name = item.getAttribute('data-status-name');
+        var appId = item.getAttribute('data-app-id');
+        allDrops.forEach(function(d){ hideDropdown(d); });
+        openQuickStatusModal(appId, code, name);
+        return;
+    }
+    if (!t.closest('[data-dropdown-for]') && !t.closest('[data-toggle="status-dropdown"]')) {
+        allDrops.forEach(function(d){ hideDropdown(d); });
+    }
+});
+
+function openQuickStatusModal(appId, code, name) {
+    var m = document.getElementById('quick-status-modal');
+    var form = document.getElementById('quick-status-form');
+    document.getElementById('quick-status-label').textContent = name;
+    form.querySelector('input[name="selected_ids[]"]').value = appId;
+    form.querySelector('input[name="bulk_action"]').value = code;
+    buildHiddenFilters();
+    m.classList.remove('hidden');
+}
+
+function closeQuickStatusModal(){
+    var m = document.getElementById('quick-status-modal');
+    if (m) m.classList.add('hidden');
+}
+
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeQuickStatusModal(); });
+
+function buildHiddenFilters(){
+    var form = document.getElementById('quick-status-form');
+    var params = new URLSearchParams(window.location.search);
+    form.querySelector('input[name="search"]').value = params.get('search') || '';
+    var statusParams = params.getAll('status[]');
+    var statusInputContainer = document.getElementById('quick-status-hidden-status');
+    statusInputContainer.innerHTML = '';
+    statusParams.forEach(function(s){
+        var i = document.createElement('input'); i.type='hidden'; i.name='status[]'; i.value=s; statusInputContainer.appendChild(i);
+    });
+    form.querySelector('input[name="job_id"]').value = params.get('job_id') || '';
 }
 
 </script>

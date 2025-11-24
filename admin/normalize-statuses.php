@@ -73,7 +73,7 @@ $after = $ran ? fetch_status_counts($pdo) : $before;
 
 include 'templates/header.php';
 ?>
-<div class="bg-white rounded-lg shadow-sm p-6">
+<div class="standard-container mx-auto bg-white rounded-lg shadow-sm p-6">
   <h1 class="text-2xl font-bold mb-4">Normalize Application Statuses</h1>
   <p class="text-gray-600 mb-4">This tool converts legacy/lowercase statuses to standardized uppercase values used by the admin panel.</p>
 

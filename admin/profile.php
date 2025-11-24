@@ -68,7 +68,7 @@ try {
 
 include 'templates/header.php';
 ?>
-<div class="max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-6">
+<div class="standard-container mx-auto bg-white rounded-lg shadow-sm p-6">
     <h2 class="text-xl font-bold text-blue-900 mb-6">Profil Saya</h2>
     <?php if ($error): ?>
         <div class="bg-red-100 text-red-700 p-4 rounded mb-4"><?php echo $error; ?></div>

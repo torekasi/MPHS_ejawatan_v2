@@ -144,7 +144,7 @@ if ($error) {
 
 include 'templates/header.php';
 ?>
-<div class="max-w-7xl mx-auto bg-white rounded-lg shadow-sm p-8">
+<div class="standard-container mx-auto bg-white rounded-lg shadow-sm p-8">
     <h2 class="text-xl font-bold mb-2">Senarai Jawatan Kosong</h2>
     <div class="mb-4 text-gray-600 text-sm">"*" indicates required fields</div>
     <?php if ($error): ?>
@@ -241,13 +241,28 @@ include 'templates/header.php';
                     </button>
                     <div id="license-container" class="hidden mt-3 grid grid-cols-2 md:grid-cols-5 gap-3">
                         <?php 
-                        $licenses = ['A', 'B', 'B2', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+                        $licenses = [
+                            ['code' => 'A', 'desc' => 'Motosikal (kelas lama)'],
+                            ['code' => 'B', 'desc' => 'Motosikal >250cc'],
+                            ['code' => 'B1', 'desc' => 'Motosikal ≤500cc'],
+                            ['code' => 'B2', 'desc' => 'Motosikal ≤250cc'],
+                            ['code' => 'C', 'desc' => 'Traktor'],
+                            ['code' => 'D', 'desc' => 'Kereta'],
+                            ['code' => 'E', 'desc' => 'Lori/Treler'],
+                            ['code' => 'E1', 'desc' => 'Treler ringan'],
+                            ['code' => 'E2', 'desc' => 'Treler berat'],
+                            ['code' => 'F', 'desc' => 'Jentera pertanian'],
+                            ['code' => 'G', 'desc' => 'Kenderaan gandar khas'],
+                            ['code' => 'H', 'desc' => 'Kren'],
+                            ['code' => 'I', 'desc' => 'Forklift'],
+                            ['code' => 'Tiada', 'desc' => 'Tiada lesen']
+                        ];
                         $selected_licenses = $_POST['req_license'] ?? [];
                         foreach ($licenses as $lic): 
                         ?>
                         <label class="inline-flex items-center bg-white px-3 py-2 rounded border border-gray-200 hover:bg-gray-50 cursor-pointer">
-                            <input type="checkbox" name="req_license[]" value="<?php echo $lic; ?>" class="form-checkbox h-4 w-4 text-blue-600" <?php echo in_array($lic, $selected_licenses) ? 'checked' : ''; ?>>
-                            <span class="ml-2 text-sm text-gray-700">Lesen <?php echo $lic; ?></span>
+                            <input type="checkbox" name="req_license[]" value="<?php echo $lic['code']; ?>" class="form-checkbox h-4 w-4 text-blue-600" <?php echo in_array($lic['code'], $selected_licenses) ? 'checked' : ''; ?>>
+                            <span class="ml-2 text-sm text-gray-700"><?php echo $lic['code']; ?> — <?php echo $lic['desc']; ?></span>
                         </label>
                         <?php endforeach; ?>
                     </div>
@@ -297,7 +312,12 @@ include 'templates/header.php';
                     <select name="req_birth_state" class="w-full border rounded px-3 py-2 bg-white">
                         <option value="">Semua Negeri</option>
                         <?php 
-                        $states = ["Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Sabah", "Sarawak", "Selangor", "Terengganu", "Wilayah Persekutuan"];
+                        $states = [
+                            "Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Sabah", "Sarawak", "Selangor", "Terengganu",
+                            "Wilayah Persekutuan Kuala Lumpur", "Wilayah Persekutuan Labuan", "Wilayah Persekutuan Putrajaya", "Bukan Malaysia"
+                        ];
+                        $existingBirth = $_POST['req_birth_state'] ?? '';
+                        if ($existingBirth === 'Wilayah Persekutuan') { $states[] = 'Wilayah Persekutuan'; }
                         foreach ($states as $st): 
                         ?>
                         <option value="<?php echo $st; ?>" <?php echo ($_POST['req_birth_state'] ?? '') === $st ? 'selected' : ''; ?>><?php echo $st; ?></option>

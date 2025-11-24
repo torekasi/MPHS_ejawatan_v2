@@ -52,7 +52,7 @@ try {
 include 'templates/header.php';
 ?>
 
-<div class="max-w-5xl mx-auto bg-white rounded-lg shadow-sm p-6">
+<div class="standard-container mx-auto bg-white rounded-lg shadow-sm p-6">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-xl font-bold text-blue-900">Senarai Pengguna</h2>
         <a href="admin-create.php" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition flex items-center gap-2">

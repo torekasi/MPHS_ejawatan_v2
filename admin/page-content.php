@@ -134,7 +134,7 @@ include 'templates/header.php';
 ?>
 
 <!-- Page Content -->
-<div class="max-w-7xl mx-auto bg-white rounded-lg shadow-sm p-8">
+<div class="standard-container mx-auto bg-white rounded-lg shadow-sm p-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-800">Pengurusan Kandungan Halaman</h1>
         <h2 class="text-xl text-gray-600"><?php echo htmlspecialchars($page_title); ?></h2>

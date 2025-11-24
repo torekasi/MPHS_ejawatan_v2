@@ -43,14 +43,14 @@ $config['max_upload_size'] = 10 * 1024 * 1024; // 10MB
 $config['allowed_file_types'] = ['pdf', 'jpg', 'jpeg', 'png'];
 
 // Email Configuration
-$config['smtp_host'] = 'mail.frenflo.com';
+$config['smtp_host'] = 'smtp.gmail.com';
 $config['smtp_port'] = 587;
 $config['smtp_secure'] = 'tls';  // 'tls' or 'ssl' or 'none'
 $config['smtp_auth'] = true;
-$config['smtp_username'] = 'info@frenflo.com';
-$config['smtp_password'] = 'Malaysia@2413';
-$config['admin_email'] = 'info@frenflo.com';
-$config['noreply_email'] = 'info@frenflo.com';
+$config['smtp_username'] = 'jkp@mphs.gov.my';
+$config['smtp_password'] = 'mphs1234';
+$config['admin_email'] = 'jkp@mphs.gov.my';
+$config['noreply_email'] = 'jkp@mphs.gov.my';
 
 
 // Navigation Menu Settings

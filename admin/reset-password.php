@@ -87,36 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user && !$error) {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Admin Password - eJawatan MPHS</title>
-    <link href="../assets/css/tailwind.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        .standard-container {
-            max-width: 1050px;
-            margin: 0 auto;
-            width: 100%;
-        }
-    </style>
-</head>
-<body class="min-h-screen flex items-center justify-center">
-    <div class="standard-container px-4 sm:px-6 lg:px-8">
+<?php include 'templates/header.php'; ?>
+
+    <div class="standard-container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-md mx-auto">
             <!-- Logo/Header -->
             <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-white mb-2">eJawatan MPHS</h1>
-                <p class="text-blue-100">Reset Admin Password</p>
+                <h1 class="text-3xl font-bold text-blue-900 mb-2">eJawatan MPHS</h1>
+                <p class="text-blue-600">Reset Admin Password</p>
             </div>
 
             <!-- Reset Form -->
@@ -248,5 +226,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user && !$error) {
             }
         });
     </script>
-</body>
-</html>
+<?php include 'templates/footer.php'; ?>

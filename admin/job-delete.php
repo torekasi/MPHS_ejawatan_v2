@@ -183,7 +183,7 @@ try {
                 background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
             }
         </style>
-        <div class="container mx-auto px-4 py-6">
+        <div class="standard-container mx-auto py-6">
             <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
                 <div class="flex">
                     <div class="flex-shrink-0">

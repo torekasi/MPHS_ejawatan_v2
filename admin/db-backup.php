@@ -285,21 +285,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $backups = getBackupList($backupDir);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Backup - Admin Panel</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.jpeg">
-</head>
-<body class="bg-gray-50">
-    <div class="min-h-screen">
-        <?php include('templates/header.php'); ?>
+<?php include('templates/header.php'); ?>
         
-        <main class="p-6">
-                <div class="max-w-6xl mx-auto">
+        <div class="p-6">
+                <div class="standard-container mx-auto">
                     <!-- Page Header -->
                     <div class="mb-8">
                         <h1 class="text-3xl font-bold text-gray-900">Database Backup Management</h1>
@@ -453,8 +442,7 @@ $backups = getBackupList($backupDir);
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
 
     <!-- Success Modal -->
     <div id="successModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
@@ -598,5 +586,4 @@ $backups = getBackupList($backupDir);
             }, 2000);
         <?php endif; ?>
     </script>
-</body>
-</html>
+<?php include 'templates/footer.php'; ?>

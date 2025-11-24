@@ -58,17 +58,8 @@ if ($delete_file && isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
     exit;
 }
 
-// HTML header
-echo '<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Uploads</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
+include 'templates/header.php';
+echo '<div class="standard-container mx-auto py-8">
         <div class="bg-white rounded-lg shadow-md p-6">
             <h1 class="text-2xl font-bold mb-6">Manage Uploaded Files</h1>';
 
@@ -245,9 +236,8 @@ echo '
                 <a href="../admin/index.php" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Back to Admin Dashboard</a>
             </div>
         </div>
-    </div>
-</body>
-</html>';
+    </div>';
+include 'templates/footer.php';
 
 // End output buffering and send to browser
 ob_end_flush();

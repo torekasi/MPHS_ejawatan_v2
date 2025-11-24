@@ -175,6 +175,97 @@ foreach ($work_experience as &$w) { if (isset($w['gaji']) && $w['gaji'] !== '') 
 unset($w);
 $rujukan_db = $allData['references'] ?? [];
 
+// Build job criteria display for top section
+$job_req_display = '';
+$suitability_score_top = null;
+try {
+    $jr_stmt = $pdo->prepare('SELECT job_requirements FROM job_postings WHERE id = ?');
+    $jr_stmt->execute([ (int)($application['job_id'] ?? 0) ]);
+    $req_raw_top = (string)($jr_stmt->fetchColumn() ?: '');
+} catch (Throwable $e) { $req_raw_top = ''; }
+if ($req_raw_top === '' && !empty($application['posting_job_id'])) {
+    try {
+        $jr2 = $pdo->prepare('SELECT job_requirements FROM job_postings WHERE job_code = ?');
+        $jr2->execute([ (string)$application['posting_job_id'] ]);
+        $req_raw_top = (string)($jr2->fetchColumn() ?: '');
+    } catch (Throwable $e) {}
+}
+if ($req_raw_top !== '') {
+    $decoded_top = json_decode($req_raw_top, true);
+    if (is_array($decoded_top)) {
+        $chips = [];
+        $criteria_total = 0;
+        $criteria_met = 0;
+        $lic = $decoded_top['license'] ?? [];
+        if (is_string($lic) && strlen($lic) > 0) { $lic = [$lic]; }
+        if (is_array($lic) && count($lic) > 0) {
+            foreach ($lic as $l) { $chips[] = '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">Lesen: ' . htmlspecialchars((string)$l, ENT_QUOTES, 'UTF-8') . '</span>'; }
+            $licenses_raw = $application['lesen_memandu_set'] ?? ($application['lesen_memandu'] ?? ($application['kelas_lesen'] ?? ''));
+            $app_licenses = [];
+            if (is_array($licenses_raw)) { $app_licenses = $licenses_raw; }
+            elseif (is_string($licenses_raw)) {
+                $raw = trim($licenses_raw);
+                if ($raw !== '') {
+                    $dec = json_decode($raw, true);
+                    if (is_array($dec)) { $app_licenses = $dec; }
+                    else {
+                        $parts = preg_split('/[\s,;\\\/]+/', $raw);
+                        $app_licenses = array_values(array_filter(array_map(function($v){ return trim((string)$v); }, (array)$parts), function($v){ return $v !== ''; }));
+                    }
+                }
+            }
+            $app_licenses = array_map(function($v){ return strtoupper((string)$v); }, (array)$app_licenses);
+            $required_licenses = array_values(array_filter(array_map(function($v){ return strtoupper((string)$v); }, (array)$lic), function($v){ return $v !== ''; }));
+            $required_licenses = array_unique($required_licenses);
+            $similar_sum = 0.0;
+            foreach ($required_licenses as $req_lic) {
+                $best = 0.0;
+                foreach ($app_licenses as $al) {
+                    if ($req_lic === $al) { $best = 1.0; break; }
+                    if (strpos($al, $req_lic) !== false || strpos($req_lic, $al) !== false) { $best = max($best, 0.9); }
+                    $pct = 0.0; similar_text($req_lic, $al, $pct); $best = max($best, ($pct/100.0));
+                }
+                $similar_sum += $best;
+            }
+            $criteria_total += count($required_licenses);
+            $criteria_met += $similar_sum;
+        }
+        $map = [ 'gender' => 'Jantina', 'nationality' => 'Warganegara', 'bangsa' => 'Bangsa', 'birth_state' => 'Negeri Kelahiran', 'min_education' => 'Min Pendidikan' ];
+        foreach ($map as $k => $label) {
+            $val = $decoded_top[$k] ?? '';
+            if (is_string($val)) { $val = trim($val); }
+            if (!empty($val)) { $chips[] = '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 border border-indigo-200">' . $label . ': ' . htmlspecialchars((string)$val, ENT_QUOTES, 'UTF-8') . '</span>'; }
+        }
+        $msy = $decoded_top['min_selangor_years'] ?? '';
+        if ($msy !== '' && $msy !== null) { $chips[] = '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">Bermastautin Selangor ≥ ' . htmlspecialchars((string)$msy, ENT_QUOTES, 'UTF-8') . ' tahun</span>'; $criteria_total++; $years = (int)($application['tempoh_bermastautin_selangor'] ?? 0); if ($years >= (int)$msy) { $criteria_met++; } }
+        if (!empty($decoded_top['gender'])) { $criteria_total++; $match = strtoupper(trim($application['jantina'] ?? '')) === strtoupper(trim($decoded_top['gender'])); if ($match) { $criteria_met++; } }
+        if (!empty($decoded_top['nationality'])) { $criteria_total++; $match = strtoupper(trim($application['warganegara'] ?? '')) === strtoupper(trim($decoded_top['nationality'])); if ($match) { $criteria_met++; } }
+        if (!empty($decoded_top['bangsa'])) { $criteria_total++; $match = strtoupper(trim($application['bangsa'] ?? '')) === strtoupper(trim($decoded_top['bangsa'])); if ($match) { $criteria_met++; } }
+        if (!empty($decoded_top['birth_state'])) { $criteria_total++; $match = strtoupper(trim($application['negeri_kelahiran'] ?? '')) === strtoupper(trim($decoded_top['birth_state'])); if ($match) { $criteria_met++; } }
+        if (!empty($decoded_top['min_education'])) {
+            $criteria_total++;
+            try {
+                $edu_stmt = $pdo->prepare("SELECT kelayakan FROM application_education WHERE application_reference = ?");
+                $edu_stmt->execute([$application['application_reference']]);
+                $edu_rows = $edu_stmt->fetchAll(PDO::FETCH_COLUMN);
+                $edu_ranks = [ 'SPM' => 1, 'STPM' => 2, 'SIJIL' => 2, 'DIPLOMA' => 3, 'IJAZAH' => 4, 'IJAZAH SARJANA MUDA' => 4, 'MASTER' => 5, 'SARJANA' => 5, 'PHD' => 5 ];
+                $req_rank = $edu_ranks[strtoupper($decoded_top['min_education'])] ?? 0;
+                $max_app_rank = 0;
+                foreach ($edu_rows as $edu) {
+                    $normalized_edu = strtoupper(trim($edu));
+                    foreach ($edu_ranks as $key => $rank) { if (strpos($normalized_edu, $key) !== false) { $max_app_rank = max($max_app_rank, $rank); } }
+                }
+                if ($max_app_rank >= $req_rank) { $criteria_met++; }
+            } catch (Throwable $e) {}
+        }
+        if ($criteria_total > 0) { $suitability_score_top = (int)round(($criteria_met / $criteria_total) * 100); }
+        if (count($chips) > 0) { $job_req_display = implode('', $chips); }
+        else { $job_req_display = '<span class="text-gray-500 italic">Tiada kriteria khusus</span>'; }
+    } else {
+        $job_req_display = strlen(trim($req_raw_top)) > 0 ? htmlspecialchars($req_raw_top, ENT_QUOTES, 'UTF-8') : '<span class="text-gray-500 italic">Tiada kriteria khusus</span>';
+    }
+}
+
 // Handle status update if form submitted (timestamp-based)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
     $csrf = $_POST['csrf_token'] ?? '';
@@ -453,9 +544,20 @@ include 'templates/header.php';
 
 <div id="mainContent" class="standard-container mx-auto transition-all">
 
+    <style>
+    @media print { .print-hidden { display: none !important; } }
+    </style>
+
+    <div class="print-hidden pdf-hidden bg-indigo-50 p-4 rounded-lg border border-indigo-100 mb-4">
+        <div class="text-xs font-semibold tracking-wide text-indigo-700 mb-2 flex items-center gap-2">Skor Kriteria Jawatan<?php if ($suitability_score_top !== null) { echo ' <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 border border-indigo-200">' . htmlspecialchars((string)$suitability_score_top, ENT_QUOTES, 'UTF-8') . '%</span>'; } ?></div>
+        <div class="flex flex-wrap gap-2 items-start bg-white rounded p-3 border border-indigo-100">
+            <?php echo $job_req_display !== '' ? $job_req_display : '<span class="text-gray-500 italic">Tiada kriteria khusus</span>'; ?>
+        </div>
+    </div>
+
     <!-- Non-sticky header: back link and status chip -->
     <div class="flex justify-between items-center mb-6 px-4 mt-4">
-        <a href="applications-list.php" class="flex items-center text-blue-600 hover:text-blue-800">
+        <a href="applications-list.php" class="flex items-center text-blue-600 hover:text-blue-800 print-hidden pdf-hidden">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -557,16 +659,16 @@ include 'templates/header.php';
     <!-- Resume Header -->
     <div class="bg-white shadow-sm border border-gray-200 rounded-lg overflow-hidden mb-6">
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-8 text-white">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-start">
                 <div class="flex items-center">
                     <?php $passportPath = $application['gambar_passport_path'] ?? $application['gambar_passport'] ?? null; ?>
                     <?php if (!empty($passportPath) && file_exists('../' . $passportPath)): ?>
-                        <div class="w-20 h-20 rounded-full overflow-hidden mr-6 border-2 border-white">
+                        <div class="w-28 h-28 rounded-full overflow-hidden mr-6 border-2 border-white">
                             <img src="../<?php echo htmlspecialchars($passportPath); ?>" alt="Passport Photo" class="h-full w-full object-cover">
                         </div>
                     <?php else: ?>
-                        <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mr-6">
-                            <span class="text-white font-bold text-2xl">
+                        <div class="w-28 h-28 bg-white bg-opacity-20 rounded-full flex items-center justify-center mr-6">
+                            <span class="text-white font-bold text-3xl">
                                 <?php echo strtoupper(substr($application['nama_penuh'], 0, 1)); ?>
                             </span>
                         </div>
@@ -575,13 +677,6 @@ include 'templates/header.php';
                         <h1 class="text-3xl font-bold mb-2"><?php echo htmlspecialchars($application['nama_penuh']); ?></h1>
                         <p class="text-blue-100 text-lg"><?php echo htmlspecialchars($application['jawatan_dipohon'] ?? 'Pemohon Jawatan'); ?></p>
                         <p class="text-blue-100">ID Permohonan: <?php echo htmlspecialchars($application['application_reference']); ?></p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="bg-white bg-opacity-20 rounded-lg p-4">
-                        <p class="text-sm text-blue-100">Jawatan Dipohon</p>
-                        <p class="text-lg font-semibold"><?php echo htmlspecialchars($application['job_title'] ?? 'N/A'); ?></p>
-                        <p class="text-sm text-blue-100"><?php echo htmlspecialchars(($application['job_id'] ?? '') . ' ' . ($application['kod_gred'] ?? '')); ?></p>
                     </div>
                 </div>
             </div>
@@ -1924,6 +2019,9 @@ function printResume() {
   var prevHandleDisplay = handle ? handle.style.display : null;
   if (sidebar) sidebar.style.display = 'none';
   if (handle) handle.style.display = 'none';
+  var pdfHiddenEls = Array.prototype.slice.call(document.querySelectorAll('.pdf-hidden'));
+  var prevPdfDisplays = pdfHiddenEls.map(function(x){ return x.style.display; });
+  pdfHiddenEls.forEach(function(x){ x.style.display = 'none'; });
   var opt = { margin: 0.3, filename: pdfFileName, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } };
   ensureHtml2PdfLoaded(function(){
     try {
@@ -1933,16 +2031,19 @@ function printResume() {
         if (w) { w.onload = function(){ w.focus(); w.print(); }; }
         if (sidebar) sidebar.style.display = (prevSidebarDisplay !== null ? prevSidebarDisplay : '');
         if (handle) handle.style.display = (prevHandleDisplay !== null ? prevHandleDisplay : '');
+        pdfHiddenEls.forEach(function(x, i){ x.style.display = prevPdfDisplays[i] || ''; });
       });
       if (chain && typeof chain.catch === 'function') {
         chain.catch(function(){
           if (sidebar) sidebar.style.display = (prevSidebarDisplay !== null ? prevSidebarDisplay : '');
           if (handle) handle.style.display = (prevHandleDisplay !== null ? prevHandleDisplay : '');
+          pdfHiddenEls.forEach(function(x, i){ x.style.display = prevPdfDisplays[i] || ''; });
         });
       }
     } catch (e) {
       if (sidebar) sidebar.style.display = (prevSidebarDisplay !== null ? prevSidebarDisplay : '');
       if (handle) handle.style.display = (prevHandleDisplay !== null ? prevHandleDisplay : '');
+      pdfHiddenEls.forEach(function(x, i){ x.style.display = prevPdfDisplays[i] || ''; });
       throw e;
     }
   });
@@ -1963,6 +2064,9 @@ function downloadResumePdf() {
   var prevHandleDisplay = handle ? handle.style.display : null;
   if (sidebar) sidebar.style.display = 'none';
   if (handle) handle.style.display = 'none';
+  var pdfHiddenEls = Array.prototype.slice.call(document.querySelectorAll('.pdf-hidden'));
+  var prevPdfDisplays = pdfHiddenEls.map(function(x){ return x.style.display; });
+  pdfHiddenEls.forEach(function(x){ x.style.display = 'none'; });
   var opt = { margin: 0.3, filename: pdfFileName, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } };
   ensureHtml2PdfLoaded(function(){
     try {
@@ -1971,16 +2075,19 @@ function downloadResumePdf() {
         task.then(function(){
           if (sidebar) sidebar.style.display = (prevSidebarDisplay !== null ? prevSidebarDisplay : '');
           if (handle) handle.style.display = (prevHandleDisplay !== null ? prevHandleDisplay : '');
+          pdfHiddenEls.forEach(function(x, i){ x.style.display = prevPdfDisplays[i] || ''; });
         });
       } else {
         setTimeout(function(){
           if (sidebar) sidebar.style.display = (prevSidebarDisplay !== null ? prevSidebarDisplay : '');
           if (handle) handle.style.display = (prevHandleDisplay !== null ? prevHandleDisplay : '');
+          pdfHiddenEls.forEach(function(x, i){ x.style.display = prevPdfDisplays[i] || ''; });
         }, 1000);
       }
     } catch (e) {
       if (sidebar) sidebar.style.display = (prevSidebarDisplay !== null ? prevSidebarDisplay : '');
       if (handle) handle.style.display = (prevHandleDisplay !== null ? prevHandleDisplay : '');
+      pdfHiddenEls.forEach(function(x, i){ x.style.display = prevPdfDisplays[i] || ''; });
       throw e;
     }
   });
