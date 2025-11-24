@@ -25,12 +25,12 @@ try {
     $stmt = $pdo->query("SELECT COUNT(*) as total FROM application_application_main WHERE submission_locked = 0 OR submission_locked IS NULL");
     $total_drafts = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-    // Get applications by status (only submitted applications)
+    // Get applications by grouped submission_status (only submitted applications)
     $stmt = $pdo->query("SELECT 
-        SUM(CASE WHEN status IN ('PENDING','pending') THEN 1 ELSE 0 END) as pending_count,
-        SUM(CASE WHEN status IN ('REVIEWED','SHORTLISTED','shortlisted') THEN 1 ELSE 0 END) as reviewed_count,
-        SUM(CASE WHEN status IN ('APPROVED','ACCEPTED','accepted') THEN 1 ELSE 0 END) as approved_count,
-        SUM(CASE WHEN status IN ('REJECTED','rejected') THEN 1 ELSE 0 END) as rejected_count
+        SUM(CASE WHEN submission_status IN ('PENDING','RECEIVED') THEN 1 ELSE 0 END) as pending_count,
+        SUM(CASE WHEN submission_status IN ('SCREENING','TEST_INTERVIEW','AWAITING_RESULT') THEN 1 ELSE 0 END) as reviewed_count,
+        SUM(CASE WHEN submission_status IN ('PASSED_INTERVIEW','OFFER_APPOINTMENT','APPOINTED') THEN 1 ELSE 0 END) as approved_count,
+        SUM(CASE WHEN submission_status IN ('REJECTED') THEN 1 ELSE 0 END) as rejected_count
         FROM application_application_main WHERE submission_locked = 1");
     $stats = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -55,6 +55,7 @@ try {
 include 'templates/header.php';
 ?>
 
+<div class="standard-container mx-auto">
 <!-- Welcome Section -->
 <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
     <div class="flex items-center justify-between">
@@ -72,8 +73,8 @@ include 'templates/header.php';
 <!-- Statistics Section -->
 <div class="mb-10">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-        <!-- Total Submitted Applications -->
-        <a href="applications-list.php" class="block transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
+        <!-- Total Applications -->
+        <a href="applications-list.php" title="Mengira semua permohonan dihantar (submission_locked = 1). Draf tidak termasuk." class="block transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
             <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl shadow-xl p-6 border border-blue-200 hover:border-blue-300">
                 <div class="flex items-center">
                     <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4 shadow-lg flex-shrink-0">
@@ -82,16 +83,16 @@ include 'templates/header.php';
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-blue-700 mb-1">Permohonan Dihantar</p>
-                        <p class="text-2xl font-semibold text-blue-900 mb-1"><?php echo number_format($total_applications); ?></p>
-                        <p class="text-xs text-blue-600">Klik untuk lihat semua</p>
+                        <p class="text-lg font-bold text-blue-900 mb-1">Total Permohonan</p>
+                        <p class="text-2xl font-semibold text-blue-900 mb-2"><?php echo number_format($total_applications); ?></p>
+                        <p class="text-xs text-blue-600">Jumlah permohonan yang telah dihantar</p>
                     </div>
                 </div>
             </div>
         </a>
         
         <!-- Draft Applications -->
-        <a href="draft-applications.php" class="block transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
+        <a href="draft-applications.php" title="Mengira permohonan draf (submission_locked = 0 atau NULL)." class="block transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
             <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl shadow-xl p-6 border border-orange-200 hover:border-orange-300">
                 <div class="flex items-center">
                     <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mr-4 shadow-lg flex-shrink-0">
@@ -100,16 +101,16 @@ include 'templates/header.php';
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-orange-700 mb-1">Permohonan Draf</p>
-                        <p class="text-2xl font-semibold text-orange-900 mb-1"><?php echo number_format($total_drafts); ?></p>
-                        <p class="text-xs text-orange-600">Klik untuk lihat draf</p>
+                        <p class="text-lg font-bold text-orange-900 mb-1">Permohonan Draf</p>
+                        <p class="text-2xl font-semibold text-orange-900 mb-2"><?php echo number_format($total_drafts); ?></p>
+                        <p class="text-xs text-orange-600">Permohonan belum dihantar oleh pemohon</p>
                     </div>
                 </div>
             </div>
         </a>
        
         <!-- Pending Applications -->
-        <a href="applications-list.php?status=PENDING" class="block transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
+        <a href="applications-list.php?status[]=PENDING&status[]=RECEIVED" title="Belum Disemak = Permohonan Diterima (PENDING/RECEIVED)." class="block transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
             <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl shadow-xl p-6 border border-yellow-200 hover:border-yellow-300">
                 <div class="flex items-center">
                     <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4 shadow-lg flex-shrink-0">
@@ -118,9 +119,9 @@ include 'templates/header.php';
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-yellow-700 mb-1">Belum Disemak</p>
-                        <p class="text-2xl font-semibold text-yellow-900 mb-1"><?php echo number_format($pending_count); ?></p>
-                        <p class="text-xs text-yellow-600">Klik untuk tapis</p>
+                        <p class="text-lg font-bold text-yellow-900 mb-1">Belum Disemak</p>
+                        <p class="text-2xl font-semibold text-yellow-900 mb-2"><?php echo number_format($pending_count); ?></p>
+                        <p class="text-xs text-yellow-600">Jumlah permohonan yang belum diproses</p>
                     </div>
                 </div>
             </div>
@@ -128,7 +129,10 @@ include 'templates/header.php';
     </div>
 </div>
 
+</div>
+
 <!-- Job Listings Section -->
+<div class="standard-container mx-auto">
 <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
     <h2 class="text-xl font-bold text-gray-800 mb-4">Senarai Jawatan Kosong</h2>
     
@@ -183,8 +187,8 @@ include 'templates/header.php';
         try {
             $stmt = $pdo->prepare("SELECT 
                 COUNT(*) as total,
-                SUM(CASE WHEN status IN ('PENDING','pending') THEN 1 ELSE 0 END) as pending,
-                SUM(CASE WHEN status IN ('REVIEWED','SHORTLISTED','shortlisted') THEN 1 ELSE 0 END) as reviewed
+                SUM(CASE WHEN submission_status IN ('PENDING','RECEIVED') THEN 1 ELSE 0 END) as pending,
+                SUM(CASE WHEN submission_status IN ('SCREENING','TEST_INTERVIEW','AWAITING_RESULT') THEN 1 ELSE 0 END) as reviewed
                 FROM application_application_main WHERE job_id = ? AND submission_locked = 1");
             $stmt->execute([$job_id]);
             $stats = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -215,9 +219,9 @@ include 'templates/header.php';
                         <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Permohonan
                             <div class="mt-1 grid grid-cols-3 gap-2 text-xs text-gray-500 font-normal">
-                                <span class="block text-center">Total</span>
-                                <span class="block text-center">Disemak</span>
-                                <span class="block text-center">Belum</span>
+                                <span class="block text-center" title="Jumlah permohonan dihantar bagi jawatan.">Total</span>
+                                <span class="block text-center" title="Telah Disemak = Sedang Ditapis + Dipanggil Ujian/Temu Duga + Menunggu Keputusan.">Disemak</span>
+                                <span class="block text-center" title="Belum Disemak = Permohonan Diterima (PENDING/RECEIVED).">Belum</span>
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tindakan</th>
@@ -243,13 +247,13 @@ include 'templates/header.php';
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="grid grid-cols-3 gap-2">
-                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>" class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-blue-100 text-blue-800 hover:bg-blue-200">
+                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>" title="Jumlah permohonan dihantar bagi jawatan ini (submission_locked = 1)." class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-blue-100 text-blue-800 hover:bg-blue-200">
                                     <?php echo $stats['total']; ?>
                                 </a>
-                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=REVIEWED" class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-green-100 text-green-800 hover:bg-green-200">
+                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status[]=SCREENING&status[]=TEST_INTERVIEW&status[]=AWAITING_RESULT" title="Telah Disemak = Sedang Ditapis + Dipanggil Ujian/Temu Duga + Menunggu Keputusan." class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-green-100 text-green-800 hover:bg-green-200">
                                     <?php echo $stats['reviewed']; ?>
                                 </a>
-                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=PENDING" class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
+                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status[]=PENDING&status[]=RECEIVED" title="Belum Disemak = Permohonan Diterima (PENDING/RECEIVED)." class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
                                     <?php echo $stats['pending']; ?>
                                 </a>
                             </div>
@@ -283,9 +287,9 @@ include 'templates/header.php';
                         <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Permohonan
                             <div class="mt-1 grid grid-cols-3 gap-2 text-xs text-gray-500 font-normal">
-                                <span class="block text-center">Total</span>
-                                <span class="block text-center">Disemak</span>
-                                <span class="block text-center">Belum</span>
+                                <span class="block text-center" title="Jumlah permohonan dihantar bagi jawatan.">Total</span>
+                                <span class="block text-center" title="Telah Disemak = Sedang Ditapis + Dipanggil Ujian/Temu Duga + Menunggu Keputusan.">Disemak</span>
+                                <span class="block text-center" title="Belum Disemak = Permohonan Diterima (PENDING/RECEIVED).">Belum</span>
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tindakan</th>
@@ -311,13 +315,13 @@ include 'templates/header.php';
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="grid grid-cols-3 gap-2">
-                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>" class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-blue-100 text-blue-800 hover:bg-blue-200">
+                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>" title="Jumlah permohonan dihantar bagi jawatan ini (submission_locked = 1)." class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-blue-100 text-blue-800 hover:bg-blue-200">
                                     <?php echo $stats['total']; ?>
                                 </a>
-                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=REVIEWED" class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-green-100 text-green-800 hover:bg-green-200">
+                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status[]=SCREENING&status[]=TEST_INTERVIEW&status[]=AWAITING_RESULT" title="Telah Disemak = Sedang Ditapis + Dipanggil Ujian/Temu Duga + Menunggu Keputusan." class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-green-100 text-green-800 hover:bg-green-200">
                                     <?php echo $stats['reviewed']; ?>
                                 </a>
-                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=PENDING" class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
+                                <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status[]=PENDING&status[]=RECEIVED" title="Belum Disemak = Permohonan Diterima (PENDING/RECEIVED)." class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
                                     <?php echo $stats['pending']; ?>
                                 </a>
                             </div>
@@ -357,9 +361,9 @@ include 'templates/header.php';
                             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Permohonan
                                 <div class="mt-1 grid grid-cols-3 gap-2 text-xs text-gray-500 font-normal">
-                                    <span class="block text-center">Total</span>
-                                    <span class="block text-center">Disemak</span>
-                                    <span class="block text-center">Belum</span>
+                                    <span class="block text-center" title="Jumlah permohonan dihantar bagi jawatan.">Total</span>
+                                    <span class="block text-center" title="Telah Disemak = Sedang Ditapis + Dipanggil Ujian/Temu Duga + Menunggu Keputusan.">Disemak</span>
+                                    <span class="block text-center" title="Belum Disemak = Permohonan Diterima (PENDING/RECEIVED).">Belum</span>
                                 </div>
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tindakan</th>
@@ -385,13 +389,13 @@ include 'templates/header.php';
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="grid grid-cols-3 gap-2">
-                                    <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>" class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-blue-100 text-blue-800 hover:bg-blue-200">
+                                    <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>" title="Jumlah permohonan dihantar bagi jawatan ini (submission_locked = 1)." class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-blue-100 text-blue-800 hover:bg-blue-200">
                                         <?php echo $stats['total']; ?>
                                     </a>
-                                    <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=REVIEWED" class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-green-100 text-green-800 hover:bg-green-200">
+                                    <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status[]=SCREENING&status[]=TEST_INTERVIEW&status[]=AWAITING_RESULT" title="Telah Disemak = Sedang Ditapis + Dipanggil Ujian/Temu Duga + Menunggu Keputusan." class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-green-100 text-green-800 hover:bg-green-200">
                                         <?php echo $stats['reviewed']; ?>
                                     </a>
-                                    <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=PENDING" class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
+                                    <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status[]=PENDING&status[]=RECEIVED" title="Belum Disemak = Permohonan Diterima (PENDING/RECEIVED)." class="block text-center px-3 py-2 rounded-md text-sm font-semibold bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
                                         <?php echo $stats['pending']; ?>
                                     </a>
                                 </div>
@@ -420,6 +424,7 @@ include 'templates/header.php';
     <div class="mt-4 text-right">
         <a href="job-list.php" class="text-blue-600 hover:underline">Lihat Semua Jawatan →</a>
     </div>
+</div>
 </div>
 
 <script>

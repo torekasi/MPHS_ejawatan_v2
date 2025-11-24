@@ -76,7 +76,7 @@ log_admin_action('Viewed activity logs', 'OTHER', 'logs', null, $filters);
 include 'templates/header.php';
 ?>
 
-<div class="max-w-7xl mx-auto bg-white rounded-lg shadow-sm p-8">
+<div class="standard-container mx-auto bg-white rounded-lg shadow-sm p-8">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-blue-900">Log Aktiviti Admin</h2>
         <div class="text-sm text-gray-500">

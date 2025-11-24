@@ -381,26 +381,11 @@ try {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Blaster - Admin Panel</title>
-    <link href="../assets/css/tailwind.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
-    </style>
-</head>
-<body class="bg-gray-100">
-    <?php include 'templates/header.php'; ?>
+<?php include 'templates/header.php'; ?>
 
     <div class="container mx-auto px-4 py-8">
-        <main>
-            <div class="max-w-6xl mx-auto">
+        <div>
+            <div class="standard-container mx-auto">
                 <div class="mb-8">
                     <h1 class="text-3xl font-bold text-gray-900">Email Blaster</h1>
                     <p class="text-gray-600 mt-2">Test and send emails to applicants</p>
@@ -648,7 +633,7 @@ try {
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 
     <?php include 'templates/footer.php'; ?>

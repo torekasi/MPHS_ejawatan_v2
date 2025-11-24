@@ -1,2395 +1,14 @@
-[2025-08-27 11:08:21] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-08-27 11:08:21] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-08-27 11:08:21] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-08-27
-[2025-08-27 11:18:21] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-08-27 11:18:21] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-08-27 11:18:21] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-08-27
-[2025-08-27 11:18:35] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-08-27 11:18:35] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-08-27 11:18:35] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-08-27
-[2025-08-27 11:18:55] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-08-27 11:18:55] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-08-27 11:18:55] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-08-27
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:18:59] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 193] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 193] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] Undefined array key "username"
-[2025-08-27 11:19:00] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 154] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:21:02] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-08-27 11:21:02] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-08-27 11:21:02] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-08-27
-[2025-08-27 11:26:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-27 11:26:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-27 11:26:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:26:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:26:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:26:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:27:34] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-27 11:27:34] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-27 11:27:34] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:27:34] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:27:34] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:27:34] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:44:14] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-27 11:44:14] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-27 11:44:14] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:44:14] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:44:14] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 11:44:14] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:19:43] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-27 14:19:43] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-27 14:19:43] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:19:43] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:19:43] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:19:43] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:29:23] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-27 14:29:23] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-27 14:29:23] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:29:24] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:29:24] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:29:24] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:36:50] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-27 14:36:50] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-27 14:36:50] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:36:50] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:36:50] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:36:50] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:00] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-27 14:37:00] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-27 14:37:00] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:00] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:00] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:00] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:10] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-27 14:37:10] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-27 14:37:10] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:10] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:10] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:10] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:32] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-27 14:37:32] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-27 14:37:32] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:32] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:32] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-27 14:37:32] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 01:07:31] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-08-29 01:07:31] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-08-29 01:07:31] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-08-29
-[2025-08-29 01:52:06] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-29 01:52:06] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-29 01:52:06] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 01:52:06] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 01:52:06] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 01:52:06] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 14:25:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-29 14:25:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-29 14:25:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 14:25:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 14:25:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 14:25:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 15:24:53] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-08-29 15:24:53] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-08-29 15:24:53] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 15:24:54] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 15:24:54] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-08-29 15:24:54] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:28:04] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-09-01 05:28:04] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-09-01 05:28:04] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:28:04] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:28:04] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:28:04] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:39:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-09-01 05:39:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-09-01 05:39:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:39:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:39:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:39:59] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:40:03] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] Undefined array key "pendidikan"
-[2025-09-01 05:40:03] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 601] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-09-01 05:40:03] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 708] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:40:03] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 719] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:40:03] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 730] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 05:40:03] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 741] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 07:09:29] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 680] Undefined array key "pendidikan"
-[2025-09-01 07:09:29] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 680] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated
-[2025-09-01 07:09:29] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 787] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 07:09:29] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 798] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 07:09:29] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 809] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-01 07:09:29] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 820] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 11:13:43] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 221] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 11:13:43] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 221] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 11:13:43] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 221] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 11:13:43] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 221] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 11:13:43] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 221] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 11:13:43] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 221] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 11:15:36] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-05 11:15:36] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-05 11:15:36] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-05
-[2025-09-05 11:16:28] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-05 11:16:28] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-05 11:16:28] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-05
-[2025-09-05 11:25:29] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-05 11:25:29] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-05 11:25:29] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-05
-[2025-09-05 11:31:28] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-05 11:31:28] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-05 11:31:28] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-05
-[2025-09-05 11:32:26] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-05 11:32:26] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-05 11:32:26] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-05
-[2025-09-05 11:34:47] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-05 11:34:47] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-05 11:34:47] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-05
-[2025-09-05 11:45:22] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-05 11:45:22] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-05 11:45:22] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-05
-[2025-09-05 23:15:02] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:02] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:02] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:02] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:09] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:09] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:10] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:10] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 559] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 563] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 567] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 1049] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 1050] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:18] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 1051] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:19] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 1051] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 559] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 563] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 567] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 1049] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 1050] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 1051] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:25] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 1051] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:35] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:35] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:35] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:35] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:40] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:40] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:40] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:40] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:51] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:51] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:51] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:51] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:15:56] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:16:08] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:16:08] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:16:08] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:16:08] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:16:13] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 805] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:16:13] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 816] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:16:13] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 827] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-05 23:16:13] [ERROR] [File: /var/www/html/admin/application-view.php] [Line: 838] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-06 00:27:10] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-06 00:27:10] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-06 00:27:10] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-06
-[2025-09-06 02:53:12] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-view.php: 3
-[2025-09-06 02:53:15] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-06 02:53:15] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-06 02:53:15] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-06
-[2025-09-06 02:53:19] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-06 02:53:19] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-06 02:53:19] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-06
-[2025-09-06 02:53:35] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-06 02:53:35] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-06 02:53:35] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-06
-[2025-09-06 02:55:57] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: Direct TCP connection to db
-[2025-09-06 02:55:57] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-09-06 02:55:57] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-06
-[2025-09-23 07:38:42] [EXCEPTION] [File: /var/www/html/admin/job-list.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-23 07:38:53] [EXCEPTION] [File: /var/www/html/admin/job-list.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-23 07:41:05] [EXCEPTION] [File: /var/www/html/admin/job-list.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-23 07:41:07] [EXCEPTION] [File: /var/www/html/admin/job-list.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-23 07:42:21] [EXCEPTION] [File: /var/www/html/admin/job-list.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-23 07:42:30] [EXCEPTION] [File: /var/www/html/admin/job-list.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-23 07:44:07] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:18:39] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 07:18:59] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 07:18:59] [DEBUG_INFO] [File: ] [Line: ] 
 Database Host: db
 Database Name: ejawatan_db
 Database User: ejawatan_user
 PDO Connection: Success
 Connection Method: PDO
-[2025-09-23 07:44:07] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:18:59] [DEBUG_INFO] [File: ] [Line: ] 
 job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status, requires_payment, application_fee
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-    [requires_payment] => 1
-    [application_fee] => 2.50
-)
-
-[2025-09-23 07:44:07] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-23
-[2025-09-23 07:44:38] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-view.php: 3
-[2025-09-23 07:44:38] [EXCEPTION] [File: /var/www/html/admin/job-view.php] [Line: 27] Call to undefined function get_database_connection()
-[2025-09-23 07:46:31] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-view.php: 3
-[2025-09-23 07:46:31] [EXCEPTION] [File: /var/www/html/admin/job-view.php] [Line: 27] Call to undefined function get_database_connection()
-[2025-09-23 07:46:39] [EXCEPTION] [File: /var/www/html/admin/page-content.php] [Line: 13] Call to undefined function get_database_connection()
-[2025-09-23 07:49:41] [EXCEPTION] [File: /var/www/html/admin/users.php] [Line: 17] Call to undefined function get_database_connection()
-[2025-09-23 07:50:13] [EXCEPTION] [File: /var/www/html/admin/page-content.php] [Line: 13] Call to undefined function get_database_connection()
-[2025-09-23 07:50:38] [EXCEPTION] [File: /var/www/html/admin/page-content.php] [Line: 13] Call to undefined function get_database_connection()
-[2025-09-23 07:50:43] [EXCEPTION] [File: /var/www/html/admin/users.php] [Line: 17] Call to undefined function get_database_connection()
-[2025-09-23 07:50:57] [EXCEPTION] [File: /var/www/html/admin/activity-logs.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-23 07:51:11] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-09-23 07:51:11] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status, requires_payment, application_fee
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-    [requires_payment] => 1
-    [application_fee] => 2.50
-)
-
-[2025-09-23 07:51:11] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-23
-[2025-09-23 07:51:12] [EXCEPTION] [File: /var/www/html/admin/job-create.php] [Line: 11] Call to undefined function get_database_connection()
-[2025-09-23 07:55:43] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-09-23 07:55:43] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status, requires_payment, application_fee
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-    [requires_payment] => 1
-    [application_fee] => 2.50
-)
-
-[2025-09-23 07:55:43] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-23
-[2025-09-23 07:55:59] [EXCEPTION] [File: /var/www/html/admin/user-edit.php] [Line: 22] Call to undefined function get_database_connection()
-[2025-09-23 07:56:24] [EXCEPTION] [File: /var/www/html/admin/admin-create.php] [Line: 12] Call to undefined function get_database_connection()
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:35] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:36] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:36] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:39] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-09-23 07:56:41] [EXCEPTION] [File: /var/www/html/admin/profile.php] [Line: 16] Call to undefined function get_database_connection()
-[2025-09-23 07:57:10] [EXCEPTION] [File: /var/www/html/admin/job-edit.php] [Line: 10] Call to undefined function get_database_connection()
-[2025-09-23 07:57:25] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-view.php: 1
-[2025-09-23 07:57:25] [EXCEPTION] [File: /var/www/html/admin/job-view.php] [Line: 27] Call to undefined function get_database_connection()
-[2025-09-23 07:57:39] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-09-23 07:57:39] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status, requires_payment, application_fee
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-    [requires_payment] => 1
-    [application_fee] => 2.50
-)
-
-[2025-09-23 07:57:39] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-23
-[2025-09-23 07:57:45] [EXCEPTION] [File: /var/www/html/admin/job-edit.php] [Line: 10] Call to undefined function get_database_connection()
-[2025-09-24 12:27:13] [EXCEPTION] [File: /var/www/html/admin/application-view.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-24 12:47:47] [EXCEPTION] [File: /var/www/html/admin/application-view.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-24 12:48:02] [EXCEPTION] [File: /var/www/html/admin/application-view.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-09-24 15:27:04] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-view.php: 3
-[2025-09-24 18:49:43] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-09-24 18:49:43] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status, requires_payment, application_fee
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-    [requires_payment] => 1
-    [application_fee] => 2.50
-)
-
-[2025-09-24 18:49:43] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-24
-[2025-09-24 19:14:11] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-09-24 19:14:11] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status, requires_payment, application_fee
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-    [requires_payment] => 1
-    [application_fee] => 2.50
-)
-
-[2025-09-24 19:14:11] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-09-24
-[2025-10-06 22:41:14] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] substr(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-10-06 22:41:14] [ERROR] [File: /var/www/html/admin/activity-logs.php] [Line: 223] strlen(): Passing null to parameter #1 ($string) of type string is deprecated
-[2025-10-06 22:50:53] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-view.php: 3
-[2025-10-06 22:50:57] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-06 22:50:57] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status, requires_payment, application_fee
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-    [requires_payment] => 1
-    [application_fee] => 2.50
-)
-
-[2025-10-06 22:50:57] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-06
-[2025-10-19 01:00:40] [EXCEPTION] [File: /var/www/html/admin/activity-logs.php] [Line: 61] Call to a member function query() on null
-[2025-10-20 10:44:05] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 10:44:05] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, job_id, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [job_id] => JOB-000003
-    [status] => 1
-)
-
-[2025-10-20 10:44:05] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:01:43] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:01:43] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [job_code] => JOB-000003
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [status] => 1
-)
-
-[2025-10-20 22:01:43] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:04:38] [DATABASE_ERROR] [File: ] [Line: ] SQLSTATE[HY000]: General error: 1364 Field 'job_code' doesn't have a default value
-[2025-10-20 22:04:38] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:04:38] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [job_code] => JOB-000003
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [status] => 1
-)
-
-[2025-10-20 22:04:38] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:04:53] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:04:53] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [job_code] => JOB-000003
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [status] => 1
-)
-
-[2025-10-20 22:04:53] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:05:36] [DATABASE_ERROR] [File: ] [Line: ] SQLSTATE[HY000]: General error: 1364 Field 'job_code' doesn't have a default value
-[2025-10-20 22:05:36] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:05:36] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [job_code] => JOB-000003
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [status] => 1
-)
-
-[2025-10-20 22:05:36] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:21:31] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:21:31] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [job_code] => JOB-000003
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [status] => 1
-)
-
-[2025-10-20 22:21:31] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:22:45] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:22:45] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-10-17
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:22:45
-    [status] => 1
-)
-
-[2025-10-20 22:22:45] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:23:48] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:23:48] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-10-17
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:22:45
-    [status] => 1
-)
-
-[2025-10-20 22:23:48] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:24:09] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:24:09] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-10-17
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:09
-    [status] => 1
-)
-
-[2025-10-20 22:24:09] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:24:27] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:24:27] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:24:27] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:26:00] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:26:00] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:26:00] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:30:25] [DEBUG_INFO] [File: ] [Line: ] No ID parameter provided in job-view.php
-[2025-10-20 22:30:25] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:30:25] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:30:25] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:30:28] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-view.php: 4
-[2025-10-20 22:30:35] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:30:35] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:30:35] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:36:37] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-MAJLIS-0011
-[2025-10-20 22:36:39] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:36:39] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:36:39] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:36:42] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: JOB-MAJLIS-0011
-[2025-10-20 22:37:16] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:37:16] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:37:16] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:37:25] [EXCEPTION] [File: /var/www/html/admin/job-delete.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-10-20 22:39:11] [EXCEPTION] [File: /var/www/html/admin/job-delete.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-10-20 22:39:16] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:39:16] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:39:16] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:39:20] [EXCEPTION] [File: /var/www/html/admin/job-delete.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-10-20 22:42:24] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-MAJLIS-0011
-[2025-10-20 22:53:26] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:53:26] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:53:26] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:55:11] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:55:11] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:55:11] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:55:51] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:55:51] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:55:51] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 22:57:21] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 22:57:21] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 22:57:21] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:02:45] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:02:45] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:02:45] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:05:19] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:05:19] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:05:19] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:05:22] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:05:22] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:05:22] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:10:44] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000002
-[2025-10-20 23:24:07] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:24:07] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:24:07] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:24:18] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:24:18] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:24:18] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:27:03] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:27:03] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:27:03] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:28:18] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:28:18] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:28:18] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:28:25] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:28:25] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:28:25] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:28:37] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:28:37] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:28:37] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:29:51] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:29:51] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 5
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 5
-First record: Array
-(
-    [id] => 5
-    [job_code] => JOB-2025-001
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => PEGAWAI PENGUATKUASA
-    [kod_gred] => N51
-    [salary_min] => 3900.00
-    [salary_max] => 7890.00
-    [requirements] => <p>test jawatan baru</p>
-    [created_at] => 2025-10-20 15:29:51
-    [updated_at] => 2025-10-20 15:29:51
-    [status] => 1
-)
-
-[2025-10-20 23:29:51] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:30:23] [EXCEPTION] [File: /var/www/html/admin/job-delete.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-10-20 23:30:26] [EXCEPTION] [File: /var/www/html/admin/job-delete.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-10-20 23:30:49] [EXCEPTION] [File: /var/www/html/admin/job-delete.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-10-20 23:31:17] [EXCEPTION] [File: /var/www/html/admin/job-delete.php] [Line: 9] Call to undefined function get_database_connection()
-[2025-10-20 23:38:01] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:38:01] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 5
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 5
-First record: Array
-(
-    [id] => 5
-    [job_code] => JOB-2025-001
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => PEGAWAI PENGUATKUASA
-    [kod_gred] => N51
-    [salary_min] => 3900.00
-    [salary_max] => 7890.00
-    [requirements] => <p>test jawatan baru</p>
-    [created_at] => 2025-10-20 15:29:51
-    [updated_at] => 2025-10-20 15:29:51
-    [status] => 1
-)
-
-[2025-10-20 23:38:01] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:38:10] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:38:10] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 4
-    [job_code] => JOB-MAJLIS-0011
-    [edaran_iklan] => IKLAN UMUM
-    [ad_date] => 2025-10-19
-    [ad_close_date] => 2025-12-06
-    [job_title] => JURUUKUR
-    [kod_gred] => N33
-    [salary_min] => 3300.00
-    [salary_max] => 6540.00
-    [requirements] => <p>test the content</p>
-    [created_at] => 2025-10-20 14:22:45
-    [updated_at] => 2025-10-20 14:24:27
-    [status] => 1
-)
-
-[2025-10-20 23:38:10] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:38:29] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:38:29] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [job_code] => JOB-000003
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [status] => 1
-)
-
-[2025-10-20 23:38:29] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:42:27] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:42:27] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 6
-    [job_code] => JOB-2025-001
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => PEGAWAI PENGUATKUASA
-    [kod_gred] => N22
-    [salary_min] => 4000.00
-    [salary_max] => 8000.00
-    [requirements] => <p>test code</p>
-    [created_at] => 2025-10-20 15:42:27
-    [updated_at] => 2025-10-20 15:42:27
-    [status] => 1
-)
-
-[2025-10-20 23:42:27] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:43:15] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:43:15] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 6
-    [job_code] => JOB-2025-001
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => PEGAWAI PENGUATKUASA
-    [kod_gred] => N22
-    [salary_min] => 4000.00
-    [salary_max] => 8000.00
-    [requirements] => <p>test code</p>
-    [created_at] => 2025-10-20 15:42:27
-    [updated_at] => 2025-10-20 15:42:27
-    [status] => 1
-)
-
-[2025-10-20 23:43:15] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:44:14] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:44:14] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 5
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 5
-First record: Array
-(
-    [id] => 7
-    [job_code] => JOB-2025-002
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => PEGAWAI JURUUKUR
-    [kod_gred] => B6
-    [salary_min] => 2000.00
-    [salary_max] => 7000.00
-    [requirements] => <p>test jawatan</p>
-    [created_at] => 2025-10-20 15:44:14
-    [updated_at] => 2025-10-20 15:44:14
-    [status] => 1
-)
-
-[2025-10-20 23:44:14] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:44:34] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:44:34] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 5
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 5
-First record: Array
-(
-    [id] => 7
-    [job_code] => JOB-2025-002
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => PEGAWAI JURUUKUR
-    [kod_gred] => B6
-    [salary_min] => 2000.00
-    [salary_max] => 7000.00
-    [requirements] => <p>test jawatan</p>
-    [created_at] => 2025-10-20 15:44:14
-    [updated_at] => 2025-10-20 15:44:14
-    [status] => 1
-)
-
-[2025-10-20 23:44:34] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:44:39] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:44:39] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 6
-    [job_code] => JOB-2025-001
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => PEGAWAI PENGUATKUASA
-    [kod_gred] => N22
-    [salary_min] => 4000.00
-    [salary_max] => 8000.00
-    [requirements] => <p>test code</p>
-    [created_at] => 2025-10-20 15:42:27
-    [updated_at] => 2025-10-20 15:42:27
-    [status] => 1
-)
-
-[2025-10-20 23:44:39] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:50:41] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:50:41] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 5
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 5
-First record: Array
-(
-    [id] => 8
-    [job_code] => JOB-2025-002
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => TEST JAWATAN
-    [kod_gred] => N89
-    [salary_min] => 3000.00
-    [salary_max] => 7000.00
-    [requirements] => <p><strong>data</strong></p>
-    [created_at] => 2025-10-20 15:50:41
-    [updated_at] => 2025-10-20 15:50:41
-    [status] => 1
-)
-
-[2025-10-20 23:50:41] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:50:56] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:50:56] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 5
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 5
-First record: Array
-(
-    [id] => 8
-    [job_code] => JOB-2025-002
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => TEST JAWATAN
-    [kod_gred] => N89
-    [salary_min] => 3000.00
-    [salary_max] => 7000.00
-    [requirements] => <p><strong>data</strong></p>
-    [created_at] => 2025-10-20 15:50:41
-    [updated_at] => 2025-10-20 15:50:41
-    [status] => 1
-)
-
-[2025-10-20 23:50:56] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:51:08] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:51:08] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 6
-    [job_code] => JOB-2025-001
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => PEGAWAI PENGUATKUASA
-    [kod_gred] => N22
-    [salary_min] => 4000.00
-    [salary_max] => 8000.00
-    [requirements] => <p>test code</p>
-    [created_at] => 2025-10-20 15:42:27
-    [updated_at] => 2025-10-20 15:42:27
-    [status] => 1
-)
-
-[2025-10-20 23:51:08] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:55:04] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-2025-001
-[2025-10-20 23:57:08] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:57:08] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 6
-    [job_code] => JOB-2025-001
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-20
-    [ad_close_date] => 2025-12-04
-    [job_title] => PEGAWAI PENGUATKUASA
-    [kod_gred] => N22
-    [salary_min] => 4000.00
-    [salary_max] => 8000.00
-    [requirements] => <p>test code</p>
-    [created_at] => 2025-10-20 15:42:27
-    [updated_at] => 2025-10-20 15:42:27
-    [status] => 1
-)
-
-[2025-10-20 23:57:08] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-20 23:57:17] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-20 23:57:17] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [job_code] => JOB-000003
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [status] => 1
-)
-
-[2025-10-20 23:57:17] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-20
-[2025-10-21 00:15:37] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-21 00:15:37] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 4
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 4
-First record: Array
-(
-    [id] => 9
-    [job_code] => ejmphs20251021001537
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2025-10-16
-    [ad_close_date] => 2025-11-20
-    [job_title] => TEST JAWATAN 2
-    [kod_gred] => N88
-    [salary_min] => 3300.00
-    [salary_max] => 5500.00
-    [requirements] => <p>test</p>
-    [created_at] => 2025-10-20 16:15:37
-    [updated_at] => 2025-10-20 16:15:37
-    [status] => 1
-)
-
-[2025-10-21 00:15:37] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-21
-[2025-10-21 00:17:19] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-21 00:17:19] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
-Total records: 3
-SQL Query: SELECT * FROM job_postings ORDER BY id DESC
-Records fetched: 3
-First record: Array
-(
-    [id] => 3
-    [job_code] => JOB-000003
-    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
-    [ad_date] => 2024-02-01
-    [ad_close_date] => 2025-12-31
-    [job_title] => PEMANDU KENDERAAN
-    [kod_gred] => R3
-    [salary_min] => 1200.00
-    [salary_max] => 1800.00
-    [requirements] => <h4>Kelayakan Minimum:</h4><ul><li>Warganegara Malaysia</li><li>Berumur tidak kurang dari 21 tahun</li><li>Lesen Memandu yang sah</li></ul>
-    [created_at] => 2025-08-23 14:57:53
-    [updated_at] => 2025-08-24 11:23:29
-    [status] => 1
-)
-
-[2025-10-21 00:17:19] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-21
-[2025-10-21 00:18:25] [DEBUG_INFO] [File: ] [Line: ] 
-Database Host: db
-Database Name: ejawatan_db
-Database User: ejawatan_user
-PDO Connection: Success
-Connection Method: PDO
-[2025-10-21 00:18:25] [DEBUG_INFO] [File: ] [Line: ] 
-job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
 Total records: 4
 SQL Query: SELECT * FROM job_postings ORDER BY id DESC
 Records fetched: 4
@@ -2406,24 +25,22 @@ First record: Array
     [salary_max] => 5500.00
     [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
     [created_at] => 2025-10-20 16:18:25
-    [updated_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
     [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
 )
 
-[2025-10-21 00:18:25] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-21
-[2025-10-21 00:20:42] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
-[2025-10-21 00:23:02] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
-[2025-10-21 00:23:39] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
-[2025-10-21 00:24:33] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
-[2025-10-21 00:28:01] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:18:59] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:19:03] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 07:19:10] [DEBUG_INFO] [File: ] [Line: ] 
 Database Host: db
 Database Name: ejawatan_db
 Database User: ejawatan_user
 PDO Connection: Success
 Connection Method: PDO
-[2025-10-21 00:28:01] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:19:10] [DEBUG_INFO] [File: ] [Line: ] 
 job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
 Total records: 4
 SQL Query: SELECT * FROM job_postings ORDER BY id DESC
 Records fetched: 4
@@ -2440,24 +57,22 @@ First record: Array
     [salary_max] => 5500.00
     [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
     [created_at] => 2025-10-20 16:18:25
-    [updated_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
     [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
 )
 
-[2025-10-21 00:28:01] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-21
-[2025-10-21 00:28:05] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
-[2025-10-21 00:28:24] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 3
-[2025-10-21 00:28:43] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 3
-[2025-10-21 00:29:00] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 3
-[2025-10-21 00:29:00] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:19:10] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:19:12] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 07:19:19] [DEBUG_INFO] [File: ] [Line: ] 
 Database Host: db
 Database Name: ejawatan_db
 Database User: ejawatan_user
 PDO Connection: Success
 Connection Method: PDO
-[2025-10-21 00:29:00] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:19:19] [DEBUG_INFO] [File: ] [Line: ] 
 job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
 Total records: 4
 SQL Query: SELECT * FROM job_postings ORDER BY id DESC
 Records fetched: 4
@@ -2474,25 +89,23 @@ First record: Array
     [salary_max] => 5500.00
     [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
     [created_at] => 2025-10-20 16:18:25
-    [updated_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
     [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
 )
 
-[2025-10-21 00:29:00] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-21
-[2025-10-21 00:29:10] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
-[2025-10-21 00:32:05] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
-[2025-10-21 00:32:32] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
-[2025-10-21 00:33:50] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-view.php: 1
-[2025-10-21 00:38:02] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
-[2025-10-21 00:38:43] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:19:19] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:19:22] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
+[2025-11-24 07:20:44] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
+[2025-11-24 07:25:35] [DEBUG_INFO] [File: ] [Line: ] 
 Database Host: db
 Database Name: ejawatan_db
 Database User: ejawatan_user
 PDO Connection: Success
 Connection Method: PDO
-[2025-10-21 00:38:43] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:25:35] [DEBUG_INFO] [File: ] [Line: ] 
 job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
 Total records: 4
 SQL Query: SELECT * FROM job_postings ORDER BY id DESC
 Records fetched: 4
@@ -2509,21 +122,21 @@ First record: Array
     [salary_max] => 5500.00
     [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
     [created_at] => 2025-10-20 16:18:25
-    [updated_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
     [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
 )
 
-[2025-10-21 00:38:43] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-21
-[2025-10-21 00:38:48] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
-[2025-10-21 00:40:43] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:25:35] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:25:49] [DEBUG_INFO] [File: ] [Line: ] 
 Database Host: db
 Database Name: ejawatan_db
 Database User: ejawatan_user
 PDO Connection: Success
 Connection Method: PDO
-[2025-10-21 00:40:43] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:25:49] [DEBUG_INFO] [File: ] [Line: ] 
 job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
 Total records: 4
 SQL Query: SELECT * FROM job_postings ORDER BY id DESC
 Records fetched: 4
@@ -2540,20 +153,21 @@ First record: Array
     [salary_max] => 5500.00
     [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
     [created_at] => 2025-10-20 16:18:25
-    [updated_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
     [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
 )
 
-[2025-10-21 00:40:43] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-21
-[2025-10-21 00:41:13] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:25:49] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:28:52] [DEBUG_INFO] [File: ] [Line: ] 
 Database Host: db
 Database Name: ejawatan_db
 Database User: ejawatan_user
 PDO Connection: Success
 Connection Method: PDO
-[2025-10-21 00:41:13] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:28:52] [DEBUG_INFO] [File: ] [Line: ] 
 job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
 Total records: 4
 SQL Query: SELECT * FROM job_postings ORDER BY id DESC
 Records fetched: 4
@@ -2570,21 +184,23 @@ First record: Array
     [salary_max] => 5500.00
     [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
     [created_at] => 2025-10-20 16:18:25
-    [updated_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
     [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
 )
 
-[2025-10-21 00:41:13] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-10-21
-[2025-10-21 00:41:33] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
-[2025-11-17 07:14:29] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:28:52] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:28:54] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 07:29:23] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 07:31:39] [DEBUG_INFO] [File: ] [Line: ] 
 Database Host: db
 Database Name: ejawatan_db
 Database User: ejawatan_user
 PDO Connection: Success
 Connection Method: PDO
-[2025-11-17 07:14:29] [DEBUG_INFO] [File: ] [Line: ] 
+[2025-11-24 07:31:39] [DEBUG_INFO] [File: ] [Line: ] 
 job_postings table exists: Yes
-Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
 Total records: 4
 SQL Query: SELECT * FROM job_postings ORDER BY id DESC
 Records fetched: 4
@@ -2601,8 +217,1106 @@ First record: Array
     [salary_max] => 5500.00
     [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
     [created_at] => 2025-10-20 16:18:25
-    [updated_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
     [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
 )
 
-[2025-11-17 07:14:29] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-17
+[2025-11-24 07:31:39] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:32:08] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 07:32:08] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 07:32:08] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:32:25] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 07:32:25] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 07:32:25] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:34:41] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 07:34:41] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 07:34:41] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:34:47] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 07:34:59] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 07:34:59] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 91] Undefined variable $id
+[2025-11-24 07:34:59] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 109] Undefined variable $id
+[2025-11-24 07:34:59] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 07:34:59] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 07:34:59] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:35:03] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 07:36:06] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 07:36:06] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 07:36:06] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:36:08] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 07:41:14] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 07:41:15] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 07:41:15] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:52:00] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 07:52:00] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-23 23:18:59
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 07:52:01] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 07:52:11] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 08:05:19] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 08:09:21] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 08:09:59] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 08:10:05] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 08:10:05] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 08:10:05] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 00:10:05
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 08:10:05] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 08:10:07] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 08:14:23] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 08:14:23] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 00:10:05
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B"], "birth_state": "", "nationality": "", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 08:14:23] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 08:14:26] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 08:14:34] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 08:14:38] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 08:14:38] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 08:14:38] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 00:14:38
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B", "B2"], "birth_state": "", "nationality": "", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 08:14:38] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 08:18:48] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 08:18:53] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 08:18:53] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 91] Undefined variable $id
+[2025-11-24 08:18:53] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 109] Undefined variable $id
+[2025-11-24 08:18:53] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 08:18:53] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 00:14:38
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B", "B2"], "birth_state": "", "nationality": "", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 08:18:53] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 08:23:54] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: JOB-000003
+[2025-11-24 08:24:02] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: JOB-000003
+[2025-11-24 08:24:02] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 91] Undefined variable $id
+[2025-11-24 08:24:02] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 109] Undefined variable $id
+[2025-11-24 08:24:02] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 08:24:02] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 00:14:38
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B", "B2"], "birth_state": "", "nationality": "", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 08:24:02] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 08:24:13] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
+[2025-11-24 08:24:17] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 3
+[2025-11-24 08:24:23] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 3
+[2025-11-24 08:24:24] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 08:24:24] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 00:14:38
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B", "B2"], "birth_state": "", "nationality": "", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 08:24:24] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 08:24:27] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
+[2025-11-24 09:07:47] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 3
+[2025-11-24 09:07:52] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 3
+[2025-11-24 09:07:52] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 09:07:52] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 00:14:38
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B", "B2"], "birth_state": "", "nationality": "", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 09:07:52] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 09:09:08] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 09:09:17] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 09:09:17] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 91] Undefined variable $id
+[2025-11-24 09:09:17] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 109] Undefined variable $id
+[2025-11-24 09:09:17] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 09:09:17] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 00:14:38
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B", "B2"], "birth_state": "", "nationality": "", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 09:09:17] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 09:09:26] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 09:09:31] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:09:39] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:09:39] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 09:09:39] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 01:09:39
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": [], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 09:09:39] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 09:09:42] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 09:10:47] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:11:33] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:11:33] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 09:11:33] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 01:11:33
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B", "B2"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 09:11:33] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 09:11:37] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 09:13:47] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:13:53] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:13:54] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 09:23:13] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:23:20] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:23:20] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 09:23:46] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:23:51] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:23:51] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 09:26:05] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:26:09] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:26:09] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 09:26:22] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:26:25] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:26:25] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 09:26:36] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:26:39] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 09:26:39] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 09:28:47] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 09:28:47] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 01:26:39
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 09:28:47] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 19:45:50] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 19:45:50] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 01:26:39
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 19:45:50] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 19:52:17] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 19:52:17] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 01:26:39
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 19:52:17] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 19:52:20] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 19:52:25] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 19:52:25] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 91] Undefined variable $id
+[2025-11-24 19:52:25] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 109] Undefined variable $id
+[2025-11-24 19:52:25] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 19:52:30] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 19:52:33] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 19:52:33] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 19:53:06] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 19:53:06] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 11:52:33
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 19:53:06] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 19:53:09] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 19:53:37] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 19:53:37] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 91] Undefined variable $id
+[2025-11-24 19:53:37] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 109] Undefined variable $id
+[2025-11-24 19:53:37] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 19:53:41] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 19:53:45] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 19:53:45] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 19:54:55] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 19:54:55] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 11:53:45
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 19:54:55] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 19:54:57] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 19:54:57] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 11:53:45
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 19:54:57] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 19:56:52] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: Not set
+Database Name: Not set
+Database User: Not set
+PDO Connection: Failed
+Connection Method: Unknown
+Connection Error: 1
+[2025-11-24 19:56:52] [DATABASE_ERROR] [File: ] [Line: ] Database connection not available
+[2025-11-24 19:56:52] [EXCEPTION] [File: /var/www/html/config.php] [Line: 10] Cannot use a scalar value as an array
+[2025-11-24 20:00:02] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 20:00:02] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 11:53:45
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan", "nationality": "Warganegara Malaysia", "min_education": "", "min_selangor_years": ""}
+)
+
+[2025-11-24 20:00:02] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 20:00:05] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 20:04:58] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 20:05:14] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 20:05:14] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 91] Undefined variable $id
+[2025-11-24 20:05:14] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 109] Undefined variable $id
+[2025-11-24 20:05:14] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 20:05:28] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 20:05:39] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 20:05:39] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 20:05:46] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 20:05:46] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 12:05:39
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan", "nationality": "Warganegara Malaysia", "min_education": "STPM", "min_selangor_years": ""}
+)
+
+[2025-11-24 20:05:46] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 20:05:49] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 20:06:01] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 20:06:01] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 91] Undefined variable $id
+[2025-11-24 20:06:01] [ERROR] [File: /var/www/html/admin/job-edit.php] [Line: 109] Undefined variable $id
+[2025-11-24 20:06:01] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 20:08:24] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 20:08:52] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 20:08:52] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: EJMPHS20251021001825
+[2025-11-24 20:08:56] [DEBUG_INFO] [File: ] [Line: ] ID Parameter in job-edit.php: 10
+[2025-11-24 20:09:44] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 20:09:44] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 12:08:52
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan Kuala Lumpur", "nationality": "Warganegara Malaysia", "min_education": "STPM", "min_selangor_years": ""}
+)
+
+[2025-11-24 20:09:44] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 20:31:56] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 20:31:56] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 12:08:52
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan Kuala Lumpur", "nationality": "Warganegara Malaysia", "min_education": "STPM", "min_selangor_years": ""}
+)
+
+[2025-11-24 20:31:56] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 20:32:51] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 20:32:51] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 12:08:52
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan Kuala Lumpur", "nationality": "Warganegara Malaysia", "min_education": "STPM", "min_selangor_years": ""}
+)
+
+[2025-11-24 20:32:51] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 20:33:11] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 20:33:11] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 12:08:52
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan Kuala Lumpur", "nationality": "Warganegara Malaysia", "min_education": "STPM", "min_selangor_years": ""}
+)
+
+[2025-11-24 20:33:11] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 20:46:19] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 20:46:19] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 12:08:52
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan Kuala Lumpur", "nationality": "Warganegara Malaysia", "min_education": "STPM", "min_selangor_years": ""}
+)
+
+[2025-11-24 20:46:19] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 22:33:04] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 22:33:04] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 12:08:52
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan Kuala Lumpur", "nationality": "Warganegara Malaysia", "min_education": "STPM", "min_selangor_years": ""}
+)
+
+[2025-11-24 22:33:04] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-24 22:33:07] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: EJMPHS20251021001825
+[2025-11-24 22:33:16] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: JOB-000003
+[2025-11-24 22:33:38] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-edit.php: JOB-000003
+[2025-11-24 22:33:38] [DEBUG_INFO] [File: ] [Line: ] Job Code Parameter in job-view.php: JOB-000003
+[2025-11-24 22:33:44] [DEBUG_INFO] [File: ] [Line: ] 
+Database Host: db
+Database Name: ejawatan_db
+Database User: ejawatan_user
+PDO Connection: Success
+Connection Method: PDO
+[2025-11-24 22:33:44] [DEBUG_INFO] [File: ] [Line: ] 
+job_postings table exists: Yes
+Table columns: id, job_code, edaran_iklan, ad_date, ad_close_date, job_title, kod_gred, salary_min, salary_max, requirements, created_at, updated_at, status, job_requirements
+Total records: 4
+SQL Query: SELECT * FROM job_postings ORDER BY id DESC
+Records fetched: 4
+First record: Array
+(
+    [id] => 10
+    [job_code] => EJMPHS20251021001825
+    [edaran_iklan] => DALAMAN SAHAJA (MPHS)
+    [ad_date] => 2025-10-21
+    [ad_close_date] => 2025-12-05
+    [job_title] => PEGAWAI PENGUATUASA JALAN
+    [kod_gred] => N22
+    [salary_min] => 4400.00
+    [salary_max] => 5500.00
+    [requirements] => <p>test jawatan yagn di sanding pada sistem</p><p>kini system berjaya</p><ul><li>masukkan maklumat </li><li>perengan ke 2 telah dimasukkan</li></ul>
+    [created_at] => 2025-10-20 16:18:25
+    [updated_at] => 2025-11-24 12:08:52
+    [status] => 1
+    [job_requirements] => {"bangsa": "", "gender": "", "license": ["B2", "D"], "birth_state": "Wilayah Persekutuan Kuala Lumpur", "nationality": "Warganegara Malaysia", "min_education": "STPM", "min_selangor_years": ""}
+)
+
+[2025-11-24 22:33:44] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24

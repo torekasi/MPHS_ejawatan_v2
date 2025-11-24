@@ -631,6 +631,16 @@ function create_tables($pdo) {
         } catch (PDOException $e) {
         }
 
+        try {
+            $stmt = $pdo->query("SHOW COLUMNS FROM application_extracurricular LIKE 'tahun'");
+            if (!$stmt->fetch()) {
+                $pdo->exec("ALTER TABLE application_extracurricular ADD COLUMN tahun VARCHAR(4) AFTER peringkat");
+                error_log("Added tahun column to application_extracurricular table");
+            }
+        } catch (PDOException $e) {
+            error_log("Schema update for application_extracurricular tahun: " . $e->getMessage());
+        }
+
         // Ensure application_work_experience table has application_id
         try {
             $stmt = $pdo->query("SHOW TABLES LIKE 'application_work_experience'");
@@ -877,6 +887,24 @@ function create_tables($pdo) {
             }
         } catch (PDOException $e) {
             error_log("Schema update for application_professional_bodies salinan_sijil_filename: " . $e->getMessage());
+        }
+
+        try {
+            $stmt = $pdo->query("SHOW COLUMNS FROM application_professional_bodies LIKE 'tahun'");
+            if (!$stmt->fetch()) {
+                $pdo->exec("ALTER TABLE application_professional_bodies ADD COLUMN tahun VARCHAR(4) AFTER no_ahli");
+                error_log("Added tahun column to application_professional_bodies table");
+            } else {
+                // Check if tahun is DATE type and change it to VARCHAR(4)
+                $stmt = $pdo->query("SHOW COLUMNS FROM application_professional_bodies LIKE 'tahun'");
+                $column = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($column && strpos($column['Type'], 'date') !== false) {
+                    $pdo->exec("ALTER TABLE application_professional_bodies MODIFY COLUMN tahun VARCHAR(4)");
+                    error_log("Modified tahun column from DATE to VARCHAR(4) in application_professional_bodies table");
+                }
+            }
+        } catch (PDOException $e) {
+            error_log("Schema update for application_professional_bodies tahun: " . $e->getMessage());
         }
 
         // Create application_spm_results table

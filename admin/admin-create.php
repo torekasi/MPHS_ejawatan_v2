@@ -75,19 +75,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-    <meta charset="UTF-8">
-    <title>Daftar Akaun Admin - ejawatan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/x-icon" href="<?php echo htmlspecialchars($config['favicon']); ?>">
-</head>
-<body class="bg-gray-50 min-h-screen flex flex-col justify-center items-center">
-    <header class="w-full flex flex-col items-center mt-10 mb-6">
-        <img src="<?php echo htmlspecialchars($config['logo_url']); ?>" alt="Logo" class="h-20 w-auto mx-auto mb-4 drop-shadow-lg">
-    </header>
-    <main class="w-full max-w-md bg-white p-8 rounded shadow-xl">
+<?php include 'templates/header.php'; ?>
+
+<div class="standard-container mx-auto">
+    <div class="w-full max-w-md mx-auto bg-white p-8 rounded shadow-xl">
         <h2 class="text-2xl font-bold mb-6 text-center text-blue-900">Daftar Akaun Admin</h2>
         <?php if ($error): ?>
             <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-center"><?php echo $error; ?></div>
@@ -127,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="mt-4 text-center">
             <a href="index.php" class="text-blue-700 hover:underline text-sm">Kembali ke Dashboard</a>
         </div>
-    </main>
-</body>
-</html>
+    </div>
+</div>
+
+<?php include 'templates/footer.php'; ?>

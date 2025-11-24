@@ -1,14 +1,10 @@
 <?php
 // Admin page to unlock applications that have expired tokens
-require_once '../includes/AdminAuth.php';
-require_once '../config.php';
-
-// Check admin authentication
-$adminAuth = new AdminAuth($pdo);
-if (!$adminAuth->isLoggedIn()) {
-    header('Location: login.php');
-    exit();
-}
+require_once '../includes/bootstrap.php';
+require_once 'auth.php';
+$config = require '../config.php';
+$result = get_database_connection($config);
+$pdo = $result['pdo'];
 
 $message = '';
 $error = '';
@@ -111,25 +107,10 @@ try {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buka Kunci Permohonan - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
-</head>
-<body class="bg-gray-100">
-    <?php include 'includes/header.php'; ?>
+<?php include 'templates/header.php'; ?>
 
-    <main class="container mx-auto px-4 py-8">
-        <div class="max-w-6xl mx-auto">
+    <div class="container mx-auto px-4 py-8">
+        <div class="standard-container mx-auto">
             <!-- Header -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                 <div class="flex items-center justify-between">
@@ -203,6 +184,6 @@ try {
                 <?php endif; ?>
             </div>
         </div>
-    </main>
-</body>
-</html>
+    </div>
+
+<?php include 'templates/footer.php'; ?>

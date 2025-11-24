@@ -7,6 +7,10 @@
  * @SecurityTag: validated
  */
 if (!defined('APP_SECURE')) { http_response_code(403); exit; }
+
+// Define year variables for dropdowns
+$current_year = date('Y');
+$last_year = $current_year - 1;
 ?>
 <div class="bg-white rounded-lg shadow-md overflow-hidden">
     <div class="section-title">Kemahiran Bahasa</div>
@@ -305,7 +309,15 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Tahun <span class="required">*</span></label>
-                <input type="number" name="spm_tahun" class="w-full px-3 py-2 border border-gray-300 rounded-md" min="1970" max="<?php echo date('Y'); ?>" required value="<?php echo htmlspecialchars($spm_data['tahun'] ?? $application['spm_tahun'] ?? ''); ?>">
+                <select name="spm_tahun" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                    <option value="">Pilih Tahun</option>
+                    <?php 
+                    $selected_spm_year = $spm_data['tahun'] ?? $application['spm_tahun'] ?? '';
+                    for ($year = $last_year; $year >= 1970; $year--): 
+                    ?>
+                        <option value="<?php echo $year; ?>" <?php echo ($selected_spm_year == $year) ? 'selected' : ''; ?>><?php echo $year; ?></option>
+                    <?php endfor; ?>
+                </select>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Gred Keseluruhan <span class="required">*</span></label>
@@ -457,11 +469,27 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Dari Tahun</label>
-                        <input type="text" name="persekolahan[<?php echo $edu_idx; ?>][dari_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="YYYY" pattern="^[0-9]{4}$" minlength="4" maxlength="4" inputmode="numeric" value="<?php echo htmlspecialchars($edu['dari_tahun']); ?>">
+                        <select name="persekolahan[<?php echo $edu_idx; ?>][dari_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <option value="">Pilih Tahun</option>
+                            <?php 
+                            $selected_dari = $edu['dari_tahun'] ?? '';
+                            for ($year = $last_year; $year >= 1970; $year--): 
+                            ?>
+                                <option value="<?php echo $year; ?>" <?php echo ($selected_dari == $year) ? 'selected' : ''; ?>><?php echo $year; ?></option>
+                            <?php endfor; ?>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Hingga Tahun</label>
-                        <input type="text" name="persekolahan[<?php echo $edu_idx; ?>][hingga_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="YYYY" pattern="^[0-9]{4}$" minlength="4" maxlength="4" inputmode="numeric" value="<?php echo htmlspecialchars($edu['hingga_tahun']); ?>">
+                        <select name="persekolahan[<?php echo $edu_idx; ?>][hingga_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <option value="">Pilih Tahun</option>
+                            <?php 
+                            $selected_hingga = $edu['hingga_tahun'] ?? '';
+                            for ($year = $last_year; $year >= 1970; $year--): 
+                            ?>
+                                <option value="<?php echo $year; ?>" <?php echo ($selected_hingga == $year) ? 'selected' : ''; ?>><?php echo $year; ?></option>
+                            <?php endfor; ?>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Pangkat/Gred/CGPA</label>
@@ -513,11 +541,25 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Dari Tahun</label>
-                        <input type="text" name="persekolahan[0][dari_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="YYYY" pattern="^[0-9]{4}$" minlength="4" maxlength="4" inputmode="numeric">
+                        <select name="persekolahan[0][dari_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <option value="">Pilih Tahun</option>
+                            <?php 
+                            for ($year = $last_year; $year >= 1970; $year--): 
+                            ?>
+                                <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
+                            <?php endfor; ?>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Hingga Tahun</label>
-                        <input type="text" name="persekolahan[0][hingga_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="YYYY" pattern="^[0-9]{4}$" minlength="4" maxlength="4" inputmode="numeric">
+                        <select name="persekolahan[0][hingga_tahun]" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <option value="">Pilih Tahun</option>
+                            <?php 
+                            for ($year = $last_year; $year >= 1970; $year--): 
+                            ?>
+                                <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
+                            <?php endfor; ?>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Pangkat/Gred/CGPA</label>
@@ -540,8 +582,8 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
         </div>
         <div class="flex justify-end"><button type="button" id="addEducation" class="add-row-btn">Tambah Pendidikan</button></div>
     </div>
-    <div class="section-title" style="display:none">Badan Profesional</div>
-    <div class="p-6" style="display:none">
+    <div class="section-title">Badan Profesional</div>
+    <div class="p-6">
         <div id="professional-body-container">
             <?php 
             $prof_idx = 0; 
@@ -610,8 +652,8 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
         </div>
         <div class="flex justify-end"><button type="button" id="addProfessionalBody" class="add-row-btn">Tambah Badan Profesional</button></div>
     </div>
-    <div class="section-title" style="display:none">Kegiatan Luar</div>
-    <div class="p-6" style="display:none">
+    <div class="section-title">Kegiatan Luar</div>
+    <div class="p-6">
         <div id="extracurricular-container">
             <?php 
             $extra_idx = 0; 
@@ -712,14 +754,32 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
         const count = container.querySelectorAll('.'+entryClass).length;
         clone.querySelectorAll('input, select, textarea').forEach(inp => {
             // reset values
-            if(inp.type === 'file'){ inp.value=''; }
-            else { inp.value=''; }
+            if(inp.type === 'file'){ 
+                inp.value=''; 
+                inp.removeAttribute('required'); // Remove required from cloned file inputs
+            }
+            else if(inp.type === 'hidden' && inp.name && (inp.name.includes('_path') || inp.name.includes('sijil_path'))) {
+                // Remove hidden path inputs from cloned entry
+                inp.remove();
+                return;
+            }
+            else { 
+                inp.value=''; 
+            }
             if(inp.name){ inp.name = inp.name.replace('[0]', '['+count+']'); }
             if(inp.type === 'file'){
                 const m = inp.name.match(/^([a-zA-Z_]+)\[(\d+)\]\[([a-zA-Z_]+)\]$/);
                 if(m){ inp.id = `${m[1]}_${m[2]}_${m[3]}`; }
             }
         });
+        
+        // Remove "existing file" messages from cloned entry
+        clone.querySelectorAll('p.text-xs.text-green-700').forEach(p => {
+            if(p.textContent.includes('Fail dimuat naik:')) {
+                p.remove();
+            }
+        });
+        
         // update status div ids next to file inputs
         clone.querySelectorAll('.file-status').forEach(div => {
             const prev = div.previousElementSibling;
@@ -763,6 +823,145 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
     register('professional-body-container','professional-body-entry','addProfessionalBody');
     register('extracurricular-container','extracurricular-entry','addExtracurricular');
     register('work-experience-container','work-experience-entry','addWorkExperience');
+    
+    // Education field validation - make fields mandatory if Nama Institusi has value
+    function setupEducationValidation() {
+        const educationContainer = document.getElementById('education-container');
+        if (!educationContainer) return;
+        
+        function validateEducationEntry(entry) {
+            const institusiInput = entry.querySelector('input[name*="[institusi]"]');
+            if (!institusiInput) return;
+            
+            const kelayakanSelect = entry.querySelector('select[name*="[kelayakan]"]');
+            const dariTahunSelect = entry.querySelector('select[name*="[dari_tahun]"]');
+            const hinggaTahunSelect = entry.querySelector('select[name*="[hingga_tahun]"]');
+            
+            const hasInstitusi = institusiInput.value.trim() !== '';
+            
+            // Set required attribute based on institusi value
+            if (kelayakanSelect) {
+                kelayakanSelect.required = hasInstitusi;
+                if (hasInstitusi) {
+                    kelayakanSelect.classList.add('border-red-300');
+                    // Add required indicator to label
+                    const label = kelayakanSelect.closest('div').querySelector('label');
+                    if (label && !label.querySelector('.required')) {
+                        const span = document.createElement('span');
+                        span.className = 'required';
+                        span.textContent = '*';
+                        label.appendChild(document.createTextNode(' '));
+                        label.appendChild(span);
+                    }
+                } else {
+                    kelayakanSelect.classList.remove('border-red-300');
+                    const label = kelayakanSelect.closest('div').querySelector('label');
+                    if (label) {
+                        const requiredSpan = label.querySelector('.required');
+                        if (requiredSpan) requiredSpan.remove();
+                    }
+                }
+            }
+            
+            if (dariTahunSelect) {
+                dariTahunSelect.required = hasInstitusi;
+                if (hasInstitusi) {
+                    dariTahunSelect.classList.add('border-red-300');
+                    const label = dariTahunSelect.closest('div').querySelector('label');
+                    if (label && !label.querySelector('.required')) {
+                        const span = document.createElement('span');
+                        span.className = 'required';
+                        span.textContent = '*';
+                        label.appendChild(document.createTextNode(' '));
+                        label.appendChild(span);
+                    }
+                } else {
+                    dariTahunSelect.classList.remove('border-red-300');
+                    const label = dariTahunSelect.closest('div').querySelector('label');
+                    if (label) {
+                        const requiredSpan = label.querySelector('.required');
+                        if (requiredSpan) requiredSpan.remove();
+                    }
+                }
+            }
+            
+            if (hinggaTahunSelect) {
+                hinggaTahunSelect.required = hasInstitusi;
+                if (hasInstitusi) {
+                    hinggaTahunSelect.classList.add('border-red-300');
+                    const label = hinggaTahunSelect.closest('div').querySelector('label');
+                    if (label && !label.querySelector('.required')) {
+                        const span = document.createElement('span');
+                        span.className = 'required';
+                        span.textContent = '*';
+                        label.appendChild(document.createTextNode(' '));
+                        label.appendChild(span);
+                    }
+                } else {
+                    hinggaTahunSelect.classList.remove('border-red-300');
+                    const label = hinggaTahunSelect.closest('div').querySelector('label');
+                    if (label) {
+                        const requiredSpan = label.querySelector('.required');
+                        if (requiredSpan) requiredSpan.remove();
+                    }
+                }
+            }
+            
+            // Remove red border when field is filled
+            if (kelayakanSelect && kelayakanSelect.value !== '') {
+                kelayakanSelect.classList.remove('border-red-300');
+            }
+            if (dariTahunSelect && dariTahunSelect.value !== '') {
+                dariTahunSelect.classList.remove('border-red-300');
+            }
+            if (hinggaTahunSelect && hinggaTahunSelect.value !== '') {
+                hinggaTahunSelect.classList.remove('border-red-300');
+            }
+        }
+        
+        // Setup validation for all existing entries
+        function setupAllEntries() {
+            const entries = educationContainer.querySelectorAll('.education-entry');
+            entries.forEach(entry => {
+                const institusiInput = entry.querySelector('input[name*="[institusi]"]');
+                if (institusiInput) {
+                    // Validate on input
+                    institusiInput.addEventListener('input', () => validateEducationEntry(entry));
+                    institusiInput.addEventListener('blur', () => validateEducationEntry(entry));
+                    
+                    // Also validate when other fields change
+                    const kelayakanSelect = entry.querySelector('select[name*="[kelayakan]"]');
+                    const dariTahunSelect = entry.querySelector('select[name*="[dari_tahun]"]');
+                    const hinggaTahunSelect = entry.querySelector('select[name*="[hingga_tahun]"]');
+                    
+                    if (kelayakanSelect) {
+                        kelayakanSelect.addEventListener('change', () => validateEducationEntry(entry));
+                    }
+                    if (dariTahunSelect) {
+                        dariTahunSelect.addEventListener('change', () => validateEducationEntry(entry));
+                    }
+                    if (hinggaTahunSelect) {
+                        hinggaTahunSelect.addEventListener('change', () => validateEducationEntry(entry));
+                    }
+                    
+                    // Initial validation
+                    validateEducationEntry(entry);
+                }
+            });
+        }
+        
+        // Initial setup
+        setupAllEntries();
+        
+        // Re-setup when new entries are added
+        const observer = new MutationObserver(() => {
+            setupAllEntries();
+        });
+        observer.observe(educationContainer, { childList: true });
+    }
+    
+    // Run validation setup
+    setupEducationValidation();
 }));
 </script>
     <div class="section-title">Pengalaman Kerja</div>

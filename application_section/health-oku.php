@@ -78,7 +78,27 @@ if (!defined('APP_SECURE')) { http_response_code(403); exit; }
                         </label>
                     </div>
                 </div>
-                <?php $jenis_oku = !empty($application['jenis_oku']) ? json_decode($application['jenis_oku'], true) : []; ?>
+                <?php 
+                $jenis_oku = [];
+                if (!empty($application['jenis_oku'])) {
+                    if (is_array($application['jenis_oku'])) {
+                        $jenis_oku = $application['jenis_oku'];
+                    } elseif (is_string($application['jenis_oku'])) {
+                        $decoded = json_decode($application['jenis_oku'], true);
+                        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                            $jenis_oku = $decoded;
+                        } else {
+                            $raw = trim($application['jenis_oku']);
+                            if (strpos($raw, ',') !== false) {
+                                $parts = array_map('trim', explode(',', $raw));
+                                $jenis_oku = array_filter($parts, function($v){ return $v !== ''; });
+                            } elseif ($raw !== '') {
+                                $jenis_oku = [$raw];
+                            }
+                        }
+                    }
+                }
+                ?>
                 <div class="w-1/2" id="oku_field" style="display: <?php echo (($application['pemegang_kad_oku'] ?? '')==='YA' || ($application['pemegang_kad_oku'] ?? '')==='Ya') ? 'block' : 'none'; ?>;">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Jenis OKU (Pilihan)</label>
                     <div class="mt-2 flex flex-wrap gap-2">

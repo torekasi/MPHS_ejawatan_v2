@@ -84,7 +84,38 @@ Every time code is updated, modified, or new features are added, the following d
 
 ---
 
-### 3. Technical Documentation (`/docs/technical/`)
+### 3. Walkthroughs & Feature Documentation (`/docs/*.md`)
+**When to create:**
+- Completing a significant feature or task
+- Implementing complex workflows
+- Major UI/UX changes
+
+**Requirements:**
+- **Save Location:** All walkthroughs must be saved as markdown files in the `/docs/` directory (e.g., `/docs/feature-name.md`).
+- **Changelog Reference:** The created documentation file MUST be referenced in the corresponding `/docs/changelog.md` entry.
+
+**Format:**
+- Feature Title
+- Description of changes
+- Implementation details
+- Verification steps
+- Screenshots (if applicable)
+
+---
+
+### 4. Product Requirements Document (`/docs/PRD.md`)
+**When to update:**
+- Before starting ANY coding task or implementation
+- When requirements change during implementation
+
+**Requirements:**
+- **Incremental Updates:** Add a new section for each feature/task.
+- **Content:** Must include the Goal, User Stories (optional), Technical Requirements, and Implementation Plan.
+- **Status:** Mark sections as [Draft], [In Progress], or [Completed].
+
+---
+
+### 5. Technical Documentation (`/docs/technical/`)
 **When to update:**
 - Architecture changes
 - Database schema modifications
@@ -119,6 +150,7 @@ Every time code is updated, modified, or new features are added, the following d
 1. **Before coding:**
    - Review existing documentation
    - Plan what documentation will need updates
+   - **Update PRD:** Incrementally update `/docs/PRD.md` with the implementation plan and requirements for the current task.
 
 2. **During coding:**
    - Add inline code comments
@@ -138,6 +170,85 @@ Every time code is updated, modified, or new features are added, the following d
    - Ensure examples are accurate
 
 ---
+
+## Testing and File Naming Conventions
+
+### Testing Files Naming Standard
+
+**MANDATORY:** All testing, verification, and debugging files MUST use the `test_` prefix.
+
+**Naming Format:**
+```
+test_<filename>.<extension>
+```
+
+**Examples:**
+- `test_database_connection.php` - Database connection testing
+- `test_email_service.php` - Email service verification
+- `test_payment_gateway.php` - Payment gateway testing
+- `test_file_upload.php` - File upload functionality testing
+- `test_recaptcha.php` - reCAPTCHA verification testing
+- `test_api_endpoint.php` - API endpoint testing
+
+**Rules:**
+1. ✅ **DO** use `test_` prefix for all testing files
+2. ✅ **DO** place test files in appropriate directories:
+   - `/tests/` - Unit and integration tests
+   - `/tools/` - Utility and verification scripts
+   - Root directory - Quick debugging scripts (temporary)
+3. ✅ **DO** add test files to `.gitignore` if they contain sensitive data
+4. ❌ **DON'T** commit test files to production branches without review
+5. ❌ **DON'T** leave test files in production deployments
+
+**Test File Structure:**
+```php
+<?php
+/**
+ * @FileID: test_<identifier>
+ * @Module: Testing
+ * @Author: [Your Name]
+ * @Purpose: [What this test verifies]
+ * @LastModified: YYYY-MM-DD
+ * @SecurityTag: testing
+ */
+
+// Test configuration
+define('TEST_MODE', true);
+
+// Your test code here
+```
+
+**Cleanup:**
+- Remove temporary test files before committing
+- Document permanent test files in `/docs/testing.md`
+- Archive old test files in `/tests/archive/`
+
+---
+
+## Code Organization Rules
+
+### File Naming Conventions
+
+**Production Files:**
+- Use descriptive, lowercase names with hyphens: `application-status.php`
+- Controllers: `<Name>Controller.php` (PascalCase)
+- Models: `<Name>Model.php` (PascalCase)
+- Views: `<name>-view.php` (lowercase with hyphens)
+
+**Testing Files:**
+- Always prefix with `test_`: `test_feature_name.php`
+
+**Utility Scripts:**
+- Place in `/tools/` directory
+- Use descriptive names: `update-schema.php`, `fix-database.php`
+
+**Migration Scripts:**
+- Place in `/tools/` or `/migrations/`
+- Use date prefix: `2025-11-22_add_sijil_tambahan.sql`
+- Or descriptive names: `add-sijil-tambahan-column.sql`
+
+---
+
 
 ## Documentation Standards
 

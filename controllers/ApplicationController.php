@@ -252,40 +252,41 @@ class ApplicationController
         }
 
         $jobId = isset($_POST['job_id']) ? (int)$_POST['job_id'] : 0;
+        $jobCode = isset($_POST['job_code']) ? trim((string)$_POST['job_code']) : '';
         $nric = isset($_POST['nombor_ic']) ? trim((string)$_POST['nombor_ic']) : '';
         $excludeId = isset($_POST['application_id']) ? (int)$_POST['application_id'] : 0;
 
         try {
-            require_once __DIR__ . '/../.config.php';
-            $dsn = "mysql:host={$config['db_host']};dbname={$config['db_name']};charset=utf8mb4";
-            $pdo = new PDO($dsn, $config['db_user'], $config['db_pass'], [
+            $cfgResult = require __DIR__ . '/../config.php';
+            $cfg = $cfgResult['config'] ?? $cfgResult;
+            $dsn = "mysql:host={$cfg['db_host']};dbname={$cfg['db_name']};charset=utf8mb4";
+            $pdo = new PDO($dsn, $cfg['db_user'], $cfg['db_pass'], [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
+            if (!$jobId && $jobCode !== '') {
+                $s = $pdo->prepare('SELECT id FROM job_postings WHERE job_code = ? LIMIT 1');
+                $s->execute([$jobCode]);
+                $row = $s->fetch();
+                if ($row && isset($row['id'])) { $jobId = (int)$row['id']; }
+            }
 
-            // Check in application_application_main table first
-            if ($excludeId > 0) {
-                $stmt = $pdo->prepare('SELECT id FROM application_application_main WHERE job_id = ? AND nombor_ic = ? AND id <> ? LIMIT 1');
-                $stmt->execute([$jobId, $nric, $excludeId]);
+            require_once __DIR__ . '/../includes/DuplicateApplicationChecker.php';
+            $checker = new DuplicateApplicationChecker($pdo);
+            $result = $checker->checkDuplicateApplication($nric, $jobId);
+            if ($result['status'] === 'duplicate_found') {
+                $ref = $result['application']['application_reference'] ?? null;
+                echo json_encode([
+                    'exists' => true,
+                    'duplicate' => true,
+                    'message' => $result['message'],
+                    'application_reference' => $ref,
+                    'semak_status_url' => 'semak-status.php'
+                ]);
             } else {
-                $stmt = $pdo->prepare('SELECT id FROM application_application_main WHERE job_id = ? AND nombor_ic = ? LIMIT 1');
-                $stmt->execute([$jobId, $nric]);
+                echo json_encode(['exists' => false, 'duplicate' => false]);
             }
-            $exists = (bool)$stmt->fetch();
-            
-            // Also check legacy job_applications table if not found in main table
-            if (!$exists) {
-                if ($excludeId > 0) {
-                    $stmt = $pdo->prepare('SELECT id FROM job_applications WHERE job_id = ? AND nombor_ic = ? AND id <> ? LIMIT 1');
-                    $stmt->execute([$jobId, $nric, $excludeId]);
-                } else {
-                    $stmt = $pdo->prepare('SELECT id FROM job_applications WHERE job_id = ? AND nombor_ic = ? LIMIT 1');
-                    $stmt->execute([$jobId, $nric]);
-                }
-                $exists = (bool)$stmt->fetch();
-            }
-            echo json_encode(['exists' => $exists]);
         } catch (Throwable $e) {
             http_response_code(500);
             echo json_encode(['error' => 'SERVER_ERROR']);

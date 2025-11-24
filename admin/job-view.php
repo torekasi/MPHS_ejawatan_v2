@@ -28,7 +28,7 @@ try {
     if (!$pdo) {
         logError('Database connection not available in job-view.php', 'DATABASE_ERROR');
         include 'templates/header.php';
-        echo '<div class="max-w-7xl mx-auto p-6">';
+        echo '<div class="standard-container mx-auto p-6">';
         echo '<div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">';
         echo '<p class="font-bold">Ralat Sambungan Pangkalan Data</p>';
         echo '<p>Sambungan ke pangkalan data tidak tersedia. Sila cuba lagi kemudian atau hubungi pentadbir sistem.</p>';
@@ -83,20 +83,82 @@ try {
     $approved = (int)($application_stats['approved'] ?? 0);
     $rejected = (int)($application_stats['rejected'] ?? 0);
     $draft_total = (int)($application_stats['draft_total'] ?? 0);
+    $statuses = [];
+    try { $sstmt = $pdo->query("SELECT id, code, name, sort_order FROM application_statuses WHERE is_active = 1 ORDER BY sort_order, id"); $statuses = $sstmt->fetchAll(PDO::FETCH_ASSOC) ?: []; } catch (Exception $e) { $statuses = []; }
+    $counts_by_status = [];
+    try { $cstmt = $pdo->prepare("SELECT UPPER(status) AS code_u, COUNT(*) AS cnt FROM application_application_main WHERE job_id = ? AND submission_locked = 1 GROUP BY UPPER(status)"); $cstmt->execute([$job['id']]); foreach ($cstmt->fetchAll(PDO::FETCH_ASSOC) as $row) { $counts_by_status[$row['code_u']] = (int)$row['cnt']; } } catch (Exception $e) { $counts_by_status = []; }
+    $now = time();
+    $ad_ts = strtotime($job['ad_date'] ?? '');
+    $close_ts = strtotime($job['ad_close_date'] ?? '');
+    $category_label = 'Aktif';
+    $border_class = 'border-blue-200';
+    $header_bg_class = 'bg-blue-50 border border-blue-200';
+    $chip_class = 'bg-blue-100 text-blue-700';
+    if ($ad_ts && $now < $ad_ts) { $category_label = 'Akan Datang'; $border_class = 'border-indigo-200'; $header_bg_class = 'bg-indigo-50 border border-indigo-200'; $chip_class = 'bg-indigo-100 text-indigo-700'; }
+    elseif ($close_ts && $now > $close_ts) { $days = (int)floor(($now - $close_ts) / 86400); if ($days <= 45) { $category_label = 'Ditutup ≤45 hari'; $border_class = 'border-orange-200'; $header_bg_class = 'bg-orange-50 border border-orange-200'; $chip_class = 'bg-orange-100 text-orange-700'; } else { $category_label = 'Ditutup >45 hari'; $border_class = 'border-gray-200'; $header_bg_class = 'bg-gray-100 border border-gray-200'; $chip_class = 'bg-gray-200 text-gray-700'; } }
 } catch (Exception $e) {
     die('Ralat pangkalan data: ' . htmlspecialchars($e->getMessage()));
 }
 
+if (array_key_exists('job_requirements', $job)) {
+    $req_raw = (string)($job['job_requirements'] ?? '');
+    $req_display = '';
+    $decoded = json_decode($req_raw, true);
+    if (is_array($decoded)) {
+        $chips = [];
+        $lic = $decoded['license'] ?? [];
+        if (is_string($lic) && strlen($lic) > 0) { $lic = [$lic]; }
+        if (is_array($lic) && count($lic) > 0) {
+            foreach ($lic as $l) {
+                $chips[] = '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">Lesen: ' . htmlspecialchars((string)$l) . '</span>';
+            }
+        }
+        $map = [
+            'gender' => 'Jantina',
+            'nationality' => 'Warganegara',
+            'bangsa' => 'Bangsa',
+            'birth_state' => 'Negeri Kelahiran',
+            'min_education' => 'Min Pendidikan'
+        ];
+        foreach ($map as $k => $label) {
+            $val = $decoded[$k] ?? '';
+            if (is_string($val)) { $val = trim($val); }
+            if (!empty($val)) {
+                $chips[] = '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 border border-indigo-200">' . $label . ': ' . htmlspecialchars((string)$val) . '</span>';
+            }
+        }
+        $msy = $decoded['min_selangor_years'] ?? '';
+        if ($msy !== '' && $msy !== null) {
+            $chips[] = '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">Bermastautin Selangor ≥ ' . htmlspecialchars((string)$msy) . ' tahun</span>';
+        }
+        if (count($chips) > 0) {
+            $req_display = implode('', $chips);
+        } else {
+            $req_display = '<span class="text-gray-500 italic">Tiada kriteria khusus</span>';
+        }
+    } else {
+        $req_display = strlen(trim($req_raw)) > 0 ? htmlspecialchars($req_raw) : '<span class="text-gray-500 italic">Tiada kriteria khusus</span>';
+    }
+}
 include 'templates/header.php';
 ?>
-<div class="standard-container mx-auto bg-white rounded-xl shadow-lg p-8 mt-10 border border-blue-100">
-    <div class="flex items-center gap-4 mb-6">
-        <div class="flex-shrink-0 bg-blue-100 rounded-full p-3">
-            <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 01-8 0m8 0a4 4 0 00-8 0m8 0V5a4 4 0 00-8 0v2m8 0v2a4 4 0 01-8 0V7m8 0h2a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V9a2 2 0 012-2h2"></path></svg>
+<div class="standard-container mx-auto bg-white rounded-xl shadow-lg p-8 mt-10 border <?php echo htmlspecialchars($border_class); ?>">
+    <div class="flex items-center justify-between gap-4 mb-6 rounded-lg <?php echo htmlspecialchars($header_bg_class); ?> px-4 py-3">
+        <div class="flex items-center gap-4">
+            <div class="flex-shrink-0 bg-blue-100 rounded-full p-3">
+                <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 01-8 0m8 0a4 4 0 00-8 0m8 0V5a4 4 0 00-8 0v2m8 0v2a4 4 0 01-8 0V7m8 0h2a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V9a2 2 0 012-2h2"></path></svg>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold text-blue-900 mb-1"><?php echo htmlspecialchars($job['job_title']); ?></h1>
+                <div class="text-sm text-gray-600 font-mono">Kod Jawatan: <span class="font-semibold text-blue-700"><?php echo htmlspecialchars($job['job_code']); ?></span></div>
+            </div>
         </div>
-        <div>
-            <h1 class="text-3xl font-bold text-blue-900 mb-1"><?php echo htmlspecialchars($job['job_title']); ?></h1>
-            <div class="text-sm text-gray-600 font-mono">Kod Jawatan: <span class="font-semibold text-blue-700"><?php echo htmlspecialchars($job['job_code']); ?></span></div>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold <?php echo htmlspecialchars($chip_class); ?>"><?php echo $category_label; ?></span>
+    </div>
+    <div class="mb-8">
+        <div class="text-xs font-semibold tracking-wide px-3 py-2 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 mb-2">Kriteria Ideal</div>
+        <div class="flex flex-wrap gap-2 items-start bg-gray-50 rounded p-4 border border-gray-200" style="min-height:60px">
+            <?php echo $req_display ?? '<span class="text-gray-500 italic">Tiada kriteria khusus</span>'; ?>
         </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -126,72 +188,43 @@ include 'templates/header.php';
         </div>
     </div>
     <div class="mb-8">
-        <div class="text-xs text-gray-500 mb-1">Syarat & Kelayakan Lantikan</div>
+        <div class="text-xs font-semibold tracking-wide px-3 py-2 rounded bg-blue-50 text-blue-700 border border-blue-200 mb-2">Syarat & Kelayakan Lantikan</div>
         <div class="prose prose-blue prose-sm max-w-none bg-gray-50 rounded p-4 border border-gray-200" style="min-height:80px">
-            <?php
-            // Display the requirements with proper HTML rendering
-            echo $job['requirements'];
-            ?>
+            <?php echo $job['requirements']; ?>
         </div>
-        <style>
-        /* Enhanced styling for lists and typography */
-        .prose ul { list-style-type: disc !important; margin: 0.8em 0 !important; padding-left: 1.7em !important; }
-        .prose ol { list-style-type: decimal !important; margin: 0.8em 0 !important; padding-left: 1.7em !important; }
-        .prose li { display: list-item !important; margin-bottom: 0.4em !important; }
-        .prose li::marker { color: #1e40af !important; }
-        .prose ol li::marker { font-weight: bold !important; }
-        .prose p { margin-bottom: 0.8em !important; }
-        .prose h3 { font-size: 1.3em !important; font-weight: bold !important; margin-top: 1.4em !important; margin-bottom: 0.7em !important; color: #1e3a8a !important; }
-        .prose h4 { font-size: 1.1em !important; font-weight: bold !important; margin-top: 1.2em !important; margin-bottom: 0.6em !important; color: #1e40af !important; }
-        .prose br { display: block !important; margin-bottom: 0.4em !important; }
-        </style>
     </div>
 
-    <!-- Application Stats Cards placed above CTAs -->
     <div class="mb-8">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Statistik Permohonan</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <!-- Total Submitted -->
             <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>" class="block bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg hover:border-blue-300 transition-all duration-200 transform hover:scale-105">
                 <div class="text-center">
                     <div class="text-2xl font-bold text-blue-600"><?php echo $total_submitted; ?></div>
                     <div class="text-sm text-gray-600 mt-1">Jumlah Dihantar</div>
                 </div>
             </a>
-            
-            <!-- Pending -->
-            <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=PENDING" class="block bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg hover:border-yellow-300 transition-all duration-200 transform hover:scale-105">
+            <?php 
+                $color_map = [
+                    'PENDING' => ['text' => 'text-yellow-600', 'hover' => 'hover:border-yellow-300'],
+                    'REVIEWED' => ['text' => 'text-green-600', 'hover' => 'hover:border-green-300'],
+                    'SHORTLISTED' => ['text' => 'text-green-600', 'hover' => 'hover:border-green-300'],
+                    'APPROVED' => ['text' => 'text-emerald-600', 'hover' => 'hover:border-emerald-300'],
+                    'ACCEPTED' => ['text' => 'text-emerald-600', 'hover' => 'hover:border-emerald-300'],
+                    'REJECTED' => ['text' => 'text-red-600', 'hover' => 'hover:border-red-300'],
+                ];
+                foreach ($statuses as $st): 
+                    $code = strtoupper($st['code']); 
+                    $count = $counts_by_status[$code] ?? 0; 
+                    $text = $color_map[$code]['text'] ?? 'text-blue-600'; 
+                    $hover = $color_map[$code]['hover'] ?? 'hover:border-blue-300';
+            ?>
+            <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=<?php echo urlencode($st['code']); ?>" class="block bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg <?php echo $hover; ?> transition-all duration-200 transform hover:scale-105">
                 <div class="text-center">
-                    <div class="text-2xl font-bold text-yellow-600"><?php echo $pending; ?></div>
-                    <div class="text-sm text-gray-600 mt-1">Belum Disemak</div>
+                    <div class="text-2xl font-bold <?php echo $text; ?>"><?php echo $count; ?></div>
+                    <div class="text-sm text-gray-600 mt-1"><?php echo htmlspecialchars($st['name']); ?></div>
                 </div>
             </a>
-            
-            <!-- Reviewed -->
-            <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=REVIEWED" class="block bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg hover:border-green-300 transition-all duration-200 transform hover:scale-105">
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-green-600"><?php echo $reviewed; ?></div>
-                    <div class="text-sm text-gray-600 mt-1">Telah Disemak</div>
-                </div>
-            </a>
-            
-            <!-- Approved -->
-            <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=APPROVED" class="block bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg hover:border-emerald-300 transition-all duration-200 transform hover:scale-105">
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-emerald-600"><?php echo $approved; ?></div>
-                    <div class="text-sm text-gray-600 mt-1">Diluluskan</div>
-                </div>
-            </a>
-            
-            <!-- Rejected -->
-            <a href="applications-list.php?job_id=<?php echo urlencode($job['id']); ?>&status=REJECTED" class="block bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg hover:border-red-300 transition-all duration-200 transform hover:scale-105">
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-red-600"><?php echo $rejected; ?></div>
-                    <div class="text-sm text-gray-600 mt-1">Ditolak</div>
-                </div>
-            </a>
-            
-            <!-- Draft -->
+            <?php endforeach; ?>
             <a href="draft-applications.php?job_id=<?php echo urlencode($job['id']); ?>" class="block bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg hover:border-gray-400 transition-all duration-200 transform hover:scale-105">
                 <div class="text-center">
                     <div class="text-2xl font-bold text-gray-600"><?php echo $draft_total; ?></div>

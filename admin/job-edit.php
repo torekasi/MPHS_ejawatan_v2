@@ -39,6 +39,10 @@ try {
     }
     
     $job = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Ensure $id is set for updates even when page is opened via job_code
+    if ($job && (!isset($id) || !is_numeric($id))) {
+        $id = (int)($job['id'] ?? 0);
+    }
     if (!$job) {
         header('Location: job-list.php');
         exit;
@@ -63,6 +67,18 @@ if (!is_numeric($salary_min) || !is_numeric($salary_max)) {
 $salary_min = number_format((float)$salary_min, 2, '.', '');
 $salary_max = number_format((float)$salary_max, 2, '.', '');
         $requirements = trim($_POST['requirements'] ?? '');
+        
+        // Capture job requirements for filtering
+        $job_requirements = [
+            'license' => $_POST['req_license'] ?? [],
+            'gender' => $_POST['req_gender'] ?? '',
+            'nationality' => $_POST['req_nationality'] ?? '',
+            'bangsa' => $_POST['req_bangsa'] ?? '',
+            'min_selangor_years' => $_POST['req_min_selangor_years'] ?? '',
+            'birth_state' => $_POST['req_birth_state'] ?? '',
+            'min_education' => $_POST['req_min_education'] ?? ''
+        ];
+        $job_requirements_json = json_encode($job_requirements);
 
         // Validation
         if (!$job_title || !$ad_date || !$ad_close_date || !$edaran_iklan || !$kod_gred || !$salary_min || !$salary_max || !$requirements) {
@@ -75,8 +91,8 @@ $salary_max = number_format((float)$salary_max, 2, '.', '');
             // Store old job data for logging changes
             $old_job = $job;
             
-            $stmt = $pdo->prepare('UPDATE job_postings SET job_title=?, ad_date=?, ad_close_date=?, edaran_iklan=?, kod_gred=?, salary_min=?, salary_max=?, requirements=? WHERE id=?');
-            $stmt->execute([$job_title, $ad_date, $ad_close_date, $edaran_iklan, $kod_gred, $salary_min, $salary_max, $requirements, $id]);
+            $stmt = $pdo->prepare('UPDATE job_postings SET job_title=?, ad_date=?, ad_close_date=?, edaran_iklan=?, kod_gred=?, salary_min=?, salary_max=?, requirements=?, job_requirements=? WHERE id=?');
+            $stmt->execute([$job_title, $ad_date, $ad_close_date, $edaran_iklan, $kod_gred, $salary_min, $salary_max, $requirements, $job_requirements_json, $id]);
             
             // Log the job update action (use integer entity_id, keep formatted code in details)
             // Use job_code if available, otherwise use formatted job_id
@@ -102,8 +118,12 @@ $log_details = [
                 'message' => 'Jawatan berjaya dikemaskini!'
             ];
             
-            // Redirect to job list page after successful update
-            header('Location: job-list.php');
+            // Redirect to job-view page after successful update
+            if (!empty($job['job_code'])) {
+                header('Location: job-view.php?job_code=' . urlencode($job['job_code']));
+            } else {
+                header('Location: job-view.php?id=' . urlencode($id));
+            }
             exit;
         }
     }
@@ -133,7 +153,7 @@ if ($error) {
 
 include 'templates/header.php';
 ?>
-<div class="max-w-7xl mx-auto bg-white rounded-lg shadow-sm p-8 mt-8">
+<div class="standard-container mx-auto bg-white rounded-lg shadow-sm p-8 mt-8">
     <h2 class="text-2xl font-bold mb-6 text-blue-900">Edit Jawatan</h2>
     <?php if ($error): ?>
         <div class="bg-red-100 text-red-700 p-4 rounded mb-4"><?php echo $error; ?></div>
@@ -170,6 +190,12 @@ include 'templates/header.php';
             <label class="block font-semibold mb-1">GAJI MAKSIMUM *</label>
 <input type="text" id="salary_max" name="salary_max" class="w-full border rounded px-3 py-2" required value="<?php echo number_format($job['salary_max'], 2); ?>" pattern="^\d{1,3}(,\d{3})*(\.\d{2})?$" title="Sila masukkan nilai dalam format 1,234.56" inputmode="decimal" autocomplete="off">
         </div>
+
+        <!-- Candidate Filtering Requirements Section -->
+        <?php 
+        $reqs = json_decode($job['job_requirements'] ?? '{}', true) ?: [];
+        ?>
+
         <div class="md:col-span-2">
             <label class="block font-semibold mb-1">Syarat & Kelayakan Lantikan *</label>
             <input type="hidden" name="requirements" id="requirements">
@@ -200,9 +226,171 @@ include 'templates/header.php';
                 return true;
             };
         </script>
+
+        <!-- Candidate Filtering Requirements Section -->
+        <div class="md:col-span-2 bg-blue-50 p-6 rounded-lg border border-blue-100 mt-6">
+            <h3 class="text-lg font-semibold text-blue-800 mb-4 flex items-center justify-between cursor-pointer" onclick="toggleSection('criteria-section')">
+                <span class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                    Kriteria Penapisan Calon (Ideal Candidate)
+                </span>
+                <svg id="criteria-icon" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </h3>
+            <p class="text-sm text-blue-700 mb-4">
+                Kriteria ini akan membantu dalam penapisan senarai pemohon dengan mengenal pasti calon yang disyorkan berdasarkan keperluan jawatan.
+            </p>
+            <div id="criteria-section" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- License Requirements (Collapsible) -->
+                <div class="col-span-1 md:col-span-3 border-b border-blue-200 pb-4 mb-2">
+                    <button type="button" class="flex items-center text-sm font-medium text-blue-700 hover:text-blue-900 focus:outline-none" onclick="toggleLicense()">
+                        <span id="license-toggle-icon" class="mr-2">▶</span>
+                        Lesen Memandu Diperlukan
+                    </button>
+                    <div id="license-container" class="hidden mt-3 grid grid-cols-2 md:grid-cols-5 gap-3">
+                        <?php 
+                        $licenses = [
+                            ['code' => 'A', 'desc' => 'Motosikal (kelas lama)'],
+                            ['code' => 'B', 'desc' => 'Motosikal >250cc'],
+                            ['code' => 'B1', 'desc' => 'Motosikal ≤500cc'],
+                            ['code' => 'B2', 'desc' => 'Motosikal ≤250cc'],
+                            ['code' => 'C', 'desc' => 'Traktor'],
+                            ['code' => 'D', 'desc' => 'Kereta'],
+                            ['code' => 'E', 'desc' => 'Lori/Treler'],
+                            ['code' => 'E1', 'desc' => 'Treler ringan'],
+                            ['code' => 'E2', 'desc' => 'Treler berat'],
+                            ['code' => 'F', 'desc' => 'Jentera pertanian'],
+                            ['code' => 'G', 'desc' => 'Kenderaan gandar khas'],
+                            ['code' => 'H', 'desc' => 'Kren'],
+                            ['code' => 'I', 'desc' => 'Forklift'],
+                            ['code' => 'Tiada', 'desc' => 'Tiada lesen']
+                        ];
+                        $selected_licenses = $reqs['license'] ?? [];
+                        foreach ($licenses as $lic): 
+                        ?>
+                        <label class="inline-flex items-center bg-white px-3 py-2 rounded border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                            <input type="checkbox" name="req_license[]" value="<?php echo $lic['code']; ?>" class="form-checkbox h-4 w-4 text-blue-600" <?php echo in_array($lic['code'], $selected_licenses) ? 'checked' : ''; ?>>
+                            <span class="ml-2 text-sm text-gray-700"><?php echo $lic['code']; ?> — <?php echo $lic['desc']; ?></span>
+                        </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Gender -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Jantina</label>
+                    <select name="req_gender" class="w-full border rounded px-3 py-2 bg-white">
+                        <option value="">Semua Jantina</option>
+                        <option value="Lelaki" <?php echo ($reqs['gender'] ?? '') === 'Lelaki' ? 'selected' : ''; ?>>Lelaki</option>
+                        <option value="Perempuan" <?php echo ($reqs['gender'] ?? '') === 'Perempuan' ? 'selected' : ''; ?>>Perempuan</option>
+                    </select>
+                </div>
+
+                <!-- Nationality -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Warganegara</label>
+                    <select name="req_nationality" class="w-full border rounded px-3 py-2 bg-white">
+                        <option value="">Semua</option>
+                        <?php 
+                        $nationalities = ["Warganegara Malaysia", "Penduduk Tetap", "Bukan Warganegara", "Pelancong"];
+                        foreach ($nationalities as $nat): 
+                        ?>
+                        <option value="<?php echo $nat; ?>" <?php echo ($reqs['nationality'] ?? '') === $nat ? 'selected' : ''; ?>><?php echo $nat; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <!-- Bangsa (New) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Bangsa</label>
+                    <select name="req_bangsa" class="w-full border rounded px-3 py-2 bg-white">
+                        <option value="">Semua Bangsa</option>
+                        <?php 
+                        $races = ["Melayu", "Cina", "India", "Kadazan", "Lain-lain"];
+                        foreach ($races as $race): 
+                        ?>
+                        <option value="<?php echo $race; ?>" <?php echo ($reqs['bangsa'] ?? '') === $race ? 'selected' : ''; ?>><?php echo $race; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <!-- Birth State (New) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Negeri Kelahiran</label>
+                    <select name="req_birth_state" class="w-full border rounded px-3 py-2 bg-white">
+                        <option value="">Semua Negeri</option>
+                        <?php 
+                        $states = [
+                            "Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Sabah", "Sarawak", "Selangor", "Terengganu",
+                            "Wilayah Persekutuan Kuala Lumpur", "Wilayah Persekutuan Labuan", "Wilayah Persekutuan Putrajaya", "Bukan Malaysia"
+                        ];
+                        $existingBirth = $reqs['birth_state'] ?? '';
+                        if ($existingBirth === 'Wilayah Persekutuan') { $states[] = 'Wilayah Persekutuan'; }
+                        foreach ($states as $st): 
+                        ?>
+                        <option value="<?php echo $st; ?>" <?php echo ($reqs['birth_state'] ?? '') === $st ? 'selected' : ''; ?>><?php echo $st; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <!-- Education -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Minima Tahap Pendidikan</label>
+                    <select name="req_min_education" class="w-full border rounded px-3 py-2 bg-white">
+                        <option value="">Tiada Had</option>
+                        <option value="SPM" <?php echo ($reqs['min_education'] ?? '') === 'SPM' ? 'selected' : ''; ?>>SPM</option>
+                        <option value="STPM" <?php echo ($reqs['min_education'] ?? '') === 'STPM' ? 'selected' : ''; ?>>STPM / Sijil</option>
+                        <option value="Diploma" <?php echo ($reqs['min_education'] ?? '') === 'Diploma' ? 'selected' : ''; ?>>Diploma</option>
+                        <option value="Ijazah" <?php echo ($reqs['min_education'] ?? '') === 'Ijazah' ? 'selected' : ''; ?>>Ijazah Sarjana Muda</option>
+                        <option value="Master" <?php echo ($reqs['min_education'] ?? '') === 'Master' ? 'selected' : ''; ?>>Sarjana (Master) / PhD</option>
+                    </select>
+                </div>
+
+
+                <!-- Years in Selangor -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Minima Menetap di Selangor (Tahun)</label>
+                    <input type="number" name="req_min_selangor_years" class="w-full border rounded px-3 py-2" min="0" max="99" placeholder="Contoh: 5" value="<?php echo htmlspecialchars($reqs['min_selangor_years'] ?? ''); ?>">
+                </div>
+            </div>
+        </div>
+
+        <script>
+        function toggleSection(id) {
+            var section = document.getElementById(id);
+            var icon = document.getElementById('criteria-icon');
+            if (section.classList.contains('hidden')) {
+                section.classList.remove('hidden');
+                icon.classList.remove('-rotate-90');
+            } else {
+                section.classList.add('hidden');
+                icon.classList.add('-rotate-90');
+            }
+        }
+
+        function toggleLicense() {
+            var container = document.getElementById('license-container');
+            var icon = document.getElementById('license-toggle-icon');
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                icon.innerHTML = '▼';
+            } else {
+                container.classList.add('hidden');
+                icon.innerHTML = '▶';
+            }
+        }
+        
+        // Auto-expand license section if any license is selected
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('input[name="req_license[]"]');
+            var isChecked = Array.from(checkboxes).some(cb => cb.checked);
+            if (isChecked) {
+                toggleLicense();
+            }
+        });
+        </script>
         <div class="md:col-span-2 flex gap-4 pt-4">
             <button type="submit" class="bg-blue-600 text-white px-8 py-2 rounded hover:bg-blue-700 transition">Simpan</button>
-            <a href="job-list.php" class="bg-gray-500 text-white px-8 py-2 rounded hover:bg-gray-600 transition">Kembali</a>
+            <button type="button" onclick="window.history.back()" class="bg-gray-500 text-white px-8 py-2 rounded hover:bg-gray-600 transition">Kembali</button>
         </div>
         <script>
     function formatNumberInput(input) {
