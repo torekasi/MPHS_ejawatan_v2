@@ -67,8 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } catch (Exception $e) {
         $error_code = uniqid('ERR', true);
-        $error = 'Database error. Reference Code: ' . $error_code;
-        log_error('Database error during login', ['error_code' => $error_code, 'exception' => $e->getMessage(), 'user_identifier' => $username]);
+        if ($e->getMessage() === 'RECAPTCHA_FAILED') {
+            $error = trim($error) ? ($error . ' Reference Code: ' . $error_code) : ('Security configuration missing. Reference Code: ' . $error_code);
+            log_security_activity('Admin login reCAPTCHA failure or missing configuration', ['error_code' => $error_code, 'user_identifier' => $username], 'ERROR');
+        } else {
+            $error = 'Database error. Reference Code: ' . $error_code;
+            log_error('Database error during login', ['error_code' => $error_code, 'exception' => $e->getMessage(), 'user_identifier' => $username]);
+        }
     }
 }
 ?>
