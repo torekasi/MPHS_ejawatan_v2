@@ -2,6 +2,7 @@
 session_start();
 // Centralized bootstrap (logging, DB helper, global handlers)
 require_once '../includes/bootstrap.php';
+require_once '../includes/Version.php';
 
 // Get database connection from main config
 $config = require_once '../config.php';
@@ -98,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
     <div class="w-full max-w-md mx-auto bg-white p-8 rounded shadow-xl">
         <h2 class="text-2xl font-bold mb-2 text-center text-blue-900">Log Masuk Admin</h2>
-        <div class="text-center text-xs text-gray-500 mb-4">Versi 2.1</div>
+        <div class="text-center text-xs text-gray-500 mb-4"><?php echo htmlspecialchars(get_app_version_label()); ?></div>
         <?php if ($error): ?>
             <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-center"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
