@@ -5,6 +5,7 @@ require_once '../includes/bootstrap.php';
 
 // Get database connection from main config
 $config = require_once '../config.php';
+$GLOBALS['config']['admin_file_logging'] = true;
 $recaptcha_v2_site_key = $config['recaptcha_v2_site_key'] ?? (getenv('RECAPTCHA_V2_SITE_KEY') ?: '');
 $recaptcha_v2_secret_key = $config['recaptcha_v2_secret_key'] ?? (getenv('RECAPTCHA_V2_SECRET_KEY') ?: '');
 
@@ -27,9 +28,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'response' => $recaptcha_response,
             'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''
         ]);
-        $context = stream_context_create(['http' => ['method' => 'POST', 'header' => 'Content-Type: application/x-www-form-urlencoded', 'content' => $verify_data, 'timeout' => 5]]);
-        $verify = @file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
-        $vres = is_string($verify) ? json_decode($verify, true) : null;
+        $vres = null;
+        if (function_exists('curl_init')) {
+            $ch = curl_init('https://www.google.com/recaptcha/api/siteverify');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $verify_data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+            $verify = curl_exec($ch);
+            curl_close($ch);
+            $vres = is_string($verify) ? json_decode($verify, true) : null;
+        } else {
+            $context = stream_context_create(['http' => ['method' => 'POST', 'header' => 'Content-Type: application/x-www-form-urlencoded', 'content' => $verify_data, 'timeout' => 5]]);
+            $verify = @file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+            $vres = is_string($verify) ? json_decode($verify, true) : null;
+        }
         if (!$vres || empty($vres['success'])) {
             $error = 'reCAPTCHA validation failed.';
         }
