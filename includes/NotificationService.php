@@ -258,6 +258,8 @@ class NotificationService {
      */
     private function generateEmailContent($application) {
         $status_url = $this->config['base_url'] . 'application-status.php?ref=' . $application['application_reference'];
+        $base = rtrim((string)($this->config['base_url'] ?? ''), '/');
+        $logo_url = $base . '/' . ltrim((string)($this->config['logo_url'] ?? ''), '/');
         
         return '
         <!DOCTYPE html>
@@ -269,7 +271,7 @@ class NotificationService {
             <style>
                 body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
                 .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .header { background: #1e3a8a; color: white; padding: 20px; text-align: center; }
+                .header { background: #e0f2fe; color: #1e3a8a; padding: 20px; text-align: center; }
                 .content { padding: 20px; background: #f9f9f9; }
                 .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
                 .button { display: inline-block; padding: 12px 24px; background: #3b82f6; color: white; text-decoration: none; border-radius: 5px; }
@@ -279,6 +281,7 @@ class NotificationService {
         <body>
             <div class="container">
                 <div class="header">
+                    <img src="' . htmlspecialchars($logo_url) . '" alt="Logo" style="height:48px;margin-bottom:0">
                     <h1>Majlis Perbandaran Hulu Selangor</h1>
                     <h2>Pengesahan Permohonan Jawatan</h2>
                 </div>

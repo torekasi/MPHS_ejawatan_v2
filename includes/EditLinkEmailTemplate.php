@@ -99,6 +99,7 @@ class EditLinkEmailTemplate {
         $job_title = strtoupper($job['job_title'] ?? 'JAWATAN');
         $app_ref = $application['application_reference'] ?? 'N/A';
         $expiry_time = date('d/m/Y H:i', time() + (24 * 60 * 60));
+        $logo = rtrim($this->base_url, '/') . '/' . ltrim((string)($this->config['logo_url'] ?? ''), '/');
         
         return "
         <!DOCTYPE html>
@@ -110,7 +111,7 @@ class EditLinkEmailTemplate {
             <style>
                 body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
                 .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .header { background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+                .header { background: #e0f2fe; color: #1e3a8a; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
                 .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
                 .btn { display: inline-block; background: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 20px 0; }
                 .btn:hover { background: #059669; }
@@ -122,6 +123,7 @@ class EditLinkEmailTemplate {
         <body>
             <div class='container'>
                 <div class='header'>
+                    <img src='{$logo}' alt='Logo' style='height:48px;margin-bottom:0'>
                     <h1>eJawatan MPHS</h1>
                     <p>Majlis Perbandaran Hulu Selangor</p>
                 </div>
@@ -239,6 +241,7 @@ Sila jangan membalas email ini.
         $app_ref = $application['application_reference'] ?? 'N/A';
         $current_time = date('d/m/Y H:i:s');
         $masked_email = $this->maskEmail($submitted_email);
+        $logo = rtrim($this->base_url, '/') . '/' . ltrim((string)($this->config['logo_url'] ?? ''), '/');
         
         return "
         <!DOCTYPE html>
@@ -260,6 +263,7 @@ Sila jangan membalas email ini.
         <body>
             <div class='container'>
                 <div class='header'>
+                    <div style='background:#e0f2fe;display:inline-block;padding:8px;border-radius:6px'><img src='{$logo}' alt='Logo' style='height:48px;margin-bottom:0'></div>
                     <h1>🔒 AMARAN KESELAMATAN</h1>
                     <p>eJawatan MPHS - Majlis Perbandaran Hulu Selangor</p>
                 </div>

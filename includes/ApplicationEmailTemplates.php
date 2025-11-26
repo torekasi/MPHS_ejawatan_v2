@@ -22,6 +22,13 @@ function generateApplicationConfirmationEmail($application) {
         $job_id_formatted = 'JOB-' . str_pad($job_id, 6, '0', STR_PAD_LEFT);
     }
     
+    $cfgLoad = @require __DIR__ . '/../config.php';
+    $cfg = is_array($cfgLoad) && isset($cfgLoad['config']) ? $cfgLoad['config'] : (is_array($cfgLoad) ? $cfgLoad : []);
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $base = rtrim((string)($cfg['base_url'] ?? ($scheme . $host . '/')), '/');
+    $logo_url = $base . '/' . ltrim((string)($cfg['logo_url'] ?? ''), '/');
+
     // Build HTML email
     $html = '
     <!DOCTYPE html>
@@ -45,8 +52,8 @@ function generateApplicationConfirmationEmail($application) {
                 border: 1px solid #ddd;
             }
             .header { 
-                background: #1e3a8a; 
-                color: white; 
+                background: #e0f2fe; 
+                color: #1e3a8a; 
                 padding: 20px; 
                 text-align: center; 
             }
@@ -134,6 +141,7 @@ function generateApplicationConfirmationEmail($application) {
     <body>
         <div class="container">
             <div class="header">
+                <img src="'.htmlspecialchars($logo_url).'" alt="Logo" style="height:48px;margin-bottom:0">
                 <h1>Majlis Perbandaran Hulu Selangor</h1>
                 <h2>Pengesahan Penerimaan Permohonan Jawatan</h2>
             </div>

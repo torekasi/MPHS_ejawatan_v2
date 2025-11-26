@@ -45,9 +45,12 @@ class MailSender {
      * @return bool Success status
      */
     public function send($to, $subject, $message, $headers = []) {
-        // Try SMTP first if configured
-        if (!empty($this->config['mail_host']) && !empty($this->config['mail_port'])) {
-            $this->log("Using SMTP configuration: {$this->config['mail_host']}:{$this->config['mail_port']}");
+        // Try SMTP first if configured (check both mail_* and smtp_* keys)
+        $mail_host = $this->config['mail_host'] ?? $this->config['smtp_host'] ?? null;
+        $mail_port = $this->config['mail_port'] ?? $this->config['smtp_port'] ?? null;
+        
+        if (!empty($mail_host) && !empty($mail_port)) {
+            $this->log("Using SMTP configuration: {$mail_host}:{$mail_port}");
             return $this->sendSmtp($to, $subject, $message, $headers);
         }
         
@@ -107,20 +110,44 @@ class MailSender {
      * @return bool Success status
      */
     private function sendSmtp($to, $subject, $message, $headers = []) {
-        // Use PHPMailer if available via Composer; otherwise fall back to basic mail()
-        $host = $this->config['mail_host'] ?? 'localhost';
-        $port = (int)($this->config['mail_port'] ?? 25);
-        $username = $this->config['mail_username'] ?? '';
-        $password = $this->config['mail_password'] ?? '';
-        $from = $this->config['mail_from_address'] ?? $this->config['email_from'] ?? 'noreply@mphs.gov.my';
-        $from_name = $this->config['mail_from_name'] ?? 'MPHS eJawatan';
-        $reply_to = $this->config['email_reply_to'] ?? 'admin@mphs.gov.my';
-        $encryption = strtolower($this->config['mail_encryption'] ?? ''); // '', 'ssl', 'tls'
+        // Use PHPMailer if available via Composer; otherwise attempt to load it, then fall back
+        // Support both mail_* and smtp_* config keys for compatibility
+        $host = $this->config['mail_host'] ?? $this->config['smtp_host'] ?? 'localhost';
+        $port = (int)($this->config['mail_port'] ?? $this->config['smtp_port'] ?? 25);
+        $username = $this->config['mail_username'] ?? $this->config['smtp_username'] ?? '';
+        $password = $this->config['mail_password'] ?? $this->config['smtp_password'] ?? '';
+        $from = $this->config['mail_from_address'] ?? $this->config['email_from'] ?? $this->config['noreply_email'] ?? 'noreply@mphs.gov.my';
+        $from_name = $this->config['mail_from_name'] ?? $this->config['email_from_name'] ?? 'MPHS eJawatan';
+        $reply_to = $this->config['email_reply_to'] ?? $this->config['admin_email'] ?? 'admin@mphs.gov.my';
+        $encryption = strtolower($this->config['mail_encryption'] ?? $this->config['smtp_secure'] ?? ''); // '', 'ssl', 'tls'
         $timeout = (int)($this->config['mail_timeout'] ?? 30); // Increased timeout to 30 seconds
 
         $this->log("Attempting to send email via PHPMailer SMTP ({$host}:{$port}, enc={$encryption})");
 
-        if (!class_exists('\\PHPMailer\\PHPMailer\\PHPMailer')) {
+        $hasPHPMailer = class_exists('\\PHPMailer\\PHPMailer\\PHPMailer');
+        if (!$hasPHPMailer) {
+            $autoloadPaths = [
+                __DIR__ . '/../vendor/autoload.php',
+                __DIR__ . '/../../vendor/autoload.php'
+            ];
+            foreach ($autoloadPaths as $autoloadPath) {
+                if (file_exists($autoloadPath)) {
+                    require_once $autoloadPath;
+                    break;
+                }
+            }
+            $hasPHPMailer = class_exists('\\PHPMailer\\PHPMailer\\PHPMailer');
+            if ($hasPHPMailer) {
+                if (!class_exists('PHPMailer')) {
+                    class_alias('\\PHPMailer\\PHPMailer\\PHPMailer', 'PHPMailer');
+                }
+                if (class_exists('\\PHPMailer\\PHPMailer\\Exception') && !class_exists('PHPMailerException')) {
+                    class_alias('\\PHPMailer\\PHPMailer\\Exception', 'PHPMailerException');
+                }
+            }
+        }
+
+        if (!$hasPHPMailer) {
             $this->log('PHPMailer not available. Falling back to PHP mail() SMTP headers route.', 'warning');
             return $this->sendMail($to, $subject, $message, $headers);
         }
@@ -128,49 +155,64 @@ class MailSender {
         try {
             $mail = new PHPMailer(true);
 
-            // Server settings
-            $mail->isSMTP();
-            $mail->Host = $host;
-            $mail->Port = $port;
-            $mail->SMTPAuth = !empty($username);
-            if ($mail->SMTPAuth) {
-                $mail->Username = $username;
-                $mail->Password = $password;
+            call_user_func([$mail, 'isSMTP']);
+            $mail->{'Host'} = $host;
+            $mail->{'Port'} = $port;
+            $mail->{'SMTPAuth'} = !empty($username);
+            if ($mail->{'SMTPAuth'}) {
+                $mail->{'Username'} = $username;
+                $mail->{'Password'} = $password;
             }
             if (in_array($encryption, ['ssl', 'tls'], true)) {
-                $mail->SMTPSecure = $encryption;
+                $mail->{'SMTPSecure'} = $encryption;
             }
-            $mail->Timeout = max(10, $timeout); // Minimum 10 seconds timeout
-            $mail->CharSet = 'UTF-8';
+            $mail->{'Timeout'} = max(10, $timeout);
+            $mail->{'CharSet'} = 'UTF-8';
 
-            // Recipients
-            $mail->setFrom($from, $from_name);
+            call_user_func([$mail, 'setFrom'], $from, $from_name);
             if (!empty($reply_to)) {
-                $mail->addReplyTo($reply_to);
+                call_user_func([$mail, 'addReplyTo'], $reply_to);
             }
-            $mail->addAddress($to);
+            call_user_func([$mail, 'addAddress'], $to);
 
-            // Content
-            $mail->isHTML(true);
-            $mail->Subject = $subject;
-            $mail->Body = $message;
-            $mail->AltBody = strip_tags($message);
+            call_user_func([$mail, 'isHTML'], true);
+            $scheme2 = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+            $host2 = $_SERVER['HTTP_HOST'] ?? 'localhost';
+            $base2 = rtrim((string)($this->config['base_url'] ?? ($scheme2 . $host2 . '/')), '/');
+            $logoRel = (string)($this->config['logo_url'] ?? '');
+            if ($logoRel !== '') {
+                $candidate1 = (isset($_SERVER['DOCUMENT_ROOT']) ? rtrim($_SERVER['DOCUMENT_ROOT'], '/') : '') . '/' . ltrim($logoRel, '/');
+                $candidate2 = __DIR__ . '/../public/' . ltrim($logoRel, '/');
+                $embedPath = null;
+                if ($candidate1 && file_exists($candidate1)) { $embedPath = $candidate1; }
+                elseif (file_exists($candidate2)) { $embedPath = $candidate2; }
+                if ($embedPath) {
+                    $cid = 'logo_' . uniqid();
+                    $ext = strtolower(pathinfo($embedPath, PATHINFO_EXTENSION));
+                    $mime = ($ext === 'jpg' || $ext === 'jpeg') ? 'image/jpeg' : (($ext === 'png') ? 'image/png' : 'image/' . $ext);
+                    call_user_func([$mail, 'addEmbeddedImage'], $embedPath, $cid, basename($embedPath), 'base64', $mime);
+                    $logoAbs = $base2 . '/' . ltrim($logoRel, '/');
+                    $message = str_replace('src="' . $logoAbs . '"', 'src="cid:' . $cid . '"', $message);
+                    $message = str_replace('src=\'' . $logoAbs . '\'', 'src=\'cid:' . $cid . '\'', $message);
+                    $message = str_replace('src="/' . ltrim($logoRel, '/') . '"', 'src="cid:' . $cid . '"', $message);
+                    $message = str_replace('src=\'/' . ltrim($logoRel, '/') . '\'', 'src=\'cid:' . $cid . '\'', $message);
+                }
+            }
+            $mail->{'Subject'} = $subject;
+            $mail->{'Body'} = $message;
+            $mail->{'AltBody'} = strip_tags($message);
 
-            // Map custom headers if provided
             foreach ($headers as $h) {
                 $parts = explode(':', $h, 2);
                 if (count($parts) === 2) {
-                    $mail->addCustomHeader(trim($parts[0]), trim($parts[1]));
+                    call_user_func([$mail, 'addCustomHeader'], trim($parts[0]), trim($parts[1]));
                 }
             }
 
-            $mail->send();
+            call_user_func([$mail, 'send']);
             $this->log("Email sent successfully to {$to} with subject: {$subject}");
             return true;
-        } catch (PHPMailerException $e) {
-            $this->log('PHPMailer exception: ' . $e->getMessage(), 'error');
-            return false;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->log('SMTP exception: ' . $e->getMessage(), 'error');
             return false;
         }
@@ -187,6 +229,10 @@ class MailSender {
     public function sendTest($to, $subject = null, $message = null) {
         $subject = $subject ?? 'Test Email from eJawatan System';
         $message = $message ?? 'This is a test email from the eJawatan system. Time: ' . date('Y-m-d H:i:s');
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $base = rtrim((string)($this->config['base_url'] ?? ($scheme . $host . '/')), '/');
+        $logo = $base . '/' . ltrim((string)($this->config['logo_url'] ?? ''), '/');
         
         // Create HTML message
         $html_message = '
@@ -199,7 +245,7 @@ class MailSender {
             <style>
                 body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
                 .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .header { background: #1e3a8a; color: white; padding: 20px; text-align: center; }
+                .header { background: #e0f2fe; color: #1e3a8a; padding: 20px; text-align: center; }
                 .content { padding: 20px; background: #f9f9f9; }
                 .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
             </style>
@@ -207,6 +253,7 @@ class MailSender {
         <body>
             <div class="container">
                 <div class="header">
+                    <img src="' . htmlspecialchars($logo) . '" alt="Logo" style="height:48px;margin-bottom:0">
                     <h1>Majlis Perbandaran Hulu Selangor</h1>
                     <h2>Test Email</h2>
                 </div>

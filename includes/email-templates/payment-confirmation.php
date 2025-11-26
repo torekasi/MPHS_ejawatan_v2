@@ -17,6 +17,13 @@
  * - $year (for application link)
  */
 
+$cfgLoad = @require __DIR__ . '/../../config.php';
+$cfg = is_array($cfgLoad) && isset($cfgLoad['config']) ? $cfgLoad['config'] : (is_array($cfgLoad) ? $cfgLoad : []);
+$scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$base = rtrim((string)($cfg['base_url'] ?? ($scheme . $host . '/')), '/');
+$logo_url = $base . '/' . ltrim((string)($cfg['logo_url'] ?? ''), '/');
+
 $email_html = '
 <!DOCTYPE html>
 <html lang="ms">
@@ -50,8 +57,8 @@ $email_html = '
         }
         
         .header {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: #ffffff;
+            background: #e0f2fe;
+            color: #1e3a8a;
             padding: 40px 30px;
             text-align: center;
         }
@@ -319,6 +326,7 @@ $email_html = '
     <div class="email-container">
         <!-- Header -->
         <div class="header">
+            <img src="' . htmlspecialchars($logo_url) . '" alt="Logo" style="max-height:60px;margin-bottom:10px;">
             <h1>Majlis Perbandaran Hulu Selangor</h1>
             <p>Sistem eJawatan</p>
         </div>

@@ -47,10 +47,10 @@ $config['smtp_host'] = 'smtp.gmail.com';
 $config['smtp_port'] = 587;
 $config['smtp_secure'] = 'tls';  // 'tls' or 'ssl' or 'none'
 $config['smtp_auth'] = true;
-$config['smtp_username'] = 'jkp@mphs.gov.my';
-$config['smtp_password'] = 'mphs1234';
-$config['admin_email'] = 'jkp@mphs.gov.my';
-$config['noreply_email'] = 'jkp@mphs.gov.my';
+$config['smtp_username'] = 'ejawatan@mphs.gov.my';
+$config['smtp_password'] = 'bqcdxbgxdadmqrqj';
+$config['admin_email'] = 'ejawatan@mphs.gov.my';
+$config['noreply_email'] = 'ejawatan@mphs.gov.my';
 
 
 // Navigation Menu Settings
