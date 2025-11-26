@@ -260,6 +260,29 @@ class NotificationService {
         $status_url = $this->config['base_url'] . 'application-status.php?ref=' . $application['application_reference'];
         $base = rtrim((string)($this->config['base_url'] ?? ''), '/');
         $logo_url = $base . '/' . ltrim((string)($this->config['logo_url'] ?? ''), '/');
+        $job_title = trim((string)($application['job_title'] ?? ''));
+        $kod_gred = trim((string)($application['kod_gred'] ?? ''));
+        $job_code = trim((string)($application['job_code'] ?? ''));
+        if ($job_title === '' || $kod_gred === '' || $job_code === '') {
+            try {
+                $dsn2 = "mysql:host=" . ($this->config['db_host'] ?? '') . ";dbname=" . ($this->config['db_name'] ?? '') . ";charset=utf8mb4";
+                $pdo2 = new \PDO($dsn2, ($this->config['db_user'] ?? ''), ($this->config['db_pass'] ?? ''), [
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                    \PDO::ATTR_EMULATE_PREPARES => false,
+                ]);
+                if (!empty($application['job_id'])) {
+                    $stmt2 = $pdo2->prepare('SELECT job_title, kod_gred, job_code FROM job_postings WHERE id = ? LIMIT 1');
+                    $stmt2->execute([ (int)$application['job_id'] ]);
+                    $jr2 = $stmt2->fetch();
+                    if ($jr2) {
+                        if ($job_title === '') { $job_title = (string)($jr2['job_title'] ?? ''); }
+                        if ($kod_gred === '') { $kod_gred = (string)($jr2['kod_gred'] ?? ''); }
+                        if ($job_code === '') { $job_code = (string)($jr2['job_code'] ?? ''); }
+                    }
+                }
+            } catch (\Throwable $e) {}
+        }
         
         return '
         <!DOCTYPE html>
@@ -276,6 +299,9 @@ class NotificationService {
                 .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
                 .button { display: inline-block; padding: 12px 24px; background: #3b82f6; color: white; text-decoration: none; border-radius: 5px; }
                 .info-box { background: white; padding: 15px; margin: 15px 0; border-left: 4px solid #3b82f6; }
+                .kv-row { display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px dotted #e5e7eb; }
+                .kv-label { font-weight: 400; color: #555; }
+                .kv-value { font-weight: 600; color: #111; }
             </style>
         </head>
         <body>
@@ -293,19 +319,18 @@ class NotificationService {
                     
                     <div class="info-box">
                         <h3>Maklumat Permohonan:</h3>
-                        <ul>
-                            <li><strong>Rujukan Permohonan:</strong> ' . htmlspecialchars($application['application_reference']) . '</li>
-                            <li><strong>Jawatan:</strong> ' . htmlspecialchars($application['job_title']) . '</li>
-                            <li><strong>Kod Gred:</strong> ' . htmlspecialchars($application['kod_gred']) . '</li>
-                            <li><strong>Tarikh Permohonan:</strong> ' . 
+                        <div class="kv-row"><div class="kv-label">Rujukan Permohonan:</div><div class="kv-value">' . htmlspecialchars($application['application_reference']) . '</div></div>
+                        <div class="kv-row"><div class="kv-label">Jawatan:</div><div class="kv-value">' . htmlspecialchars($job_title !== '' ? $job_title : 'N/A') . '</div></div>
+                        <div class="kv-row"><div class="kv-label">Kod Gred:</div><div class="kv-value">' . htmlspecialchars($kod_gred !== '' ? $kod_gred : 'N/A') . '</div></div>
+                        <div class="kv-row"><div class="kv-label">Kod Jawatan:</div><div class="kv-value">' . htmlspecialchars($job_code !== '' ? $job_code : 'N/A') . '</div></div>
+                        <div class="kv-row"><div class="kv-label">Tarikh Permohonan:</div><div class="kv-value">' . 
                                 (function($date_field) {
                                     if ($date_field && !empty($date_field)) {
                                         $timestamp = strtotime($date_field);
                                         return ($timestamp !== false) ? date('d/m/Y H:i', $timestamp) : 'N/A';
                                     }
                                     return 'N/A';
-                                })($application['application_date'] ?? $application['created_at'] ?? null) . '</li>
-                        </ul>
+                                })($application['application_date'] ?? $application['created_at'] ?? null) . '</div></div>
                     </div>
                     
                     <p>Permohonan anda telah berjaya diterima dan sedang dalam proses semakan. Anda akan dimaklumkan tentang status permohonan anda melalui email atau telefon.</p>
@@ -320,7 +345,7 @@ class NotificationService {
                         <h3>Maklumat Penting:</h3>
                         <ul>
                             <li>Simpan rujukan permohonan anda untuk rujukan akan datang</li>
-                            <li>Proses semakan mungkin mengambil masa 2-4 minggu</li>
+                            
                             <li>Pastikan maklumat hubungan anda adalah tepat dan terkini</li>
                         </ul>
                     </div>
