@@ -12,16 +12,40 @@
  * @return string HTML email content
  */
 function generateApplicationConfirmationEmail($application) {
-    // Format date nicely
-    $formatted_date = date('d/m/Y H:i:s', strtotime($application['application_date'] ?? $application['created_at']));
-    
-    // Format job ID
-    $job_id_formatted = 'N/A';
-    if (isset($application['job_id'])) {
-        $job_id = (int)$application['job_id'];
-        $job_id_formatted = 'JOB-' . str_pad($job_id, 6, '0', STR_PAD_LEFT);
+    $formatted_date = date('d/m/Y H:i:s', strtotime($application['application_date'] ?? $application['created_at'] ?? date('Y-m-d H:i:s')));
+    $job_title = trim((string)($application['job_title'] ?? ''));
+    $kod_gred = trim((string)($application['kod_gred'] ?? ''));
+    $job_code = trim((string)($application['job_code'] ?? ''));
+    if ($job_title === '' || $kod_gred === '' || $job_code === '') {
+        try {
+            $cfgLoad2 = @require __DIR__ . '/../config.php';
+            $cfg2 = is_array($cfgLoad2) && isset($cfgLoad2['config']) ? $cfgLoad2['config'] : (is_array($cfgLoad2) ? $cfgLoad2 : []);
+            $dsn = "mysql:host=" . ($cfg2['db_host'] ?? '') . ";dbname=" . ($cfg2['db_name'] ?? '') . ";charset=utf8mb4";
+            $pdo2 = new \PDO($dsn, ($cfg2['db_user'] ?? ''), ($cfg2['db_pass'] ?? ''), [
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                \PDO::ATTR_EMULATE_PREPARES => false,
+            ]);
+            if (!empty($application['job_id'])) {
+                $stmtJ = $pdo2->prepare('SELECT job_title, kod_gred, job_code FROM job_postings WHERE id = ? LIMIT 1');
+                $stmtJ->execute([ (int)$application['job_id'] ]);
+                $jr = $stmtJ->fetch();
+                if ($jr) {
+                    if ($job_title === '') { $job_title = (string)($jr['job_title'] ?? ''); }
+                    if ($kod_gred === '') { $kod_gred = (string)($jr['kod_gred'] ?? ''); }
+                    if ($job_code === '') { $job_code = (string)($jr['job_code'] ?? ''); }
+                }
+            }
+        } catch (\Throwable $e) {}
     }
     
+    $cfgLoad = @require __DIR__ . '/../config.php';
+    $cfg = is_array($cfgLoad) && isset($cfgLoad['config']) ? $cfgLoad['config'] : (is_array($cfgLoad) ? $cfgLoad : []);
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $base = rtrim((string)($cfg['base_url'] ?? ($scheme . $host . '/')), '/');
+    $logo_url = $base . '/' . ltrim((string)($cfg['logo_url'] ?? ''), '/');
+
     // Build HTML email
     $html = '
     <!DOCTYPE html>
@@ -45,8 +69,8 @@ function generateApplicationConfirmationEmail($application) {
                 border: 1px solid #ddd;
             }
             .header { 
-                background: #1e3a8a; 
-                color: white; 
+                background: #e0f2fe; 
+                color: #1e3a8a; 
                 padding: 20px; 
                 text-align: center; 
             }
@@ -78,18 +102,22 @@ function generateApplicationConfirmationEmail($application) {
                 color: #1e3a8a;
             }
             .detail-row {
-                display: flex;
-                justify-content: space-between;
+                display: grid;
+                grid-template-columns: 180px 1fr;
+                align-items: center;
+                gap: 12px;
                 margin-bottom: 8px;
                 border-bottom: 1px dotted #eee;
                 padding-bottom: 8px;
             }
             .detail-label {
-                font-weight: bold;
+                font-weight: 400;
                 color: #555;
             }
             .detail-value {
-                text-align: right;
+                font-weight: 600;
+                color: #111;
+                text-align: left;
             }
             .reference-number {
                 font-size: 18px;
@@ -134,6 +162,7 @@ function generateApplicationConfirmationEmail($application) {
     <body>
         <div class="container">
             <div class="header">
+                <img src="'.htmlspecialchars($logo_url).'" alt="Logo" style="height:48px;margin-bottom:0">
                 <h1>Majlis Perbandaran Hulu Selangor</h1>
                 <h2>Pengesahan Penerimaan Permohonan Jawatan</h2>
             </div>
@@ -152,17 +181,17 @@ function generateApplicationConfirmationEmail($application) {
                     
                     <div class="detail-row">
                         <span class="detail-label">Jawatan Dipohon:</span>
-                        <span class="detail-value">'.htmlspecialchars($application['job_title'] ?? 'N/A').'</span>
+                        <span class="detail-value">'.htmlspecialchars($job_title !== '' ? $job_title : 'N/A').'</span>
                     </div>
                     
                     <div class="detail-row">
                         <span class="detail-label">Kod Gred:</span>
-                        <span class="detail-value">'.htmlspecialchars($application['kod_gred'] ?? 'N/A').'</span>
+                        <span class="detail-value">'.htmlspecialchars($kod_gred !== '' ? $kod_gred : 'N/A').'</span>
                     </div>
                     
                     <div class="detail-row">
-                        <span class="detail-label">Job ID:</span>
-                        <span class="detail-value">'.$job_id_formatted.'</span>
+                        <span class="detail-label">Kod Jawatan:</span>
+                        <span class="detail-value">'.htmlspecialchars($job_code !== '' ? $job_code : 'N/A').'</span>
                     </div>
                     
                     <div class="detail-row">
@@ -203,7 +232,7 @@ function generateApplicationConfirmationEmail($application) {
                         <li>Panggilan temu duga (jika layak)</li>
                         <li>Keputusan permohonan</li>
                     </ul>
-                    <p>Proses semakan mengambil masa 2-4 minggu bekerja.</p>
+                    
                 </div>
                 
                 <div class="important-note">

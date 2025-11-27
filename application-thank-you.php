@@ -2,6 +2,11 @@
 session_start();
 require_once 'includes/ErrorHandler.php';
 
+$csrf_token = $_SESSION['csrf_token'] ?? '';
+if ($csrf_token === '') {
+    try { $_SESSION['csrf_token'] = bin2hex(random_bytes(16)); } catch (Throwable $e) { $_SESSION['csrf_token'] = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 16); }
+}
+
 $result = require 'config.php';
 $config = $result['config'] ?? $result;
 
@@ -68,6 +73,43 @@ if (!$error && $pdo && isset($application_reference)) {
         $error = 'Ralat mendapatkan maklumat permohonan.';
         log_error('Error fetching application details in thank you page', ['exception' => $e->getMessage(), 'application_reference' => $application_reference]);
     }
+}
+
+if (!$error && $pdo && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['resend_confirmation_email'])) {
+    $token_ok = isset($_POST['csrf_token']) && isset($_SESSION['csrf_token']) && hash_equals((string)$_SESSION['csrf_token'], (string)$_POST['csrf_token']);
+    if (!$token_ok) {
+        $_SESSION['error'] = 'Permintaan tidak sah.';
+        header('Location: application-thank-you.php?ref=' . urlencode($application_reference ?? ($_POST['application_reference'] ?? '')));
+        exit;
+    }
+    try {
+        $ref = (string)($_POST['application_reference'] ?? ($application['application_reference'] ?? ''));
+        if ($ref === '') { throw new Exception('Rujukan kosong'); }
+        $stmtR = $pdo->prepare('SELECT a.*, j.job_title, j.kod_gred, j.job_code FROM application_application_main a LEFT JOIN job_postings j ON a.job_id = j.id WHERE a.application_reference = ? LIMIT 1');
+        $stmtR->execute([$ref]);
+        $appRow = $stmtR->fetch();
+        if (!$appRow) {
+            $stmtR = $pdo->prepare('SELECT a.*, j.job_title, j.kod_gred, j.job_code FROM job_applications a LEFT JOIN job_postings j ON a.job_id = j.id WHERE a.application_reference = ? LIMIT 1');
+            $stmtR->execute([$ref]);
+            $appRow = $stmtR->fetch();
+        }
+        if ($appRow && !empty($appRow['email']) && filter_var($appRow['email'], FILTER_VALIDATE_EMAIL)) {
+            require_once 'includes/ApplicationEmailTemplates.php';
+            require_once 'includes/MailSender.php';
+            $htmlEmail = generateApplicationConfirmationEmail($appRow);
+            $subjectEmail = 'Pengesahan Permohonan Jawatan - ' . (string)($appRow['application_reference'] ?? '');
+            $mailer = new MailSender($config);
+            $mailer->send((string)$appRow['email'], $subjectEmail, $htmlEmail);
+            $_SESSION['email_sent_to'] = (string)$appRow['email'];
+            $_SESSION['success'] = 'Emel pengesahan telah dihantar semula.';
+        } else {
+            $_SESSION['error'] = 'Tidak dapat menghantar emel: emel tidak sah.';
+        }
+    } catch (Throwable $e) {
+        $_SESSION['error'] = 'Ralat menghantar emel: ' . htmlspecialchars($e->getMessage());
+    }
+    header('Location: application-thank-you.php?ref=' . urlencode($application_reference ?? ($_POST['application_reference'] ?? '')));
+    exit;
 }
 
 function formatJobId($id) {
@@ -156,22 +198,6 @@ function formatJobId($id) {
                         <div class="bg-green-50 rounded-lg p-4 mb-6">
                             <h3 class="font-semibold text-green-800 mb-3">Maklumat Permohonan</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                <div>
-                                    <span class="text-gray-600">Rujukan Permohonan:</span>
-                                    <div class="font-medium"><?php echo htmlspecialchars($application['application_reference']); ?></div>
-                                </div>
-                                <div>
-                                    <span class="text-gray-600">Tarikh Permohonan:</span>
-                                    <div class="font-medium"><?php 
-                                        $date_field = $application['created_at'] ?? $application['application_date'] ?? $application['submission_date'] ?? $application['submitted_at'] ?? null;
-                                        if ($date_field && !empty($date_field)) {
-                                            $timestamp = strtotime($date_field);
-                                            echo ($timestamp !== false) ? date('d/m/Y H:i', $timestamp) : 'N/A';
-                                        } else {
-                                            echo 'N/A';
-                                        }
-                                    ?></div>
-                                </div>
                                 <?php if ($application['payment_reference']): ?>
                                 <div>
                                     <span class="text-gray-600">Rujukan Pembayaran:</span>
@@ -185,23 +211,38 @@ function formatJobId($id) {
                             </div>
                         </div>
 
-                        <!-- Job Details -->
-                        <div class="border border-gray-200 rounded-lg p-4 mb-6">
-                            <h3 class="font-semibold text-gray-800 mb-3">Maklumat Jawatan</h3>
+
+                        <div class="border border-blue-200 rounded-lg p-4 mb-6 bg-blue-50">
+                            <h3 class="font-semibold text-blue-800 mb-3">Salinan Emel Pengesahan</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                 <div>
-                                    <span class="text-gray-600">Jawatan:</span>
-                                    <div class="font-medium"><?php echo htmlspecialchars($job['job_title']); ?></div>
+                                    <span class="text-gray-600">Nombor Rujukan:</span>
+                                    <div class="font-medium"><?php echo htmlspecialchars($application['application_reference']); ?></div>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600">Tarikh Permohonan:</span>
+                                    <div class="font-medium"><?php 
+                                        $date_field2 = $application['created_at'] ?? $application['application_date'] ?? $application['submission_date'] ?? $application['submitted_at'] ?? null;
+                                        if ($date_field2 && !empty($date_field2)) {
+                                            $timestamp2 = strtotime($date_field2);
+                                            echo ($timestamp2 !== false) ? date('d/m/Y H:i', $timestamp2) : 'N/A';
+                                        } else { echo 'N/A'; }
+                                    ?></div>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600">Jawatan Dipohon:</span>
+                                    <div class="font-medium"><?php echo htmlspecialchars($job['job_title'] ?? 'N/A'); ?></div>
                                 </div>
                                 <div>
                                     <span class="text-gray-600">Kod Gred:</span>
-                                    <div class="font-medium"><?php echo htmlspecialchars($job['kod_gred']); ?></div>
+                                    <div class="font-medium"><?php echo htmlspecialchars($job['kod_gred'] ?? 'N/A'); ?></div>
                                 </div>
                                 <div>
                                     <span class="text-gray-600">Kod Jawatan:</span>
                                     <div class="font-medium"><?php echo htmlspecialchars($job['job_code'] ?? 'N/A'); ?></div>
                                 </div>
                             </div>
+                            <p class="text-xs text-gray-600 mt-3">Ini adalah salinan kandungan utama emel pengesahan yang telah dihantar ke emel anda.</p>
                         </div>
 
                         <!-- Action Buttons -->
@@ -219,6 +260,12 @@ function formatJobId($id) {
                                     <div class="mt-4 flex justify-center space-x-3">
                                         <button type="button" onclick="window.print()" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-6 rounded-lg transition">Cetak Penerimaan borang</button>
                                         <a href="download-receipt.php?ref=<?php echo urlencode($application['application_reference']); ?>" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition">Muat Turun PDF</a>
+                                        <form method="post" class="inline-block">
+                                            <input type="hidden" name="resend_confirmation_email" value="1">
+                                            <input type="hidden" name="application_reference" value="<?php echo htmlspecialchars($application['application_reference']); ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
+                                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition">Hantar Semula Emel Penerimaan</button>
+                                        </form>
                                     </div>
                             </div>
                             
@@ -240,7 +287,6 @@ function formatJobId($id) {
                             <h4 class="font-medium text-blue-800 mb-2">📋 Nota Penting</h4>
                             <ul class="text-sm text-blue-700 space-y-1">
                                 <li>• Simpan rujukan permohonan ini untuk rekod anda</li>
-                                <li>• Permohonan anda akan diproses dalam tempoh 14 hari bekerja</li>
                                 <li>• Hanya calon yang layak akan dipanggil untuk temu duga</li>
                                 <li>• Untuk sebarang pertanyaan, sila hubungi pihak MPHS</li>
                             </ul>

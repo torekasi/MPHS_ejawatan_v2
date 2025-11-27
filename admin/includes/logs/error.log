@@ -1320,3 +1320,6 @@ First record: Array
 )
 
 [2025-11-24 22:33:44] [DEBUG_INFO] [File: ] [Line: ] Today's Date: 2025-11-24
+[2025-11-26 23:24:22] [EXCEPTION] [File: /var/www/html/admin/reset-password.php] [Line: 23] Call to undefined function get_database_connection()
+[2025-11-26 23:24:35] [EXCEPTION] [File: /var/www/html/admin/reset-password.php] [Line: 23] Call to undefined function get_database_connection()
+[2025-11-26 23:25:22] [EXCEPTION] [File: /var/www/html/admin/reset-password.php] [Line: 23] Call to undefined function get_database_connection()

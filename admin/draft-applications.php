@@ -21,6 +21,42 @@ log_admin_info('Viewed draft applications list', [
     'filters' => $filters
 ]);
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['resend_draft_email']) && !empty($_POST['application_id'])) {
+    try {
+        $appId = (int)$_POST['application_id'];
+        $stmt = $pdo->prepare('SELECT aa.*, jp.job_title, jp.kod_gred FROM application_application_main aa LEFT JOIN job_postings jp ON aa.job_id = jp.id WHERE aa.id = ? LIMIT 1');
+        $stmt->execute([$appId]);
+        $app = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($app && !empty($app['email']) && filter_var($app['email'], FILTER_VALIDATE_EMAIL)) {
+            require_once __DIR__ . '/../includes/MailSender.php';
+            $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+            $host = $_SERVER['HTTP_HOST'] ?? ($config['base_url_host'] ?? 'localhost');
+            $base = rtrim(($config['base_url'] ?? ($scheme . $host . '/')), '/');
+            $logoUrl = $base . '/' . ltrim((string)($config['logo_url'] ?? ''), '/');
+            $statusUrl = $base . '/semak-status.php?app_ref=' . urlencode((string)$app['application_reference']) . (!empty($app['nombor_ic']) ? '&nric=' . urlencode((string)$app['nombor_ic']) : '');
+            $previewUrl = $base . '/preview-application.php?ref=' . urlencode((string)$app['application_reference']);
+            $name = (string)($app['nama_penuh'] ?? 'Pemohon');
+            $jobTitle = (string)($app['job_title'] ?? '');
+            $kodGred = (string)($app['kod_gred'] ?? '');
+            $createdAt = (string)($app['created_at'] ?? date('Y-m-d H:i:s'));
+            $createdDisplay = date('d/m/Y H:i', strtotime($createdAt));
+            $updatedAt = (string)($app['updated_at'] ?? $createdAt);
+            $updatedDisplay = date('d/m/Y h:i A', strtotime($updatedAt));
+            $subject = 'Draf Permohonan Dicipta - ' . (string)$app['application_reference'];
+            $html = '<!DOCTYPE html><html lang="ms"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Draf Permohonan</title><style>body{font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#333}.container{max-width:600px;margin:0 auto;padding:20px}.header{background:#e0f2fe;color:#1e3a8a;padding:20px;text-align:center}.content{padding:20px;background:#f9f9f9}.footer{padding:20px;text-align:center;font-size:12px;color:#666}.button{display:inline-block;padding:12px 24px;background:#ffffff;color:#2563eb;text-decoration:none;border-radius:6px;border:1px solid #2563eb}.info-box{background:#fff;padding:15px;margin:15px 0;border-left:4px solid #3b82f6}</style></head><body><div class="container"><div class="header"><img src="' . htmlspecialchars($logoUrl) . '" alt="Logo" style="height:48px;margin-bottom:0"><h1>Majlis Perbandaran Hulu Selangor</h1><h2>Draf Permohonan Disimpan</h2></div><div class="content"><p>Kepada <strong>' . htmlspecialchars($name) . '</strong>,</p><p>Permohonan anda telah <strong>disimpan sebagai draf</strong>. Sila simpan email ini sebagai rujukan.</p><div class="info-box"><h3>Maklumat Permohonan</h3><ul><li><strong>Rujukan:</strong> ' . htmlspecialchars((string)$app['application_reference']) . '</li><li><strong>Jawatan:</strong> ' . htmlspecialchars($jobTitle) . '</li><li><strong>Kod Gred:</strong> ' . htmlspecialchars($kodGred) . '</li><li><strong>Tarikh Simpan:</strong> ' . htmlspecialchars($createdDisplay) . '</li><li><strong>Tarikh Kemaskini:</strong> ' . htmlspecialchars($updatedDisplay) . '</li></ul></div><p>Anda boleh menyemak dan melengkapkan permohonan anda melalui pautan berikut:</p><div style="text-align:center;margin:24px 0"><a class="button" href="' . htmlspecialchars($previewUrl) . '">Teruskan Pratonton / Lengkapkan Permohonan</a></div><div style="text-align:center;margin:12px 0"><a class="button" href="' . htmlspecialchars($statusUrl) . '">Semak Status Permohonan</a></div><div class="info-box"><h3>Peringatan</h3><ul><li>Simpan nombor rujukan ini dengan selamat</li><li>Permohonan draf belum dihantar untuk semakan</li><li>Lengkapkan semua bahagian dan klik Hantar untuk memuktamadkan</li></ul></div></div><div class="footer"><p>Email ini dijana secara automatik. Jangan balas email ini.</p><p>&copy; ' . date('Y') . ' Majlis Perbandaran Hulu Selangor</p></div></div></body></html>';
+            $mailer = new MailSender($config);
+            $mailer->send((string)$app['email'], $subject, $html);
+            if (function_exists('log_admin_action')) { log_admin_action('Resent draft email', 'EMAIL', 'application', $appId, ['application_reference' => (string)$app['application_reference']]); }
+            $_SESSION['success'] = 'Emel draf permohonan telah dihantar semula kepada pemohon.';
+        } else {
+            $_SESSION['error'] = 'Tidak dapat menghantar emel: rekod atau emel tidak sah.';
+        }
+    } catch (Throwable $e) {
+        $_SESSION['error'] = 'Ralat menghantar emel: ' . htmlspecialchars($e->getMessage());
+    }
+    header('Location: draft-applications.php');
+    exit;
+}
 // Handle search and filters
 if (isset($_GET['search']) && !empty($_GET['search'])) {
     $search = '%' . $_GET['search'] . '%';
@@ -245,7 +281,6 @@ include 'templates/header.php';
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pemohon</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jawatan Dipohon</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tarikh Direkodkan</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status Kelengkapan</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tindakan</th>
@@ -285,6 +320,8 @@ include 'templates/header.php';
                                     <div class="text-sm text-gray-500">
                                         <?php echo !empty($application['nombor_ic']) ? htmlspecialchars($application['nombor_ic']) : '<span class="text-gray-400">IC tidak diisi</span>'; ?>
                                     </div>
+                                    <div class="text-sm text-gray-900"><?php echo htmlspecialchars($application['job_title'] ?? 'N/A'); ?></div>
+                                    <div class="text-xs text-gray-500"><?php echo htmlspecialchars(($application['job_code'] ?? '') . ' ' . ($application['kod_gred'] ?? '')); ?></div>
                                     <div class="text-sm text-gray-400">
                                         <small>Ref: <?php echo htmlspecialchars($application['application_reference'] ?? 'N/A'); ?></small>
                                     </div>
@@ -292,10 +329,7 @@ include 'templates/header.php';
                             </div>
                         </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900"><?php echo htmlspecialchars($application['job_title'] ?? 'N/A'); ?></div>
-                            <div class="text-xs text-gray-500"><?php echo htmlspecialchars(($application['job_code'] ?? '') . ' ' . ($application['kod_gred'] ?? '')); ?></div>
-                        </td>
+                        
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <?php 
                                 $date_str = $application['created_at'] ?? $application['application_date'] ?? null;
@@ -308,9 +342,23 @@ include 'templates/header.php';
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="application-view.php?id=<?php echo $application['id']; ?>" class="text-blue-600 hover:text-blue-900">Lihat</a>
-                                <button onclick="deleteDraft(<?php echo $application['id']; ?>)" class="text-red-600 hover:text-red-900 ml-2">Padam</button>
+                            <div class="inline-block text-left" style="z-index:0;">
+                                <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none" onclick="toggleDropdown('dd-<?php echo (int)$application['id']; ?>', this)">
+                                    Tindakan
+                                    <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <div id="dd-<?php echo (int)$application['id']; ?>" class="origin-top-right mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden" style="position:fixed;z-index:2147483647;left:0;top:0;">
+                                    <div class="py-1">
+                                        <a href="application-view.php?id=<?php echo (int)$application['id']; ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Lihat</a>
+                                        <button type="button" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50" onclick="deleteDraft(<?php echo (int)$application['id']; ?>)">Padam</button>
+                                        <form method="post" class="block">
+                                            <input type="hidden" name="application_id" value="<?php echo (int)$application['id']; ?>">
+                                            <button type="submit" name="resend_draft_email" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Hantar Emel Draf Permohonan</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -359,6 +407,20 @@ include 'templates/header.php';
 </div>
 
 <script>
+function toggleDropdown(id, btn) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    document.querySelectorAll('[id^="dd-"]').forEach(function(d) {
+        if (d.id !== id) { d.classList.add('hidden'); }
+    });
+    var rect = btn.getBoundingClientRect();
+    el.style.position = 'fixed';
+    el.style.top = (rect.bottom + 6) + 'px';
+    el.style.left = rect.left + 'px';
+    el.style.zIndex = '2147483647';
+    el.classList.toggle('hidden');
+}
+
 function deleteDraft(applicationId) {
     if (confirm('Adakah anda pasti ingin memadam permohonan draf ini? Tindakan ini tidak boleh dibatalkan.')) {
         // Create a form to submit the delete request

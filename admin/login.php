@@ -62,16 +62,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception('Database connection unavailable.');
         }
     
-        // Securely prepare and execute SQL query
-        $stmt = $pdo->prepare('SELECT id, username, password FROM user WHERE username = ? LIMIT 1');
+        $stmt = $pdo->prepare('SELECT id, username, password, role, reset_token, reset_expires FROM user WHERE username = ? LIMIT 1');
         $stmt->execute([$username]);
         $admin = $stmt->fetch(PDO::FETCH_ASSOC);
     
         if ($admin && password_verify($password, $admin['password'])) {
+            $tok = $admin['reset_token'] ?? null;
+            $exp = $admin['reset_expires'] ?? null;
+            if (!empty($tok) && (!empty($exp) && strtotime($exp) > time())) {
+                header('Location: reset-password.php?token=' . urlencode($tok));
+                exit;
+            }
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_id'] = $admin['id'];
             $_SESSION['admin_username'] = $admin['username'];
-    
+            $_SESSION['admin_role'] = $admin['role'] ?? 'admin';
             log_activity('Successful login', 'LOGIN', 'admin', $admin['id'], ['user_identifier' => $username], 'admin');
             header('Location: index.php');
             exit;

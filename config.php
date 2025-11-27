@@ -27,9 +27,9 @@ if (!empty($envDbHost)) {
 // Application Settings
 $config['app_name'] = 'eJawatan MPHS';
 $config['app_version'] = '2.0.0';
-$config['app_env'] = 'development'; // development, staging, production
-$config['app_secret'] = 'mphs_ejawatan_secret_key_2025_secure_token_generation'; // For secure token generation
-$config['base_url'] = 'http://localhost:8000'; // Base URL for email links
+$config['app_env'] = 'production'; // development, staging, production
+$config['app_secret'] = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; // For secure token generation
+$config['base_url'] = 'http://ejawatan2.mphs.gov.my'; // update this to your production domain
 
 
 // Logo and Branding Configuration
@@ -47,10 +47,10 @@ $config['smtp_host'] = 'smtp.gmail.com';
 $config['smtp_port'] = 587;
 $config['smtp_secure'] = 'tls';  // 'tls' or 'ssl' or 'none'
 $config['smtp_auth'] = true;
-$config['smtp_username'] = 'jkp@mphs.gov.my';
-$config['smtp_password'] = 'mphs1234';
-$config['admin_email'] = 'jkp@mphs.gov.my';
-$config['noreply_email'] = 'jkp@mphs.gov.my';
+$config['smtp_username'] = 'ejawatan@mphs.gov.my';
+$config['smtp_password'] = 'bqcdxbgxdadmqrqj';
+$config['admin_email'] = 'ejawatan@mphs.gov.my';
+$config['noreply_email'] = 'ejawatan@mphs.gov.my';
 
 
 // Navigation Menu Settings
@@ -124,7 +124,7 @@ $config['log_rotate'] = true;
 $config['log_max_size'] = 10 * 1024 * 1024; // 10MB
 
 // Application URLs
-$config['base_url'] = 'http://localhost:8000';
+$config['base_url'] = 'http://ejawatan2.mphs.gov.my';   //Update this to your production domain
 $config['admin_url'] = $config['base_url'] . '/admin';
 $config['login_url'] = $config['admin_url'] . '/login.php';
 

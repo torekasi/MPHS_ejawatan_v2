@@ -66,6 +66,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $hashed = password_hash($password, PASSWORD_DEFAULT);
                 $stmt = $pdo->prepare('INSERT INTO user (username, email, password, full_name, role) VALUES (?, ?, ?, ?, ?)');
                 $stmt->execute([$username, $email, $hashed, $full_name, $role]);
+                $newId = $pdo->lastInsertId();
+                try {
+                    require_once __DIR__ . '/../includes/MailSender.php';
+                    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+                    $host = $_SERVER['HTTP_HOST'] ?? ($config['base_url_host'] ?? 'localhost');
+                    $base = rtrim(($config['base_url'] ?? ($scheme . $host . '/')), '/');
+                    $loginUrl = $base . '/admin/login.php';
+                    $forgotUrl = $base . '/admin/forgot-password.php';
+                    $token = bin2hex(random_bytes(32));
+                    $expires = date('Y-m-d H:i:s', strtotime('+14 days'));
+                    $pdo->prepare('UPDATE user SET reset_token = ?, reset_expires = ? WHERE id = ?')->execute([$token, $expires, $newId]);
+                    $resetUrl = $base . '/admin/reset-password.php?token=' . urlencode($token);
+                    $logoUrl = $base . '/' . ltrim((string)($config['logo_url'] ?? ''), '/');
+                    $to = $email;
+                    $subject = 'Selamat Datang - Akaun Admin Telah Dicipta';
+                    $body = '<!DOCTYPE html><html lang="ms"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Selamat Datang</title><style>body{font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#111827}.container{max-width:600px;margin:0 auto;padding:20px}.header{background:#e0f2fe;color:#1e3a8a;padding:20px;text-align:center}.content{padding:20px;background:#f9fafb}.footer{padding:16px;text-align:center;font-size:12px;color:#6b7280}.button{display:inline-block;padding:10px 18px;background:#ffffff;color:#2563eb;text-decoration:none;border-radius:6px;border:1px solid #2563eb}</style></head><body><div class="container"><div class="header"><img src="' . htmlspecialchars($logoUrl) . '" alt="Logo" style="height:48px;margin-bottom:0"><h1>Majlis Perbandaran Hulu Selangor</h1><h2>Akaun Admin Dicipta</h2></div><div class="content"><p>Kepada <strong>' . htmlspecialchars($full_name ?: $username) . '</strong>,</p><p>Akaun admin anda telah dicipta.</p><div style="background:#fff;padding:12px;border-left:4px solid #2563eb;margin:12px 0"><ul style="list-style:none;padding:0;margin:0"><li><strong>Nama Pengguna:</strong> ' . htmlspecialchars($username) . '</li><li><strong>Emel:</strong> ' . htmlspecialchars($email) . '</li><li><strong>Kata Laluan:</strong> ' . htmlspecialchars($password) . '</li><li><strong>Peranan:</strong> ' . htmlspecialchars($role) . '</li></ul></div><p>Untuk akses papan pemuka, klik pautan berikut:</p><p style="text-align:center;margin:20px 0"><a class="button" href="' . htmlspecialchars($loginUrl) . '">Log Masuk Admin</a></p><p>Atau tukar kata laluan kali pertama anda di pautan berikut:</p><p style="text-align:center;margin:8px 0"><a class="button" href="' . htmlspecialchars($resetUrl) . '">Tukar Kata Laluan Kali Pertama</a></p><p>Jika terlupa kata laluan, gunakan pautan berikut:</p><p style="text-align:center"><a href="' . htmlspecialchars($forgotUrl) . '">' . htmlspecialchars($forgotUrl) . '</a></p></div><div class="footer"><p>Emel ini dijana secara automatik oleh sistem eJawatan.</p></div></div></body></html>';
+                    $mailer = new MailSender($config);
+                    $mailer->send($to, $subject, $body);
+                    if (function_exists('log_admin_info')) { log_admin_info('Welcome email sent to new admin', ['user_id' => $newId, 'username' => $username, 'email' => $email]); }
+                    if (function_exists('log_admin_action')) { log_admin_action('Created admin user', 'CREATE', 'user', $newId, ['username' => $username, 'email' => $email, 'role' => $role]); }
+                } catch (Throwable $e) {
+                    if (function_exists('log_admin_error')) { log_admin_error('Failed sending welcome email', ['error' => $e->getMessage(), 'username' => $username, 'email' => $email]); }
+                }
                 header('Location: users.php');
                 exit;
             }

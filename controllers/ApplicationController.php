@@ -148,6 +148,9 @@ class ApplicationController
                 
                 // Redirect to preview or thank you page
                 if (!empty($_POST['redirect_to_preview'])) {
+                    try {
+                        self::sendDraftCreatedEmail($pdo, $cfg, (string)$result['application_reference']);
+                    } catch (Throwable $e) {}
                     header('Location: ../preview-application.php?ref=' . urlencode($result['application_reference']));
                 } else {
                     header('Location: ../application-thank-you.php?ref=' . urlencode($result['application_reference']));
@@ -292,6 +295,33 @@ class ApplicationController
             echo json_encode(['error' => 'SERVER_ERROR']);
         }
         exit();
+    }
+
+    private static function sendDraftCreatedEmail(PDO $pdo, array $cfg, string $applicationRef): void
+    {
+        $stmt = $pdo->prepare('SELECT aa.*, jp.job_title, jp.kod_gred FROM application_application_main aa LEFT JOIN job_postings jp ON aa.job_id = jp.id WHERE aa.application_reference = ? LIMIT 1');
+        $stmt->execute([$applicationRef]);
+        $app = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$app) { return; }
+        $to = trim((string)($app['email'] ?? ''));
+        if ($to === '' || !filter_var($to, FILTER_VALIDATE_EMAIL)) { return; }
+        $subject = 'Draf Permohonan Dicipta - ' . $applicationRef;
+        $base = rtrim((string)($cfg['base_url'] ?? ''), '/');
+        $logoUrl = $base . '/' . ltrim((string)($cfg['logo_url'] ?? ''), '/');
+        $prefillNric = (string)($app['nombor_ic'] ?? '');
+        $statusUrl = $base . '/semak-status.php?app_ref=' . urlencode($applicationRef) . ($prefillNric !== '' ? '&nric=' . urlencode($prefillNric) : '');
+        $previewUrl = $base . '/preview-application.php?ref=' . urlencode($applicationRef);
+        $name = (string)($app['nama_penuh'] ?? 'Pemohon');
+        $jobTitle = (string)($app['job_title'] ?? '');
+        $kodGred = (string)($app['kod_gred'] ?? '');
+        $createdAt = (string)($app['created_at'] ?? date('Y-m-d H:i:s'));
+        $createdDisplay = date('d/m/Y H:i', strtotime($createdAt));
+        $updatedAt = (string)($app['updated_at'] ?? $createdAt);
+        $updatedDisplay = date('d/m/Y h:i A', strtotime($updatedAt));
+        $html = '<!DOCTYPE html><html lang="ms"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Draf Permohonan</title><style>body{font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#333}.container{max-width:600px;margin:0 auto;padding:20px}.header{background:#e0f2fe;color:#1e3a8a;padding:20px;text-align:center}.content{padding:20px;background:#f9f9f9}.footer{padding:20px;text-align:center;font-size:12px;color:#666}.button{display:inline-block;padding:12px 24px;background:#ffffff;color:#2563eb;text-decoration:none;border-radius:6px;border:1px solid #2563eb}.info-box{background:#fff;padding:15px;margin:15px 0;border-left:4px solid #3b82f6}</style></head><body><div class="container"><div class="header"><img src="' . htmlspecialchars($logoUrl) . '" alt="Logo" style="height:48px;margin-bottom:0"><h1>Majlis Perbandaran Hulu Selangor</h1><h2>Draf Permohonan Disimpan</h2></div><div class="content"><p>Kepada <strong>' . htmlspecialchars($name) . '</strong>,</p><p>Permohonan anda telah <strong>disimpan sebagai draf</strong>. Sila simpan email ini sebagai rujukan.</p><div class="info-box"><h3>Maklumat Permohonan</h3><ul><li><strong>Rujukan:</strong> ' . htmlspecialchars($applicationRef) . '</li><li><strong>Jawatan:</strong> ' . htmlspecialchars($jobTitle) . '</li><li><strong>Kod Gred:</strong> ' . htmlspecialchars($kodGred) . '</li><li><strong>Tarikh Simpan:</strong> ' . htmlspecialchars($createdDisplay) . '</li><li><strong>Tarikh Kemaskini:</strong> ' . htmlspecialchars($updatedDisplay) . '</li></ul></div><p>Anda boleh menyemak dan melengkapkan permohonan anda melalui pautan berikut:</p><div style="text-align:center;margin:24px 0"><a class="button" href="' . htmlspecialchars($previewUrl) . '">Teruskan Pratonton / Lengkapkan Permohonan</a></div><div style="text-align:center;margin:12px 0"><a class="button" href="' . htmlspecialchars($statusUrl) . '">Semak Status Permohonan</a></div><div class="info-box"><h3>Peringatan</h3><ul><li>Simpan nombor rujukan ini dengan selamat</li><li>Permohonan draf belum dihantar untuk semakan</li><li>Lengkapkan semua bahagian dan klik Hantar untuk memuktamadkan</li></ul></div></div><div class="footer"><p>Email ini dijana secara automatik. Jangan balas email ini.</p><p>&copy; ' . date('Y') . ' Majlis Perbandaran Hulu Selangor</p></div></div></body></html>';
+        if (!class_exists('MailSender')) { require_once __DIR__ . '/../includes/MailSender.php'; }
+        $sender = new \MailSender($cfg);
+        try { $sender->send($to, $subject, $html); } catch (Throwable $e) {}
     }
 }
 

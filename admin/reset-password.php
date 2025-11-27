@@ -1,9 +1,10 @@
 <?php
 // Admin Password Reset Page
 session_start();
-require_once 'includes/ActivityLogger.php';
-require_once 'includes/error_handler.php';
-require_once 'includes/admin_logger.php';
+require_once __DIR__ . '/../includes/ActivityLogger.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/includes/error_handler.php';
+require_once __DIR__ . '/includes/admin_logger.php';
 
 // Get database connection from main config
 $config = require '../config.php';
@@ -36,7 +37,7 @@ try {
 $user = null;
 if ($pdo && $token) {
     try {
-        $stmt = $pdo->prepare("SELECT id, username, email, reset_token, reset_expires FROM users WHERE reset_token = ? AND role = 'admin'");
+        $stmt = $pdo->prepare("SELECT id, username, email, reset_token, reset_expires FROM user WHERE reset_token = ? LIMIT 1");
         $stmt->execute([$token]);
         $user = $stmt->fetch();
         
@@ -45,7 +46,7 @@ if ($pdo && $token) {
         } elseif (strtotime($user['reset_expires']) < time()) {
             $error = 'Reset token has expired.';
             // Clean up expired token
-            $stmt = $pdo->prepare("UPDATE users SET reset_token = NULL, reset_expires = NULL WHERE id = ?");
+            $stmt = $pdo->prepare("UPDATE user SET reset_token = NULL, reset_expires = NULL WHERE id = ?");
             $stmt->execute([$user['id']]);
         }
     } catch (PDOException $e) {
@@ -72,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user && !$error) {
         try {
             // Hash new password and update user
             $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
-            $stmt = $pdo->prepare("UPDATE users SET password = ?, reset_token = NULL, reset_expires = NULL WHERE id = ?");
+            $stmt = $pdo->prepare("UPDATE user SET password = ?, reset_token = NULL, reset_expires = NULL WHERE id = ?");
             $stmt->execute([$hashed_password, $user['id']]);
             
             $success = 'Password has been successfully reset! You can now log in with your new password.';
