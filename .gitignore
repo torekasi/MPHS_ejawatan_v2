@@ -1,6 +1,5 @@
 # Configuration files
 config.php
-config.php.test
 
 # Log files
 *.log

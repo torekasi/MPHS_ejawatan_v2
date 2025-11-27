@@ -29,7 +29,7 @@ $config['app_name'] = 'eJawatan MPHS';
 $config['app_version'] = '2.0.0';
 $config['app_env'] = 'production'; // development, staging, production
 $config['app_secret'] = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; // For secure token generation
-$config['base_url'] = 'https://majlis.hostnefi.my'; // update this to your production domain
+$config['base_url'] = 'http://ejawatan2.mphs.gov.my'; // update this to your production domain
 
 
 // Logo and Branding Configuration
@@ -124,7 +124,7 @@ $config['log_rotate'] = true;
 $config['log_max_size'] = 10 * 1024 * 1024; // 10MB
 
 // Application URLs
-$config['base_url'] = 'https://majlis.hostnefi.my';   //Update this to your production domain
+$config['base_url'] = 'http://ejawatan2.mphs.gov.my';   //Update this to your production domain
 $config['admin_url'] = $config['base_url'] . '/admin';
 $config['login_url'] = $config['admin_url'] . '/login.php';
 
