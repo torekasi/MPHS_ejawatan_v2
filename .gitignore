@@ -38,3 +38,7 @@ test_*.html
 test_*.sql
 debug_*.php
 debug_*.log
+# Local-only configuration and logs (do not track in remote)
+config.php
+logs/
+admin/logs/
