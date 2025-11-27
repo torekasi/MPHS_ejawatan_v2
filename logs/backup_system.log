@@ -1,8 +1,0 @@
-[2025-11-17 07:12:57] [INFO] Starting backup creation for database: ejawatan_db
-[2025-11-17 07:12:58] [INFO] PDO backup created successfully: backup_ejawatan_db_2025-11-17_07-12-57.zip (16920 bytes)
-[2025-11-20 22:49:25] [INFO] Starting backup creation for database: ejawatan_db
-[2025-11-20 22:49:25] [INFO] PDO backup created successfully: backup_ejawatan_db_2025-11-20_22-49-25.zip (19015 bytes)
-[2025-11-20 22:51:39] [INFO] Backup downloaded: backup_ejawatan_db_2025-11-20_22-49-25.zip by admin ID: 1
-[2025-11-25 22:05:19] [INFO] Starting backup creation for database: ejawatan_db
-[2025-11-25 22:05:19] [INFO] PDO backup created successfully: backup_ejawatan_db_2025-11-25_22-05-19.zip (23850 bytes)
-[2025-11-25 22:07:24] [INFO] Backup downloaded: backup_ejawatan_db_2025-11-25_22-05-19.zip by admin ID: 1
