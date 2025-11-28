@@ -41,11 +41,11 @@ services:
       - ejawatan_network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "ejawatan_user", "-pSecurePass123!"]
-      timeout: 20s
-      retries: 10
-      interval: 10s
-      start_period: 30s
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 --silent || exit 1"]
+      timeout: 5s
+      retries: 30
+      interval: 5s
+      start_period: 90s
 
   # phpMyAdmin Service
   phpmyadmin:
