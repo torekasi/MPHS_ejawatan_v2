@@ -65,6 +65,10 @@ COPY . /var/www/html/
 COPY scripts/init-db.php /usr/local/bin/init-db.php
 RUN chmod +x /usr/local/bin/init-db.php
 
+# Copy application entrypoint
+COPY scripts/app-entrypoint.sh /usr/local/bin/app-entrypoint.sh
+RUN chmod +x /usr/local/bin/app-entrypoint.sh
+
 # Set proper ownership after copying
 RUN chown -R www-data:www-data /var/www/html
 

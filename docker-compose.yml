@@ -7,6 +7,7 @@ services:
     container_name: ejawatan_web
     environment:
       DB_HOST: ${DB_HOST:-host.docker.internal}
+      GENERATE_CONFIG: ${GENERATE_CONFIG:-1}
     ports:
       - "8000:80"
     volumes:
@@ -16,6 +17,7 @@ services:
     networks:
       - ejawatan_network
     restart: unless-stopped
+    entrypoint: ["sh", "-lc", "/usr/local/bin/app-entrypoint.sh"]
     dns:
       - 8.8.8.8
       - 8.8.4.4
