@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # Web Application Service
+  web:
+    build: .
+    container_name: ejawatan_web
+    profiles:
+      - app
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+      - ./uploads:/var/www/html/uploads
+      - ./admin/logs:/var/www/html/admin/logs
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - ejawatan_network
+    restart: unless-stopped
+    entrypoint: ["sh", "-lc", "until nc -z db 3306 >/dev/null 2>&1; do echo Waiting for db:3306; sleep 1; done; apache2-foreground"]
+    command: []
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+
+  # MySQL Database Service
+  db:
+    image: mysql:8.0
+    container_name: ejawatan_db
+    environment:
+      MYSQL_ROOT_PASSWORD: RootPass123!
+      MYSQL_DATABASE: ejawatan_db
+      MYSQL_USER: ejawatan_user
+      MYSQL_PASSWORD: SecurePass123!
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
+    networks:
+      - ejawatan_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 --silent || exit 1"]
+      timeout: 5s
+      retries: 30
+      interval: 5s
+      start_period: 90s
+
+  # phpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: ejawatan_phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: ejawatan_user
+      PMA_PASSWORD: SecurePass123!
+      MYSQL_ROOT_PASSWORD: RootPass123!
+      PMA_ARBITRARY: 1
+    ports:
+      - "8081:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - ejawatan_network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  ejawatan_network:
+    driver: bridge
