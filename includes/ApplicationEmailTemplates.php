@@ -6,6 +6,74 @@
  */
 
 /**
+ * Generate a standard email layout wrapper
+ * 
+ * @param string $title Meta title of the email
+ * @param string $subtitle Heading subtitle (e.g. "Draf Permohonan Disimpan")
+ * @param string $content HTML content to inject into the body
+ * @param array $config Configuration array
+ * @return string Full HTML email
+ */
+function generateStandardEmailLayout($title, $subtitle, $content, $config) {
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'] ?? ($config['base_url_host'] ?? 'localhost');
+    $base = rtrim((string)($config['base_url'] ?? ($scheme . $host . '/')), '/');
+    $logoUrl = $base . '/' . ltrim((string)($config['logo_url'] ?? ''), '/');
+    
+    return '<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>' . htmlspecialchars($title) . '</title>
+    <style>
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #374151; margin: 0; padding: 0; background-color: #f3f4f6; }
+        .container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .header { background-color: #e0f2fe; padding: 40px 20px; text-align: center; border-bottom: 4px solid #3b82f6; }
+        .header img { height: 80px; margin-bottom: 20px; }
+        .header h1 { margin: 0; color: #1e3a8a; font-size: 24px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
+        .header h2 { margin: 15px 0 0; color: #1d4ed8; font-size: 20px; font-weight: 600; }
+        .content { padding: 40px; background-color: #ffffff; }
+        .content p { margin-bottom: 16px; line-height: 1.8; font-size: 16px; }
+        .info-box { background-color: #ffffff; border: 1px solid #e5e7eb; border-left: 5px solid #3b82f6; padding: 25px; margin: 25px 0; border-radius: 6px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+        .info-box h3 { margin-top: 0; margin-bottom: 15px; color: #111827; font-size: 18px; font-weight: 700; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
+        .info-box ul { margin: 0; padding-left: 0; list-style-type: none; }
+        .info-box li { margin-bottom: 10px; color: #4b5563; font-size: 15px; display: flex; align-items: flex-start; }
+        .info-box li strong { color: #1f2937; min-width: 140px; display: inline-block; font-weight: 600; }
+        .button { display: inline-block; padding: 14px 28px; background-color: #2563eb; color: #ffffff !important; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center; margin: 10px 0; transition: background-color 0.2s; }
+        .button:hover { background-color: #1d4ed8; }
+        .footer { background-color: #f9fafb; padding: 30px 20px; text-align: center; font-size: 13px; color: #6b7280; border-top: 1px solid #e5e7eb; }
+        .footer p { margin: 5px 0; }
+        .footer a { color: #2563eb; text-decoration: none; }
+        @media only screen and (max-width: 600px) {
+            .container { margin: 0; border-radius: 0; }
+            .content { padding: 25px; }
+            .info-box li { flex-direction: column; }
+            .info-box li strong { margin-bottom: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="' . htmlspecialchars($logoUrl) . '" alt="MPHS Logo">
+            <h1>Majlis Perbandaran Hulu Selangor</h1>
+            <h2>' . htmlspecialchars($subtitle) . '</h2>
+        </div>
+        <div class="content">
+            ' . $content . '
+        </div>
+        <div class="footer">
+            <p>Emel ini dijana secara automatik oleh Sistem eJawatan MPHS.</p>
+            <p>Sila jangan balas emel ini.</p>
+            <p>&copy; ' . date('Y') . ' Majlis Perbandaran Hulu Selangor</p>
+        </div>
+    </div>
+</body>
+</html>';
+}
+
+/**
  * Generate application confirmation email template
  * 
  * @param array $application Application data
@@ -16,17 +84,19 @@ function generateApplicationConfirmationEmail($application) {
     $job_title = trim((string)($application['job_title'] ?? ''));
     $kod_gred = trim((string)($application['kod_gred'] ?? ''));
     $job_code = trim((string)($application['job_code'] ?? ''));
+    
+    // Fallback to fetch job details if missing
     if ($job_title === '' || $kod_gred === '' || $job_code === '') {
         try {
             $cfgLoad2 = @require __DIR__ . '/../config.php';
             $cfg2 = is_array($cfgLoad2) && isset($cfgLoad2['config']) ? $cfgLoad2['config'] : (is_array($cfgLoad2) ? $cfgLoad2 : []);
-            $dsn = "mysql:host=" . ($cfg2['db_host'] ?? '') . ";dbname=" . ($cfg2['db_name'] ?? '') . ";charset=utf8mb4";
-            $pdo2 = new \PDO($dsn, ($cfg2['db_user'] ?? ''), ($cfg2['db_pass'] ?? ''), [
-                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                \PDO::ATTR_EMULATE_PREPARES => false,
-            ]);
             if (!empty($application['job_id'])) {
+                $dsn = "mysql:host=" . ($cfg2['db_host'] ?? '') . ";dbname=" . ($cfg2['db_name'] ?? '') . ";charset=utf8mb4";
+                $pdo2 = new \PDO($dsn, ($cfg2['db_user'] ?? ''), ($cfg2['db_pass'] ?? ''), [
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                    \PDO::ATTR_EMULATE_PREPARES => false,
+                ]);
                 $stmtJ = $pdo2->prepare('SELECT job_title, kod_gred, job_code FROM job_postings WHERE id = ? LIMIT 1');
                 $stmtJ->execute([ (int)$application['job_id'] ]);
                 $jr = $stmtJ->fetch();
@@ -41,218 +111,41 @@ function generateApplicationConfirmationEmail($application) {
     
     $cfgLoad = @require __DIR__ . '/../config.php';
     $cfg = is_array($cfgLoad) && isset($cfgLoad['config']) ? $cfgLoad['config'] : (is_array($cfgLoad) ? $cfgLoad : []);
-    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
-    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-    $base = rtrim((string)($cfg['base_url'] ?? ($scheme . $host . '/')), '/');
-    $logo_url = $base . '/' . ltrim((string)($cfg['logo_url'] ?? ''), '/');
 
-    // Build HTML email
-    $html = '
-    <!DOCTYPE html>
-    <html lang="ms">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pengesahan Penerimaan Permohonan Jawatan</title>
-        <style>
-            body { 
-                font-family: Arial, sans-serif; 
-                line-height: 1.6; 
-                color: #333; 
-                margin: 0;
-                padding: 0;
-            }
-            .container { 
-                max-width: 600px; 
-                margin: 0 auto; 
-                padding: 0;
-                border: 1px solid #ddd;
-            }
-            .header { 
-                background: #e0f2fe; 
-                color: #1e3a8a; 
-                padding: 20px; 
-                text-align: center; 
-            }
-            .header h1 {
-                margin: 0;
-                padding: 0;
-                font-size: 24px;
-            }
-            .header h2 {
-                margin: 10px 0 0 0;
-                padding: 0;
-                font-size: 18px;
-                font-weight: normal;
-            }
-            .content { 
-                padding: 20px; 
-                background: #f9f9f9; 
-            }
-            .application-details {
-                background: white;
-                border: 1px solid #ddd;
-                padding: 15px;
-                margin-bottom: 20px;
-            }
-            .application-details h3 {
-                margin-top: 0;
-                border-bottom: 1px solid #eee;
-                padding-bottom: 10px;
-                color: #1e3a8a;
-            }
-            .detail-row {
-                display: grid;
-                grid-template-columns: 180px 1fr;
-                align-items: center;
-                gap: 12px;
-                margin-bottom: 8px;
-                border-bottom: 1px dotted #eee;
-                padding-bottom: 8px;
-            }
-            .detail-label {
-                font-weight: 400;
-                color: #555;
-            }
-            .detail-value {
-                font-weight: 600;
-                color: #111;
-                text-align: left;
-            }
-            .reference-number {
-                font-size: 18px;
-                color: #1e3a8a;
-                font-weight: bold;
-            }
-            .next-steps {
-                background: #e8f4ff;
-                padding: 15px;
-                border-left: 4px solid #1e3a8a;
-                margin-bottom: 20px;
-            }
-            .next-steps h3 {
-                margin-top: 0;
-                color: #1e3a8a;
-            }
-            .next-steps ul {
-                margin: 0;
-                padding-left: 20px;
-            }
-            .footer { 
-                padding: 20px; 
-                text-align: center; 
-                font-size: 12px; 
-                color: #666; 
-                background: #f1f1f1;
-                border-top: 1px solid #ddd;
-            }
-            .important-note {
-                background: #fff9e6;
-                border: 1px solid #ffe0b2;
-                padding: 10px 15px;
-                margin-top: 20px;
-                border-radius: 4px;
-            }
-            .important-note h4 {
-                margin-top: 0;
-                color: #e65100;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-                <img src="'.htmlspecialchars($logo_url).'" alt="Logo" style="height:48px;margin-bottom:0">
-                <h1>Majlis Perbandaran Hulu Selangor</h1>
-                <h2>Pengesahan Penerimaan Permohonan Jawatan</h2>
-            </div>
-            
-            <div class="content">
-                <p>Salam Sejahtera,</p>
-                <p>Terima kasih kerana memohon jawatan di Majlis Perbandaran Hulu Selangor. Permohonan anda telah diterima dan sedang dalam proses semakan.</p>
-                
-                <div class="application-details">
-                    <h3>Butiran Permohonan</h3>
-                    
-                    <div class="detail-row">
-                        <span class="detail-label">Nombor Rujukan:</span>
-                        <span class="detail-value reference-number">'.htmlspecialchars($application['application_reference'] ?? 'N/A').'</span>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <span class="detail-label">Jawatan Dipohon:</span>
-                        <span class="detail-value">'.htmlspecialchars($job_title !== '' ? $job_title : 'N/A').'</span>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <span class="detail-label">Kod Gred:</span>
-                        <span class="detail-value">'.htmlspecialchars($kod_gred !== '' ? $kod_gred : 'N/A').'</span>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <span class="detail-label">Kod Jawatan:</span>
-                        <span class="detail-value">'.htmlspecialchars($job_code !== '' ? $job_code : 'N/A').'</span>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <span class="detail-label">Tarikh Permohonan:</span>
-                        <span class="detail-value">'.$formatted_date.'</span>
-                    </div>
-                </div>
-                
-                <div class="application-details">
-                    <h3>Maklumat Pemohon</h3>
-                    
-                    <div class="detail-row">
-                        <span class="detail-label">Nama Penuh:</span>
-                        <span class="detail-value">'.htmlspecialchars($application['nama_penuh'] ?? 'N/A').'</span>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <span class="detail-label">Nombor IC:</span>
-                        <span class="detail-value">'.htmlspecialchars($application['nombor_ic'] ?? 'N/A').'</span>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <span class="detail-label">Emel:</span>
-                        <span class="detail-value">'.htmlspecialchars($application['email'] ?? 'N/A').'</span>
-                    </div>
-                    
-                    <div class="detail-row">
-                        <span class="detail-label">Nombor Telefon:</span>
-                        <span class="detail-value">'.htmlspecialchars($application['nombor_telefon'] ?? 'N/A').'</span>
-                    </div>
-                </div>
-                
-                <div class="next-steps">
-                    <h3>Langkah Seterusnya</h3>
-                    <p>Permohonan anda akan melalui proses berikut:</p>
-                    <ul>
-                        <li>Semakan dokumen dan kelayakan</li>
-                        <li>Panggilan temu duga (jika layak)</li>
-                        <li>Keputusan permohonan</li>
-                    </ul>
-                    
-                </div>
-                
-                <div class="important-note">
-                    <h4>Maklumat Penting</h4>
-                    <ul>
-                        <li>Simpan nombor rujukan permohonan anda untuk semakan status</li>
-                        <li>Anda boleh menyemak status permohonan di laman web kami</li>
-                        <li>Hubungi kami jika anda mempunyai sebarang pertanyaan</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>Emel ini dijana secara automatik. Sila jangan balas emel ini.</p>
-                <p>&copy; '.date('Y').' Majlis Perbandaran Hulu Selangor. Hak Cipta Terpelihara.</p>
-                <p>Jika anda mempunyai sebarang pertanyaan, sila hubungi kami di <a href="mailto:admin@mphs.gov.my">admin@mphs.gov.my</a></p>
-            </div>
-        </div>
-    </body>
-    </html>';
+    // Build Inner Content
+    $name = htmlspecialchars($application['nama_penuh'] ?? 'Pemohon');
+    $ref = htmlspecialchars($application['application_reference'] ?? 'N/A');
     
-    return $html;
+    $content = '<p>Kepada <strong>' . $name . '</strong>,</p>
+    <p>Terima kasih kerana memohon jawatan di Majlis Perbandaran Hulu Selangor. Permohonan anda telah diterima dan sedang dalam proses semakan.</p>
+    
+    <div class="info-box">
+        <h3>Butiran Permohonan</h3>
+        <ul>
+            <li><strong>Nombor Rujukan:</strong> ' . $ref . '</li>
+            <li><strong>Jawatan:</strong> ' . htmlspecialchars($job_title) . '</li>
+            <li><strong>Kod Gred:</strong> ' . htmlspecialchars($kod_gred) . '</li>
+            <li><strong>Kod Jawatan:</strong> ' . htmlspecialchars($job_code) . '</li>
+            <li><strong>Tarikh:</strong> ' . $formatted_date . '</li>
+        </ul>
+    </div>
+
+    <div class="info-box">
+        <h3>Langkah Seterusnya</h3>
+        <p style="margin-bottom:10px;">Permohonan anda akan melalui proses berikut:</p>
+        <ul style="list-style-type: disc; padding-left: 20px;">
+            <li>Semakan dokumen dan kelayakan</li>
+            <li>Panggilan temu duga (jika layak)</li>
+            <li>Keputusan permohonan</li>
+        </ul>
+    </div>
+    
+    <p>Anda boleh menyemak status permohonan anda pada bila-bila masa di laman web eJawatan.</p>';
+
+    return generateStandardEmailLayout(
+        'Pengesahan Penerimaan Permohonan Jawatan', 
+        'Permohonan Diterima', 
+        $content, 
+        $cfg
+    );
 }

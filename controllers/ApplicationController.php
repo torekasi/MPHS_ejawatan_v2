@@ -318,7 +318,47 @@ class ApplicationController
         $createdDisplay = date('d/m/Y H:i', strtotime($createdAt));
         $updatedAt = (string)($app['updated_at'] ?? $createdAt);
         $updatedDisplay = date('d/m/Y h:i A', strtotime($updatedAt));
-        $html = '<!DOCTYPE html><html lang="ms"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Draf Permohonan</title><style>body{font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#333}.container{max-width:600px;margin:0 auto;padding:20px}.header{background:#e0f2fe;color:#1e3a8a;padding:20px;text-align:center}.content{padding:20px;background:#f9f9f9}.footer{padding:20px;text-align:center;font-size:12px;color:#666}.button{display:inline-block;padding:12px 24px;background:#ffffff;color:#2563eb;text-decoration:none;border-radius:6px;border:1px solid #2563eb}.info-box{background:#fff;padding:15px;margin:15px 0;border-left:4px solid #3b82f6}</style></head><body><div class="container"><div class="header"><img src="' . htmlspecialchars($logoUrl) . '" alt="Logo" style="height:48px;margin-bottom:0"><h1>Majlis Perbandaran Hulu Selangor</h1><h2>Draf Permohonan Disimpan</h2></div><div class="content"><p>Kepada <strong>' . htmlspecialchars($name) . '</strong>,</p><p>Permohonan anda telah <strong>disimpan sebagai draf</strong>. Sila simpan email ini sebagai rujukan.</p><div class="info-box"><h3>Maklumat Permohonan</h3><ul><li><strong>Rujukan:</strong> ' . htmlspecialchars($applicationRef) . '</li><li><strong>Jawatan:</strong> ' . htmlspecialchars($jobTitle) . '</li><li><strong>Kod Gred:</strong> ' . htmlspecialchars($kodGred) . '</li><li><strong>Tarikh Simpan:</strong> ' . htmlspecialchars($createdDisplay) . '</li><li><strong>Tarikh Kemaskini:</strong> ' . htmlspecialchars($updatedDisplay) . '</li></ul></div><p>Anda boleh menyemak dan melengkapkan permohonan anda melalui pautan berikut:</p><div style="text-align:center;margin:24px 0"><a class="button" href="' . htmlspecialchars($previewUrl) . '">Teruskan Pratonton / Lengkapkan Permohonan</a></div><div style="text-align:center;margin:12px 0"><a class="button" href="' . htmlspecialchars($statusUrl) . '">Semak Status Permohonan</a></div><div class="info-box"><h3>Peringatan</h3><ul><li>Simpan nombor rujukan ini dengan selamat</li><li>Permohonan draf belum dihantar untuk semakan</li><li>Lengkapkan semua bahagian dan klik Hantar untuk memuktamadkan</li></ul></div></div><div class="footer"><p>Email ini dijana secara automatik. Jangan balas email ini.</p><p>&copy; ' . date('Y') . ' Majlis Perbandaran Hulu Selangor</p></div></div></body></html>';
+
+        // Use standard email layout
+        if (!function_exists('generateStandardEmailLayout')) {
+            require_once __DIR__ . '/../includes/ApplicationEmailTemplates.php';
+        }
+
+        $content = '<p>Kepada <strong>' . htmlspecialchars($name) . '</strong>,</p>
+        <p>Permohonan anda telah <strong>disimpan sebagai draf</strong>. Sila simpan email ini sebagai rujukan.</p>
+        
+        <div class="info-box">
+            <h3>Maklumat Permohonan</h3>
+            <ul>
+                <li><strong>Rujukan:</strong> ' . htmlspecialchars($applicationRef) . '</li>
+                <li><strong>Jawatan:</strong> ' . htmlspecialchars($jobTitle) . '</li>
+                <li><strong>Kod Gred:</strong> ' . htmlspecialchars($kodGred) . '</li>
+                <li><strong>Tarikh Simpan:</strong> ' . htmlspecialchars($createdDisplay) . '</li>
+                <li><strong>Tarikh Kemaskini:</strong> ' . htmlspecialchars($updatedDisplay) . '</li>
+            </ul>
+        </div>
+        
+        <p>Anda boleh menyemak dan melengkapkan permohonan anda melalui pautan berikut:</p>
+        
+        <div style="text-align:center;margin:24px 0">
+            <a class="button" href="' . htmlspecialchars($previewUrl) . '">Teruskan Pratonton / Lengkapkan Permohonan</a>
+        </div>
+        
+        <div style="text-align:center;margin:12px 0">
+            <a class="button" href="' . htmlspecialchars($statusUrl) . '">Semak Status Permohonan</a>
+        </div>
+        
+        <div class="info-box" style="border-left-color: #f59e0b;">
+            <h3 style="color: #92400e;">Peringatan</h3>
+            <p>Draf ini <strong>belum dihantar</strong> sebagai permohonan rasmi. Sila pastikan anda melengkapkan dan menghantar permohonan sebelum tarikh tutup iklan jawatan.</p>
+        </div>';
+
+        $html = generateStandardEmailLayout(
+            'Draf Permohonan Disimpan',
+            'Draf Permohonan Disimpan',
+            $content,
+            $cfg
+        );
         if (!class_exists('MailSender')) { require_once __DIR__ . '/../includes/MailSender.php'; }
         $sender = new \MailSender($cfg);
         try { $sender->send($to, $subject, $html); } catch (Throwable $e) {}

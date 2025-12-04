@@ -169,6 +169,15 @@ class MailSender {
             $mail->{'Timeout'} = max(10, $timeout);
             $mail->{'CharSet'} = 'UTF-8';
 
+            // Allow insecure connections for local/docker environments to bypass SSL certificate verification issues
+            $mail->{'SMTPOptions'} = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
+
             call_user_func([$mail, 'setFrom'], $from, $from_name);
             if (!empty($reply_to)) {
                 call_user_func([$mail, 'addReplyTo'], $reply_to);
