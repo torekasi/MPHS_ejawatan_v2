@@ -39,6 +39,6 @@ if ($admin_id) {
     }
 }
 
-// Redirect to login page
-header('Location: login.php');
+// Redirect to front page
+header('Location: ../index.php');
 exit;

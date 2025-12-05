@@ -46,6 +46,7 @@
                 <?php endif; ?>
             </div>
             <!-- Navigation Menu -->
+            <?php if (!empty($_SESSION['admin_logged_in'])): ?>
             <nav class="flex flex-wrap items-center justify-center py-3 text-sm font-medium gap-1">
                 <a href="index.php" class="px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-all duration-200 <?php if(basename($_SERVER['PHP_SELF'])=='index.php') echo 'bg-blue-100 text-blue-700 font-semibold shadow-sm'; else echo 'text-gray-700'; ?>">
                     <div class="flex items-center gap-2">
@@ -164,6 +165,7 @@
                     </div>
                 </div>
             </nav>
+            <?php endif; ?>
         </div>
     </header>
     <!-- Main Content -->
